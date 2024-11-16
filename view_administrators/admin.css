@@ -1,0 +1,134 @@
+/* General Reset */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial, sans-serif';
+}
+
+/* Navbar */
+.navbar {
+    width: 100%;
+    height: 115px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #15274b;
+    color: #fff;
+    padding: 10px 20px;
+}
+
+.menu-toggle {
+    font-size: 24px;
+    background-color: #15274b; /* Background color for the button */
+    border: none; /* Remove border */
+    color: white; /* Icon color */
+    cursor: pointer;
+    padding: 20px; /* Add some padding for better spacing */
+    border-radius: 50%; /* Make the button circular */
+    display: flex; /* Center align the icon */
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional shadow for style */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth effect */
+}
+
+.menu-toggle:hover {
+    background-color: #1c3a6e; /* Slightly lighter shade for hover effect */
+    transform: scale(1.1); /* Add a subtle zoom effect on hover */
+}
+
+.overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    backdrop-filter: blur(5px); /* Blur effect */
+    display: none; /* Hidden by default */
+    z-index: 1; /* Behind the navbar but in front of the content */
+    
+}
+.sidebar {
+    position: fixed;
+    left: -250px; /* Start off-screen */
+    top: 0;
+    height: 100%;
+    width: 250px;
+    background-color: #15274b;
+    transition: left 0.3s ease; /* Smooth slide effect */
+    z-index: 2; /* Above the overlay */
+}
+
+.close-icon {
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 10px;
+  text-align: right; /* Align to the right */
+}  
+
+.nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 20px 0;
+    color: white;
+}
+
+.nav-links li {
+    padding-left: 20px;
+    margin: 20px 0; /* Add vertical spacing */
+}
+  
+.nav-links a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+  
+.show {
+    left: 0; /* Slide in */
+}
+  
+.show-overlay {
+    display: block; /* Show overlay */
+}
+  
+.logout-container{
+    position: relative;
+    z-index: 1;
+    display: flex; /* Use Flexbox to arrange buttons horizontally */
+    padding-right: 20px;
+}
+
+.logout{
+    padding: 10px 20px;
+    border: none;
+    text-decoration: none;
+    border-radius: 10px; /* Rounded appearance */
+    font-size: 16px;
+    display: inline-block; /* Ensure the buttons stay in line */
+    background-color: #000; /* Login button color */
+    color: white; /* Adjust text color for better contrast */
+}
+
+.container-fluid h1{
+    margin-left: 50px;
+    margin-top: 30px;
+    font-weight: bolder;
+}
+
+.container-fluid h3{
+    margin-left: 50px;
+    margin-top: 40px;
+    color: #2C5099;
+}
+
+.container-fluid label{
+    margin-left: 50px;
+
+}
+.container-fluid input{
+    margin-left: 50px;
+    border-radius: 3px;
+    border-color: #2C5099;
+}
