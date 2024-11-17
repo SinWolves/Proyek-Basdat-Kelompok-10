@@ -5,8 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
     <link rel="stylesheet" href="signup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    
+    <main>
+        <div class="signup-box">
+            <h1>Sign Up</h1>
+            <div class="name">
+                <label for="name">Name</label><br>
+                <div class="input-wrapper">
+                    <input type="text" name="name" id="name">
+                    <i class="fas fa-user"></i> <!-- User icon -->
+                </div>
+            </div>
+            <div class="e-mail">
+                <label for="email">Email</label><br>
+                <div class="input-wrapper">
+                    <input type="email" name="email" id="email">
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+            </div>
+            <div class="username">
+                <label for="name">Username</label><br>
+                <div class="input-wrapper">
+                    <input type="text" name="username" id="username">
+                    <i class="fas fa-user"></i> <!-- User icon -->
+                </div>
+            </div>
+            <div class="secret">
+                <label for="password">Password</label><br>
+                <div class="input-wrapper">
+                    <input type="password" name="password" id="password">
+                    <i class="fas fa-lock"></i> <!-- Lock icon -->
+                </div>
+            </div>
+            <div class="confirm">
+                <label for="password">Cornfirm Password</label><br>
+                <div class="input-wrapper">
+                    <input type="password" name="password" id="password">
+                    <i class="fas fa-lock"></i> <!-- Lock icon -->
+                </div>
+            </div>
+            <button type="submit">Sign Up</button>
+        </div>
+        <div class="sign-up">
+            <a href="login.html">Already Have an Account? Login</a>
+        </div>
+    </main>
 </body>
 </html>
