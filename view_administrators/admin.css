@@ -7,7 +7,7 @@ body, html {
 
 /* Navbar */
 .navbar {
-    background-color: #0d335d; 
+    background-color: #15274B; 
     color: white;
     padding: 10px 20px;
     display: flex;
@@ -43,10 +43,10 @@ body, html {
 .sidebar {
     position: fixed;
     top: 0;
-    left: -250px;
-    width: 250px;
+    left: -280px;
+    width: 280px;
     height: 100%;
-    background-color: #0d335d; 
+    background-color: #15274B; 
     color: white;
     transition: all 0.3s ease;
     padding: 20px;
