@@ -136,3 +136,10 @@ body, html {
     padding: 8px 10px;
     font-size: 1rem;
 }
+
+table th {
+    text-align: center;
+  }
+  table td {
+    text-align: center;
+  }
