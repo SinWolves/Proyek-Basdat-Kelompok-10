@@ -106,19 +106,30 @@ body, html {
     padding-right: 20px;
 }
 
+
+
+  h1 {
+    font-family: 'Orelega One', cursive;
+    font-size: 36px;
+    color: #0d335d;
+  }
+
+  h3 {
+    font-family: 'Orelega One', cursive;
+    color: #2C5099;
+  }
+  
 /* Form and Container */
 .container-fluid h1 {
     margin-left: 50px;
     margin-top: 30px;
     font-weight: bolder;
-    font-size: 2rem;
-    color: #0d335d;
 }
 
 .container-fluid h3 {
     margin-left: 50px;
     margin-top: 40px;
-    color: #2C5099;
+   
 }
 
 .container-fluid label {
