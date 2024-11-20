@@ -1,0 +1,47 @@
+@font-face {
+    font-family: 'Luxurious Roman';
+    src: url('login_signin/view_customers/font/LuxuriousRoman-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+  /* General Reset */
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+  
+.hero img {
+    width: 100%;
+    height: auto;
+    margin-top: -4px; /* Pastikan gambar menyatu dengan navbar */
+    display: block;
+}
+
+.navbar {
+    background-color: #15274b;
+    font-family: 'Luxurious Roman';
+    margin-bottom: 0; /* Hapus jarak di bawah navbar */
+    position: sticky;
+    top: 0;
+}
+
+.navbar-brand {
+    font-family: 'Plus Jakarta Sans', sans-serif; /* Ganti dengan font yang diinginkan */
+    font-weight: 600;
+}
+  
+.navbar .btn {
+    font-family: 'Luxurious Roman', sans-serif ;
+}
+  
+.navbar .btn-outline-light {
+    border-color: white;
+    color: white;
+}
+  
+.navbar .btn-outline-light:hover {
+    background-color: white;
+    color: black;
+}
+  

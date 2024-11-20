@@ -18,29 +18,38 @@ body, html {
   display: block;
 }
 
+.navbar {
+  position: sticky;
+  top: 0;
+  background-color: #15274b;
+  font-family: 'Luxurious Roman';
+  margin-bottom: 0; /* Hapus jarak di bawah navbar */
+}
 
 .navbar-brand {
   font-family: 'Plus Jakarta Sans', sans-serif; /* Ganti dengan font yang diinginkan */
   font-weight: 600;
 }
 
-
-.navbar {
-  background-color: #15274b;
-  font-family: 'Luxurious Roman';
-  margin-bottom: 0; /* Hapus jarak di bawah navbar */
+.navbar .user-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 3rem;
 }
 
-.navbar .btn {
-  font-family: 'Luxurious Roman', sans-serif ;
-}
-
-.navbar .btn-outline-light {
-  border-color: white;
+/* Increase the size of the Font Awesome icon */
+.navbar .user-profile .profile-icon {
+  font-size: 45px; /* Adjust this size as needed */
   color: white;
 }
 
-.navbar .btn-outline-light:hover {
-  background-color: white;
-  color: black;
+.navbar .user-profile span {
+  font-size: 1rem;
+  color: white;
 }
+
+.navbar .user-profile:hover span {
+  text-decoration: underline;
+}
+
