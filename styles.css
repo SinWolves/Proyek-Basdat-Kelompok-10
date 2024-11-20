@@ -9,6 +9,7 @@ body, html {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Luxurious Roman', cursive;
 }
   
 .hero img {
@@ -44,4 +45,69 @@ body, html {
     background-color: white;
     color: black;
 }
-  
+
+.about{
+    padding-top: 2rem;
+}
+
+.title h1 {
+    font-weight: bolder;
+    text-align: center;
+    border-bottom: 3px solid #000; /* You can adjust the color and thickness */
+    padding-bottom: 10px; /* Optional, adds space between the text and the line */
+}
+
+/* Apply flexbox to the parent container */
+.container1 {
+    padding-top: 3rem;
+    display: flex;
+    justify-content: space-between; /* Space between the two items */
+    align-items: center; /* Vertically center the items */
+}
+
+/* Ensure both child elements are displayed side by side */
+.roomPicture {
+    flex: 1; /* Optional: allows roomPicture to take equal space or adjust as needed */
+    margin-right: 20px; /* Optional: adds space between the image and the text */
+}
+
+.explain {
+    flex: 2; /* Optional: adjust the space it takes compared to roomPicture */
+    max-width: 60%; /* Optional: limits the max width of the explain section */
+    padding-right: 2rem;
+}
+
+.explain p {
+    font-size: x-large;
+    text-align: justify;  /* Justifies the text */
+    text-justify: inter-word; /* Ensures proper spacing between words (optional) */
+}
+
+.rooms{
+    background-color: #404d6d;
+}
+
+.caption h1 {
+    padding-top: 1rem;
+    color: #fff;
+    font-weight: bolder;
+    text-align: center;
+    border-bottom: 3px solid #fff; /* You can adjust the color and thickness */
+    padding-bottom: 10px; /* Optional, adds space between the text and the line */
+}
+
+.container2{
+    padding-top: 3rem;
+    gap: 6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card{
+    background-color: #f2f1db;
+}
+
+.btn1{
+    background-color: #15274b;
+}
