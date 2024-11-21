@@ -109,13 +109,58 @@ body, html {
 .nav-links {
     list-style: none;
     padding: 0;
-  }
-  
-  .nav-links a {
+}
+
+.nav-links a {
     color: white; 
     text-decoration: none; 
-  }
+}
   
-  .nav-links li {
+.nav-links li {
     margin: 5px 0; /* Jarak antar item */
-  }
+}
+
+.container {
+    margin-top: 20px;
+    right: 50%;
+}
+
+h1 {
+    font-family: 'Orelega One', cursive;
+    font-size: 36px;
+    color: #0d335d;
+}
+
+/* Table*/
+      
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid #000000;
+}
+  
+/* Ubah warna header tabel */
+.table-primary th {
+    background-color: #2C5099;
+    color: #ffffff;
+    text-align: center;
+}
+
+table th {
+    text-align: center;
+}
+
+table td {
+    text-align: center;
+}
+
+#staffForm{
+    max-width: 50%;
+}
+
+#addingStaff{
+    max-width: 15%;
+    color: #fcfcff;
+    background-color: #15274B;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
