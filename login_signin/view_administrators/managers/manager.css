@@ -109,13 +109,76 @@ body, html {
 .nav-links {
     list-style: none;
     padding: 0;
-  }
-  
-  .nav-links a {
+}
+
+.nav-links a {
     color: white; 
     text-decoration: none; 
-  }
+}
   
-  .nav-links li {
+.nav-links li {
     margin: 5px 0; /* Jarak antar item */
-  }
+}
+
+.container {
+    margin-top: 20px;
+    right: 50%;
+}
+
+h1 {
+    font-family: 'Orelega One', cursive;
+    font-size: 36px;
+    color: #0d335d;
+}
+
+/* Table*/
+
+/* Make the table body scrollable */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table thead, table tbody {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+table tbody {
+  display: table;
+  max-height: 200px; /* Set this based on the desired height */
+  overflow-y: scroll;
+  padding-right: 17px; /* Add some padding for scrollbar */
+}
+
+table th, table td {
+  padding: 10px;
+  text-align: center;
+  width: 75%;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid #000000;
+}
+
+/* Ubah warna header tabel */
+.table-primary th {
+  background-color: #2C5099;
+  color: #ffffff;
+  text-align: center;
+}
+
+#managerForm{
+    max-width: 50%;
+    margin-left: 120px;
+}
+
+#addingManager{
+    max-width: 15%;
+    color: #fcfcff;
+    background-color: #15274B;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}

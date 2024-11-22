@@ -50,35 +50,27 @@
 
   <div class="container">
     <div class="row">
-      <!-- Monthly Revenue -->
       <div class="col-md-6">
-            <table class="table table-bordered">
-              <thead class="table-primary">
-                <tr>
-                  <th>ID Staff</th>
-                  <th>Name</th>
-                  <th>Department</th>
-                  <th>Phone Number</th>
-                  <th>Address</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Louis Harahap</td>
-                  <td>Reception</td>
-                  <td>0811153955387</td>
-                  <td>Jalan Tambunan, Medan</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td colspan="6" class="text-center">No more data available</td>
-                </tr>
-              </tbody>
-            </table>
+        <table class="table table-bordered">
+          <thead class="table-primary">
+            <tr>
+              <th>ID Staff</th>
+              <th>Name</th>
+              <th>Department</th>
+              <th>Phone Number</th>
+              <th>Address</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="6" class="text-center">No more data available</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-  </div>
+    </div>
+  </div>  
 
   <div class="container border border-black row" id="staffForm">
     <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add Staff</header>
@@ -92,7 +84,7 @@
     </div>
     <div class="col-md-6 d-flex align-items-center">
       <label for="staffNumber" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Phone Number</label>
-      <input type="number" id="staffNumber" class="form-control flex-grow-1" value=""><br>
+      <input type="text" id="staffNumber" class="form-control flex-grow-1" value=""><br>
     </div>
     <div class="col-md-6 d-flex align-items-center">
       <label for="staffAddress" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Address</label>
@@ -100,6 +92,7 @@
     </div>
     <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingStaff">Save</button>
   </div>
+
     <script src="staff.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

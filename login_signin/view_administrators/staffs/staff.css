@@ -132,29 +132,47 @@ h1 {
 }
 
 /* Table*/
-      
+
+/* Make the table body scrollable */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table thead, table tbody {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+table tbody {
+  display: table;
+  max-height: 200px; /* Set this based on the desired height */
+  overflow-y: scroll;
+  padding-right: 17px; /* Add some padding for scrollbar */
+}
+
+table th, table td {
+  padding: 10px;
+  text-align: center;
+  width: 75%;
+}
+
 .table-bordered th,
 .table-bordered td {
-    border: 1px solid #000000;
+  border: 1px solid #000000;
 }
-  
+
 /* Ubah warna header tabel */
 .table-primary th {
-    background-color: #2C5099;
-    color: #ffffff;
-    text-align: center;
-}
-
-table th {
-    text-align: center;
-}
-
-table td {
-    text-align: center;
+  background-color: #2C5099;
+  color: #ffffff;
+  text-align: center;
 }
 
 #staffForm{
     max-width: 50%;
+    margin-left: 120px;
 }
 
 #addingStaff{
