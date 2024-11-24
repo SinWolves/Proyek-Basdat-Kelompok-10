@@ -109,13 +109,129 @@ body, html {
 .nav-links {
     list-style: none;
     padding: 0;
-  }
-  
-  .nav-links a {
+}
+
+.nav-links a {
     color: white; 
     text-decoration: none; 
+}
+  
+.nav-links li {
+    margin: 5px 0; /* Jarak antar item */
+}
+
+.container {
+    margin-top: 20px;
   }
   
-  .nav-links li {
-    margin: 5px 0; /* Jarak antar item */
+  h1 {
+    font-family: 'Orelega One', cursive;
+    font-size: 36px;
+    color: #0d335d;
   }
+  
+  /* Table Styling */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  table thead, table tbody {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  table tbody {
+    display: table;
+    max-height: 200px; /* Adjust this height as needed */
+    overflow-y: scroll;
+    padding-right: 17px; /* Padding to account for scrollbar */
+  }
+  
+  table th, table td {
+    padding: 10px;
+    text-align: center;
+    width: 75%;
+  }
+  
+  .table-bordered th,
+  .table-bordered td {
+    border: 1px solid #000000;
+  }
+  
+  .table-primary th {
+    background-color: #2C5099;
+    color: #ffffff;
+    text-align: center;
+  }
+  
+  /* Form Styling */
+  #roomForm {
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  #addingRooms {
+    max-width: 15%;
+    color: #fcfcff;
+    background-color: #15274B;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Flex Layout Adjustment for Columns */
+  .col-md-6 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .card {
+    max-width: 500px;
+    margin: 0 auto;
+    border-radius: 10px;
+  }
+  
+  /* Align the availability section left like in word processors */
+  .card .availability-section {
+    text-align: left;
+  }
+  
+  .availability-input {
+    width: 60px;
+    height: 38px;
+    font-size: 16px;
+  }
+  
+  span {
+    color: white;
+  }
+  
+  /* Mobile Responsiveness */
+  @media (max-width: 768px) {
+    /* Stack elements vertically on smaller screens */
+    .col-md-6 {
+      width: 100%;
+      margin-bottom: 20px; /* Add space between stacked elements */
+    }
+  
+    /* Ensure that the room form takes full width */
+    #roomForm {
+      width: 100%;
+    }
+  
+    /* Adjust the table height for mobile screens */
+    .table {
+      max-height: 150px;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    /* Ensure the table and form are aligned side by side */
+    .col-md-6 {
+      width: 50%; /* Each takes up half of the container width */
+      margin-bottom: 0; /* Remove margin between the two columns */
+    }
+  }
+  
