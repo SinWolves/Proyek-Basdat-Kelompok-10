@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Reservation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #ffff;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+        }
+        .reservation-form {
+            background: #fff;
+            color: #333;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            margin: auto;
+        }
+        .reservation-form h1 {
+            color: #6a11cb;
+            margin-bottom: 20px;
+        }
+        .btn-primary {
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            border: none;
+            transition: background 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #2575fc, #6a11cb);
+        }
+        .form-control:focus {
+            box-shadow: 0 0 5px rgba(102, 51, 204, 0.5);
+            border-color: #6a11cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="reservation-form">
+        <h1>Hotel Reservation</h1>
+        <form id="reservationForm">
+            <div class="mb-3">
+                <label for="guestName" class="form-label">Guest Name</label>
+                <input type="text" class="form-control" id="guestName" placeholder="Enter your name" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+            </div>
+            <div class="mb-3">
+                <label for="checkInDate" class="form-label">Check-in Date</label>
+                <input type="date" class="form-control" id="checkInDate" required>
+            </div>
+            <div class="mb-3">
+                <label for="checkOutDate" class="form-label">Check-out Date</label>
+                <input type="date" class="form-control" id="checkOutDate" required>
+            </div>
+            <div class="mb-3">
+                <label for="roomType" class="form-label">Room Type</label>
+                <select class="form-select" id="roomType" required>
+                    <option value="" selected>Select Room Type</option>
+                    <option value="Single">Single</option>
+                    <option value="Double">Double</option>
+                    <option value="Suite">Suite</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="guests" class="form-label">Number of Guests</label>
+                <input type="number" class="form-control" id="guests" placeholder="Enter number of guests" min="1" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Reserve Now</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
