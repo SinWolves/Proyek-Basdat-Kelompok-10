@@ -88,7 +88,7 @@ const roomsContainer = document.getElementById("roomsContainer");
     const nights = calculateNights(checkIn, checkOut);
 
     if (nights <= 0) {
-      document.getElementById("servicePrice").value = "Invalid Dates";
+      document.getElementById("TotalPrice").value = "Invalid Dates";
       return;
     }
 
@@ -105,7 +105,7 @@ const roomsContainer = document.getElementById("roomsContainer");
     });
 
     // total harga ke input Total Price
-    document.getElementById("servicePrice").value = `IDR ${totalPrice.toLocaleString("id-ID")}`;
+    document.getElementById("TotalPrice").value = `IDR ${totalPrice.toLocaleString("id-ID")}`;
   }
 
   //  perhitungan otomatis
