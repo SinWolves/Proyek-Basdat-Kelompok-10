@@ -169,3 +169,11 @@ table th, table td {
   color: #ffffff;
   text-align: center;
 }
+
+#addingService{
+    max-width: 15%;
+    color: #fcfcff;
+    background-color: #15274B;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}

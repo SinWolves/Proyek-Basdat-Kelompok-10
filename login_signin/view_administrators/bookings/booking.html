@@ -9,6 +9,17 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orelega+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Luxurious+Roman&display=swap" rel="stylesheet">
+    <style>
+      .form-control {
+       border: 1px solid #0d335d;
+       margin-bottom: 10px;
+     }
+
+     .section-title {
+       font-size: 18px;
+       color: #000000;
+     }
+   </style>
 </head>
 <body>
      <!-- Navbar -->
@@ -46,10 +57,9 @@
 
   <div class="container">
     <h1 class="mb-4">Booking Management</h1>
-  </div>
-
-  <div class="container">
+    
     <div class="row">
+      <!-- Tabel -->
       <div class="col-md-6">
         <table class="table table-bordered">
           <thead class="table-primary">
@@ -71,8 +81,72 @@
           </tbody>
         </table>
       </div>
+  
+      <!-- Form Add New Booking -->
+      <div class="col-md-6">
+        <div class="border border-black p-3" id="serviceForm">
+          <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add New Booking</header>
+          <!-- ID Customer -->
+          <div class="d-flex align-items-center mb-3">
+            <label for="serviceName" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">ID Customer</label>
+            <input type="text" id="serviceName" class="form-control flex-grow-1" value="">
+          </div>
+          <!-- Check-In -->
+          <div class="d-flex align-items-center mb-3">
+            <label for="checkInDate" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Check-In</label>
+            <input type="date" id="checkInDate" class="form-control flex-grow-1">
+          </div>
+          <!-- Check-Out -->
+          <div class="d-flex align-items-center mb-3">
+            <label for="checkOutDate" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Check-Out</label>
+            <input type="date" id="checkOutDate" class="form-control flex-grow-1">
+          </div>
+
+          <!-- Rooms -->
+          <div class="d-flex flex-column mb-3" id="roomsContainer">
+            <label class="section-title mb-2" style="font-size: 18px;">Rooms</label>
+
+            <!-- Template untuk memilih tipe kamar dan jumlah kamar -->
+            <div class="d-flex align-items-center mb-2 room-entry">
+              <!-- Pemilihan Tipe Kamar -->
+              <div class="d-flex flex-column flex-grow-1 me-2">
+                <label class="section-title" for="roomType">Room Type</label>
+                <select class="form-select" id="roomType" name="roomType">
+                  <option value="" disabled selected>Select Room Type</option>
+                  <option value="executive">Executive Suite</option>
+                  <option value="luxury">Luxury Suite</option>
+                  <option value="presidential">Presidential Suite</option>
+                </select>
+              </div>
+
+              <!-- Input Jumlah Kamar -->
+              <div class="d-flex flex-column flex-grow-1">
+                <label class="section-title" for="roomQuantity">Quantity</label>
+                <input type="number" id="roomQuantity" class="form-control" name="roomQuantity" placeholder="Enter Quantity" min="1">
+              </div>
+            </div>
+          </div>
+
+          <!-- Tombol untuk Menambah Kamar -->
+          <div class="text-start mb-3">
+            <button type="button" class="btn btn-secondary btn-sm" id="addRoomButton">Add Another Room</button>
+          </div>
+
+          <!-- Total Price -->
+          <div class="d-flex align-items-center mb-3">
+            <label for="servicePrice" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Total Price</label>
+            <input type="text" id="servicePrice" class="form-control flex-grow-1" value="" readonly>
+          </div>
+          <!-- Submit Button -->
+          <div class="text-end">
+            <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingService">Save</button>
+          </div>
+        </div>
+      </div>
     </div>
-  </div> 
+  </div>
+
+
 
     <script src="booking.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
