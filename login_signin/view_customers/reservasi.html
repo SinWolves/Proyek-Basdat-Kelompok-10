@@ -3,78 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel Reservation</title>
+    <title>Reservasi Hotel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background: #ffff;
-            color: #fff;
+            background-color: #f8f9fa;
             font-family: 'Arial', sans-serif;
+        }
+
+        .navbar {
+            background-color: #001f54;
+            color: white;
+        }
+
+        .navbar a {
+            color: white;
+            margin-right: 15px;
+        }
+
+        .reservation-header {
+            margin-top: 30px;
+            text-align: left;
+            padding: 0 20px;
+            font-size: 2rem;
+            color: #001f54;
+        }
+
+        .reservation-form {
             padding: 20px;
         }
-        .reservation-form {
-            background: #fff;
-            color: #333;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            max-width: 500px;
-            margin: auto;
-        }
-        .reservation-form h1 {
-            color: #6a11cb;
-            margin-bottom: 20px;
-        }
-        .btn-primary {
-            background: linear-gradient(45deg, #6a11cb, #2575fc);
+
+        .card {
             border: none;
-            transition: background 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
         }
+
+        .card-header {
+            background-color: #001f54;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background-color: #001f54;
+            border: none;
+        }
+
         .btn-primary:hover {
-            background: linear-gradient(45deg, #2575fc, #6a11cb);
+            background-color: #003080;
         }
-        .form-control:focus {
-            box-shadow: 0 0 5px rgba(102, 51, 204, 0.5);
-            border-color: #6a11cb;
+
+        .text-highlight {
+            color: #001f54;
+            font-weight: bold;
+        }
+
+        .increment-buttons input {
+            width: 60px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <div class="reservation-form">
-        <h1>Hotel Reservation</h1>
-        <form id="reservationForm">
-            <div class="mb-3">
-                <label for="guestName" class="form-label">Guest Name</label>
-                <input type="text" class="form-control" id="guestName" placeholder="Enter your name" required>
+    <nav class="navbar navbar-expand-lg navbar-dark px-4">
+        <a class="navbar-brand" href="#">Moonlit Hotel</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Rooms & Suites</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Facilities</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Additional Services</a></li>
+                <li class="nav-item"><a class="nav-link" href="reservasi.html">Booking</a></li>
+            </ul>
+        </div>
+        <div>
+            <span>Luthfiah Amanda Putri</span>
+        </div>
+    </nav>
+
+    <div class="reservation-header">Reservation</div>
+
+    <div class="reservation-form container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="checkIn" class="form-label">Check-In</label>
+                    <input type="date" class="form-control" id="checkIn">
+                </div>
+                <div class="mb-3">
+                    <label for="checkOut" class="form-label">Check-Out</label>
+                    <input type="date" class="form-control" id="checkOut">
+                </div>
+                <div class="card">
+                    <div class="card-header">Rooms & Suites</div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span>Executive Suite</span>
+                            <div class="increment-buttons">
+                                <button class="btn btn-sm btn-light">-</button>
+                                <input type="text" value="0" readonly>
+                                <button class="btn btn-sm btn-light">+</button>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span>Luxury Suite</span>
+                            <div class="increment-buttons">
+                                <button class="btn btn-sm btn-light">-</button>
+                                <input type="text" value="0" readonly>
+                                <button class="btn btn-sm btn-light">+</button>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Presidential Suite</span>
+                            <div class="increment-buttons">
+                                <button class="btn btn-sm btn-light">-</button>
+                                <input type="text" value="0" readonly>
+                                <button class="btn btn-sm btn-light">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email Address</label>
-                <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">Total</div>
+                    <div class="card-body">
+                        <span class="text-highlight">IDR 0</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">Payment Method</div>
+                    <div class="card-body">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="cash" value="cash">
+                            <label class="form-check-label" for="cash">Cash Payment</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard" value="creditCard">
+                            <label class="form-check-label" for="creditCard">Credit Card</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer" value="bankTransfer">
+                            <label class="form-check-label" for="bankTransfer">Bank Transfer</label>
+                        </div>
+                        <button class="btn btn-primary w-100 mt-3">Book Now</button>
+                    </div>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="checkInDate" class="form-label">Check-in Date</label>
-                <input type="date" class="form-control" id="checkInDate" required>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">Additional Services</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Personalized In-Room Dining</span>
+                            <div class="increment-buttons">
+                                <button class="btn btn-sm btn-light">-</button>
+                                <input type="text" value="0" readonly>
+                                <button class="btn btn-sm btn-light">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>24/7 In-Room Spa Services</span>
+                            <div class="increment-buttons">
+                                <button class="btn btn-sm btn-light">-</button>
+                                <input type="text" value="0" readonly>
+                                <button class="btn btn-sm btn-light">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Personal Fitness Trainer & Wellness Coach</span>
+                            <div class="increment-buttons">
+                                <button class="btn btn-sm btn-light">-</button>
+                                <input type="text" value="0" readonly>
+                                <button class="btn btn-sm btn-light">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Exclusive Kids Club with Personalized Activities</span>
+                            <div class="increment-buttons">
+                                <button class="btn btn-sm btn-light">-</button>
+                                <input type="text" value="0" readonly>
+                                <button class="btn btn-sm btn-light">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="checkOutDate" class="form-label">Check-out Date</label>
-                <input type="date" class="form-control" id="checkOutDate" required>
-            </div>
-            <div class="mb-3">
-                <label for="roomType" class="form-label">Room Type</label>
-                <select class="form-select" id="roomType" required>
-                    <option value="" selected>Select Room Type</option>
-                    <option value="Single">Single</option>
-                    <option value="Double">Double</option>
-                    <option value="Suite">Suite</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="guests" class="form-label">Number of Guests</label>
-                <input type="number" class="form-control" id="guests" placeholder="Enter number of guests" min="1" required>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Reserve Now</button>
-        </form>
+        </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
