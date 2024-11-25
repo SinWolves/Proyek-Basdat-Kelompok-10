@@ -5,21 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reservasi Hotel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orelega+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Luxurious+Roman&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
         body {
             background-color: #f8f9fa;
             font-family: 'Arial', sans-serif;
         }
 
-        .navbar {
-            background-color: #001f54;
-            color: white;
-        }
-
-        .navbar a {
-            color: white;
-            margin-right: 15px;
-        }
 
         .reservation-header {
             margin-top: 30px;
@@ -67,19 +63,27 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark px-4">
-        <a class="navbar-brand" href="#">Moonlit Hotel</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Rooms & Suites</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Facilities</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Additional Services</a></li>
-                <li class="nav-item"><a class="nav-link" href="reservasi.html">Booking</a></li>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+        <a class="navbar-brand" href="index.html">MOONLIT HOTEL</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="/index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="#rooms">Rooms & Suites</a></li>
+            <li class="nav-item"><a class="nav-link" href="#facilities">Facilities</a></li>
+            <li class="nav-item"><a class="nav-link" href="#additionalservices">Additional Services</a></li>
+            <li class="nav-item"><a class="nav-link" href="/login_signin/view_customers/reservasi.html">Booking</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contactus">Contact Us</a></li>
             </ul>
+            <div class="d-flex ms-3">
+            <button class="btn btn-outline-light me-2"  onclick="window.location.href='login_signin/login.html';">Login</button>
+            <button class="btn btn-primary" style="background-color: black;" onclick="window.location.href='login_signin/signup.html';">Sign up</button>
+            </div>
         </div>
-        <div>
-            <span>Luthfiah Amanda Putri</span>
         </div>
     </nav>
 
