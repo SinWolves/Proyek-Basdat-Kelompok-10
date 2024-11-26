@@ -29,10 +29,11 @@ document.getElementById("addingPayment").addEventListener("click", function(even
 
   // Get values from the input fields
   const paymentName = document.getElementById("paymentName").value;
-  const paymentDescription = document.getElementById("paymentDescription").value;
+  const paymentStatus = document.getElementById("paymentStatus").value;
+  const paymentDate = document.getElementById("paymentDate").value;
 
   // Validate inputs
-  if (paymentName && paymentDescription) {
+  if (paymentName && paymentStatus && paymentDate) {
     // Get the table body where new rows will be added
     const tableBody = document.querySelector("table tbody");
 
@@ -41,11 +42,13 @@ document.getElementById("addingPayment").addEventListener("click", function(even
       // Update the cells in the existing row
       const cells = editingRow.querySelectorAll("td");
       cells[1].textContent = paymentName;
-      cells[2].textContent = paymentDescription;
+      cells[2].textContent = paymentStatus;
+      cells[3].textContent = paymentDate;
 
       // Reset the form and button
       document.getElementById("paymentName").value = "";
-      document.getElementById("paymentDescription").value = "";
+      document.getElementById("paymentStatus").value = "";
+      document.getElementById("paymentDate").value = "";
       document.getElementById("addingPayment").textContent = "Save";
 
       // Clear the reference to the row being edited
@@ -63,9 +66,13 @@ document.getElementById("addingPayment").addEventListener("click", function(even
       nameCell.textContent = paymentName;
       newRow.appendChild(nameCell);
 
-      const descriptionCell = document.createElement("td");
-      descriptionCell.textContent = paymentDescription;
-      newRow.appendChild(descriptionCell);
+      const statusCell = document.createElement("td");
+      statusCell.textContent = paymentStatus;
+      newRow.appendChild(statusCell);
+
+      const dateCell = document.createElement("td");
+      dateCell.textContent = paymentDate;
+      newRow.appendChild(dateCell);
 
       // Add action cell (Edit and Delete buttons)
       const actionCell = document.createElement("td");
@@ -83,7 +90,8 @@ document.getElementById("addingPayment").addEventListener("click", function(even
 
       // Clear the form fields after adding the data
       document.getElementById("paymentName").value = "";
-      document.getElementById("paymentDescription").value = "";
+      document.getElementById("paymentStatus").value = "";
+      document.getElementById("paymentDate").value = "";
     }
   } else {
     alert("Please fill all fields.");
@@ -107,7 +115,8 @@ document.getElementById("addingPayment").addEventListener("click", function(even
 
       // Fill the form fields with the current row data
       document.getElementById("paymentName").value = cells[1].textContent;
-      document.getElementById("paymentDescription").value = cells[2].textContent;
+      document.getElementById("paymentStatus").value = cells[2].textContent;
+      document.getElementById("paymentDate").value = cells[3].textContent;
 
       // Set the editing row reference
       editingRow = row;
