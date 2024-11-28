@@ -1,23 +1,5 @@
 <?php
-
   include '../../conn_local.php';
-
-  
-  
-  if($_SERVER['REQUEST_METHOD']==='POST'){
-    
-    $nama = $_POST['nama'];
-    $departemen = $_POST['departemen'];
-    $telepon = (int)  $_POST['telepon'];
-    $alamat = $_POST['alamat'];
-    
-    $stmt = $conn->prepare("INSERT INTO manajer (nama, departemen, telepon, alamat) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssss", $nama, $departemen, $telepon, $alamat);
-
-    $stmt->execute();
-
-    $stmt->close();
-  }
   $query = "SELECT * FROM manajer";
   $result = mysqli_query($conn, $query);
 ?>
@@ -111,7 +93,7 @@
     </div>
   </div>  
 
-  <form action="manager.php" method="POST">
+  <form action="insert.php" method="POST">
   <div class="container border border-black row" id="managerForm">
     <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add Manager</header>
     <div class="col-md-6 d-flex align-items-center">
