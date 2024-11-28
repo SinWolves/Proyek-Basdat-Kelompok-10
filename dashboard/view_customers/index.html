@@ -8,6 +8,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Orelega+One&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Luxurious+Roman&display=swap" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
         <link rel="stylesheet" href="styles.css">
         <style>
         .modal-footer .btn {
@@ -35,12 +36,12 @@
                 <li class="nav-item"><a class="nav-link" href="#rooms">Rooms & Suites</a></li>
                 <li class="nav-item"><a class="nav-link" href="#facilities">Facilities</a></li>
                 <li class="nav-item"><a class="nav-link" href="#additionalservices">Additional Services</a></li>
-                <li class="nav-item"><a class="nav-link" href="/dashboard/view_customers/reservasi.html">Booking</a></li>
+                <li class="nav-item"><a class="nav-link" href="reservasi.html">Booking</a></li>
                 <li class="nav-item"><a class="nav-link" href="#contactus">Contact Us</a></li>
                 </ul>
                 <div class="d-flex ms-3">
-                    <a href="/dashboard/view_customers/login.html" class="btn btn-outline-light me-2">Login</a>
-                    <a href="/dashboard/view_customers/signup.html" class="btn btn-primary" style="background-color: rgb(182, 182, 182);">Sign up</a>
+                    <a href="login.html" class="btn btn-outline-light me-2">Login</a>
+                    <a href="signup.html" class="btn btn-primary" style="background-color: rgb(182, 182, 182);">Sign up</a>
                 </div>
                 
             </div>
@@ -307,6 +308,61 @@
 
         <!--section additional services-->
         <section id="additionalservices">
+            <header class="title">
+                <h1 style="color: #2c5099; font-family: 'Orelega One', cursive; margin-top: 100px; margin-bottom: 20px; letter-spacing: 5px;"> ADDITIONAL SERVICES </h1>
+            </header>
+            <div class="container">
+            <div class="row" style="margin-top: 40px;">
+                <div class="col-md-6">
+                 <div class="service-card" style="background-color: #757A92; color: #F5F0DD; text-align: center; padding: 20px; margin-bottom: 20px; height: 250px;">
+                  <img alt="A table set for in-room dining with a waiter in the background" src="/dashboard/view_customers/img/personalized in roon dining.png" style="width: 100%; height: 150px; object-fit: cover;"/>
+                  <p style="font-family:'Orelega One'; font-size: larger;">Personalized In-Room Dining</p>
+                 </div>
+                </div>
+                <div class="col-md-6">
+                 <div class="service-card" style="background-color: #757A92; color: #F5F0DD; text-align: center; padding: 20px; margin-bottom: 20px; height: 250px;">
+                  <img alt="A personal fitness trainer assisting a person in a gym" src="/dashboard/view_customers/img/personal fitness training.png" style="width: 100%; height: 150px; object-fit: cover;"/>
+                  <p style="font-family:'Orelega One'; font-size: larger;">Personal Fitness Trainer &amp; Wellness Coach</p>
+                 </div>
+                </div>
+                <div class="col-md-6">
+                 <div class="service-card" style="background-color: #757A92; color: #F5F0DD; text-align: center; padding: 20px; margin-bottom: 20px; height: 250px;">
+                  <img alt="A person receiving a spa treatment in a luxurious room" src="/dashboard/view_customers/img/247 spa services.png" style="width: 100%; height: 150px; object-fit: cover;"/>
+                  <p style="font-family:'Orelega One'; font-size: larger;">24/7 In-Room Spa Services</p>
+                 </div>
+                </div>
+                <div class="col-md-6">
+                 <div class="service-card" style="background-color: #757A92; color: #F5F0DD; text-align: center; padding: 20px; margin-bottom: 20px; height: 250px;">
+                  <img alt="Children participating in activities at a kids club" src="/dashboard/view_customers/img/kids club.png" style="width: 100%; height: 150px; object-fit: cover;"/>
+                  <p style="font-family:'Orelega One'; font-size: larger;">Exclusive Kids Club with Personalized Activities</p>
+                 </div>
+                </div>
+               </div>
+               <hr style="border: 2px solid #15274B; margin-top: 20px;"/>
+               <div class="row contact-info" style="margin-top: 20px;">
+                <div class="col-md-4">
+                 <p style="font-family: 'Orelega One', cursive; color: #15274B;"><strong>CONTACT US</strong></p>
+                 <p class="details" style="margin: 0; font-size: 14px; color: #15274B; font-family: 'Plus Jakarta Sans', sans-serif;">Jl. Iskandarsyah Raya No. 65 Jakarta 12160 </p>
+                 <p class="details" style="margin: 0; font-size: 14px; color: #15274B; font-family: 'Plus Jakarta Sans', sans-serif;">Fax: 62-21 29126277</p>
+                 <p class="details" style="margin: 0; font-size: 14px; color: #15274B; font-family: 'Plus Jakarta Sans', sans-serif;">Email: MoonlitHotel@gmail.com</p>
+                </div>
+                <div class="col-md-2 social-media" style="margin-top: 20px;">
+                 <p style="font-family: 'Orelega One', cursive; color: #15274B;"><strong>SOCIAL MEDIA</strong></p>
+                 <a href=""><i class="fab fa-instagram" style="font-size: 24px; color: #007bff; margin-right: 10px;"> </i></a>
+                 <a href=""><i class="fab fa-facebook" style="font-size: 24px; color: #007bff; margin-right: 10px;"></i></a>
+                </div>
+                <div class="col-md-6 review" style="margin-top: 20px;">
+                 <p style="font-family: 'Orelega One', cursive; color: #2C5099; letter-spacing: 2px;"><strong>Review</strong></p>
+                 <textarea placeholder="Share your experience" style="width: 100%; height: 100px; margin-bottom: 10px;"></textarea>
+                 <button class="btn" style="float: right; width: 100px; height: 40px; border-radius: 0; font-family: 'Plus Jakarta Sans', sans-serif; background-color: #15274B; color: white;">Send</button>
+                </div>
+               </div>
+               <hr style="border: 1px solid #2c3e50; margin-top: 20px;"/>
+               <div class="footer" style="text-align: center; margin-top: 20px; font-size: 12px; color: #2c3e50;">
+                <p>© Copyright 2024. All Rights Reserved by Moonlit Hotel</p>
+               </div>
+              </div>
+            </div>
         </section>
 
         <!--contact us-->
