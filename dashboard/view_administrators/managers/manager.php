@@ -1,3 +1,9 @@
+<?php
+  include '../../conn_local.php';
+  $query = "SELECT * FROM manajer";
+  $result = mysqli_query($conn, $query);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -40,7 +46,7 @@
       <li><a href="../additionals/additionalservices.html">Additional Services Management</a></li>
       <li><a href="../staffs/staff.html">Staff Management</a></li>
       <li><a href="../salarys/staffsalary.html">Staff Salary Management</a></li>
-      <li><a href="manager.html">Manager Management</a></li>
+      <li><a href="manager.php">Manager Management</a></li>
     </ul>
   </div>
 
@@ -63,35 +69,52 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td colspan="6" class="text-center">No more data available</td>
-            </tr>
+            <?php if(mysqli_num_rows($result) > 0): ?>
+                  <?php while($row = mysqli_fetch_assoc($result)) : ?>
+                      <tr>
+                          <td><?php echo htmlspecialchars($row['id']); ?></td>
+                          <td><?php echo htmlspecialchars($row['nama']); ?></td>
+                          <td><?php echo htmlspecialchars($row['departemen']); ?></td>
+                          <td><?php echo htmlspecialchars($row['telepon']); ?></td>
+                          <td><?php echo htmlspecialchars($row['alamat']); ?></td>
+                          <td>
+                              <button class="btn btn-danger btn-sm">Delete</button>
+                          </td>
+                      </tr>
+                  <?php endwhile; ?>
+              <?php else: ?>
+                <tr>
+                    <td colspan="6" class="text-center">No data available</td>
+                </tr>
+              <?php endif; ?>
           </tbody>
         </table>
       </div>
     </div>
   </div>  
 
+  <form action="insert.php" method="POST">
   <div class="container border border-black row" id="managerForm">
     <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add Manager</header>
     <div class="col-md-6 d-flex align-items-center">
       <label for="managerName" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Name</label>
-      <input type="text" id="managerName" class="form-control flex-grow-1" value=""><br>
+      <input name="nama" type="text" id="managerName" class="form-control flex-grow-1" value=""><br>
     </div>
     <div class="col-md-6 d-flex align-items-center">
       <label for="departmentName" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Department</label>
-      <input type="text" id="departmentName" class="form-control flex-grow-1" value=""><br>
+      <input name="departemen" type="text" id="departmentName" class="form-control flex-grow-1" value=""><br>
     </div>
     <div class="col-md-6 d-flex align-items-center">
       <label for="managerNumber" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Phone Number</label>
-      <input type="text" id="managerNumber" class="form-control flex-grow-1" value=""><br>
+      <input name="telepon" type="text" id="managerNumber" class="form-control flex-grow-1" value=""><br>
     </div>
     <div class="col-md-6 d-flex align-items-center">
       <label for="managerAddress" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Address</label>
-      <input type="text" id="managerAddress" class="form-control flex-grow-1" value=""><br>
+      <input name="alamat" type="text" id="managerAddress" class="form-control flex-grow-1" value=""><br>
     </div>
     <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingManager">Save</button>
   </div>
+  </form>
 
     <script src="manager.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

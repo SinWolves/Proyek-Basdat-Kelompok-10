@@ -1,5 +1,10 @@
 <?php
-  require_once '../../conn.php';
+  require_once '../conn_local.php';
+
+  // Query untuk mengambil data dari database
+$query = "SELECT * FROM manajer";
+$result = mysqli_query($conn, $query);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -74,7 +79,7 @@
       <li><a href="additionals/additionalservices.html">Additional Services Management</a></li>
       <li><a href="staffs/staff.html">Staff Management</a></li>
       <li><a href="salarys/staffsalary.html">Staff Salary Management</a></li>
-      <li><a href="managers/manager.html">Manager Management</a></li>
+      <li><a href="managers/manager.php">Manager Management</a></li>
     </ul>
   </div>
 
