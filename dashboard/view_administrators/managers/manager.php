@@ -1,27 +1,25 @@
 <?php
-  require_once '../../conn.php';
 
+  include '../../conn_local.php';
+
+  
+  
   if($_SERVER['REQUEST_METHOD']==='POST'){
+    
     $nama = $_POST['nama'];
-    $departemen =$_POST['departemen'];
-    $telepon = $_POST['telepon'];
+    $departemen = $_POST['departemen'];
+    $telepon = (int)  $_POST['telepon'];
     $alamat = $_POST['alamat'];
     
-    $sql = "INSERT INTO manajer (nama, departemen, telepon, alamat) 
-            VALUES (:nama, :departemen, :telepon, :alamat)";
-
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':nama', $nama);
-    $stmt->bindParam(':departemen', $departemen);
-    $stmt->bindParam(':telepon', $telepon);
-    $stmt->bindParam(':alamat', $alamat);
+    $stmt = $conn->prepare("INSERT INTO manajer (nama, departemen, telepon, alamat) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $nama, $departemen, $telepon, $alamat);
 
     $stmt->execute();
-  }
 
-  $check_data = [];
-    $show_query = $pdo->query("SELECT * FROM manajer ORDER BY id");
-    $check_data = $show_query->fetchAll(PDO::FETCH_ASSOC);
+    $stmt->close();
+  }
+  $query = "SELECT * FROM manajer";
+  $result = mysqli_query($conn, $query);
 ?>
 
 <!DOCTYPE html>
@@ -89,19 +87,19 @@
             </tr>
           </thead>
           <tbody>
-            <?php if (!empty($check_data)): ?>
-                  <?php foreach ($check_data as $data): ?>
+            <?php if(mysqli_num_rows($result) > 0): ?>
+                  <?php while($row = mysqli_fetch_assoc($result)) : ?>
                       <tr>
-                          <td><?php echo htmlspecialchars($data['id']); ?></td>
-                          <td><?php echo htmlspecialchars($data['nama']); ?></td>
-                          <td><?php echo htmlspecialchars($data['departemen']); ?></td>
-                          <td><?php echo htmlspecialchars($data['telepon']); ?></td>
-                          <td><?php echo htmlspecialchars($data['alamat']); ?></td>
+                          <td><?php echo htmlspecialchars($row['id']); ?></td>
+                          <td><?php echo htmlspecialchars($row['nama']); ?></td>
+                          <td><?php echo htmlspecialchars($row['departemen']); ?></td>
+                          <td><?php echo htmlspecialchars($row['telepon']); ?></td>
+                          <td><?php echo htmlspecialchars($row['alamat']); ?></td>
                           <td>
                               <button class="btn btn-danger btn-sm">Delete</button>
                           </td>
                       </tr>
-                  <?php endforeach; ?>
+                  <?php endwhile; ?>
               <?php else: ?>
                 <tr>
                     <td colspan="6" class="text-center">No data available</td>
@@ -113,7 +111,7 @@
     </div>
   </div>  
 
-  <form action="" method="POST">
+  <form action="manager.php" method="POST">
   <div class="container border border-black row" id="managerForm">
     <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add Manager</header>
     <div class="col-md-6 d-flex align-items-center">

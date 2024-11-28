@@ -1,70 +1,48 @@
 <?php
-    require_once '../conn.php';
+    include '../conn_local.php';
 
-    $tes = $pdo->query("SELECT * FROM tes");
-    $data = $tes->fetchAll(PDO::FETCH_ASSOC);
-
-    echo "<h1>Ini datanya</h1><br>";
-    foreach ($data as $nama){
-        echo "Id : {$nama['id']} - nama : {$nama['nama']}<br>";
-    }
-
+    // Query untuk mengambil data dari database
+$query = "SELECT * FROM tes";
+$result = mysqli_query($conn, $query);
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Mahasiswa Lab 3</title>
 </head>
 <body>
-<h1>Data from Supabase</h1>
+  <h2>Data Mahasiswa Lab Pemrograman WEB 3</h2>
 
-<!-- Create a container to display data -->
-<div id="data-container"></div>
+  <table style="border: 1px solid #000000;">
+    <tr>
+      <th>NIM</th>
+      <th>Nama</th>
+      <th>Email</th>
+      <th>Alamat</th>
+      <th>Telepon</th>
+    </tr>
 
+    <?php 
+    if(mysqli_num_rows($result) > 0) {
+      while($row = mysqli_fetch_assoc($result)) {
+        echo "<tr>";
+        echo "<td>" . $row["a"] . "</td>";
+        echo "<td>" . $row["b"] . "</td>";
+        echo "<td>" . $row["c"] . "</td>";
+        echo "<td>" . $row["d"] . "</td>";
+        echo "</tr>";
+      } 
+    } else {
+      echo "<tr><td> Tidak ada data yang tampil<td></tr>";
+    }
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-            // Make sure that the script is loaded before using the `createClient`
-            const supabase = supabase.createClient(
-                'https://uvybzqrpehswewlmhkex.supabase.co',
-                'your-api-key-here'
-            );
+    mysqli_close($conn);
+    ?>
 
-            // Function to fetch data from Supabase
-            async function fetchData() {
-                console.log('Fetching data from Supabase...');
-
-                const { data, error } = await supabase.from('tes').select('*');
-
-                // Check for errors
-                if (error) {
-                    console.error('Error fetching data:', error);
-                    document.getElementById('data-container').innerHTML = 'Error fetching data';
-                    return;
-                }
-
-                // Display the data in the HTML
-                const container = document.getElementById('data-container');
-                if (data.length === 0) {
-                    container.innerHTML = 'No data found';
-                } else {
-                    let table = '<table border="1"><tr><th>ID</th><th>Name</th><th>Age</th></tr>';
-                    data.forEach(row => {
-                        table += `<tr><td>${row.id}</td><td>${row.name}</td><td>${row.age}</td></tr>`;
-                    });
-                    table += '</table>';
-                    container.innerHTML = table;
-                }
-            }
-
-            // Fetch
-            fetchData();
-        });
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </body>
 </html>

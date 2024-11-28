@@ -1,5 +1,10 @@
 <?php
-  require_once '../conn.php';
+  require_once '../conn_local.php';
+
+  // Query untuk mengambil data dari database
+$query = "SELECT * FROM manajer";
+$result = mysqli_query($conn, $query);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
