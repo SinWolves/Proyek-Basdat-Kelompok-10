@@ -1,9 +1,20 @@
 <?php
-    include '../conn_local.php';
+    include '../conn.php';
 
     // Query untuk mengambil data dari database
-$query = "SELECT * FROM tes";
-$result = mysqli_query($conn, $query);
+    if($_SERVER['REQUEST_METHOD']==='POST'){
+  
+      $nama = $_POST['nama'];
+      
+      $stmt = $pdo->prepare("INSERT INTO tes(nama) VALUES (:nama)");
+      $stmt->bindParam(':nama', $nama);
+    
+      $stmt->execute();
+        echo "Buku Berhasil Ditambahkan";
+      header("Location: " . $_SERVER['PHP_SELF']); 
+      exit();
+    }
+
 
 ?>
 
@@ -20,29 +31,35 @@ $result = mysqli_query($conn, $query);
 
   <table style="border: 1px solid #000000;">
     <tr>
-      <th>NIM</th>
+      <th>id</th>
       <th>Nama</th>
-      <th>Email</th>
-      <th>Alamat</th>
-      <th>Telepon</th>
     </tr>
 
     <?php 
-    if(mysqli_num_rows($result) > 0) {
-      while($row = mysqli_fetch_assoc($result)) {
-        echo "<tr>";
-        echo "<td>" . $row["a"] . "</td>";
-        echo "<td>" . $row["b"] . "</td>";
-        echo "<td>" . $row["c"] . "</td>";
-        echo "<td>" . $row["d"] . "</td>";
-        echo "</tr>";
-      } 
-    } else {
-      echo "<tr><td> Tidak ada data yang tampil<td></tr>";
+    $managers = [];
+    try {
+        $stmt = $pdo->query("SELECT * FROM tes ORDER BY id");
+        $managers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        $message = "Error fetching data: " . $e->getMessage();
     }
-
-    mysqli_close($conn);
     ?>
+    <?php if(!empty($managers)) : ?>
+      <?php foreach($managers as $manager): ?>
+        <tr>
+        <td><?php echo htmlspecialchars($manager['id']); ?></td>
+        <td><?php echo htmlspecialchars($manager['nama']); ?></td>
+    </tr>
+      <?php endforeach; ?>
+      <?php else : ?>
+        <tr><td>no data</td></tr>
+      <?php endif; ?>
+  </table>
 
+  <form action="" method="POST">
+    <label for="nama">input nama:</label>
+    <input type="text" name="nama"> 
+    <button type="submit">submit</button>
+  </form>
 </body>
 </html>
