@@ -1,7 +1,22 @@
 <?php
   include '../../conn_local.php';
-  $query = "SELECT * FROM manajer";
-  $result = mysqli_query($conn, $query);
+
+  if($_SERVER['REQUEST_METHOD']==='POST'){
+  
+    $nama = $_POST['nama'];
+    $departemen = $_POST['departemen'];
+    $telepon = $_POST['telepon'];
+    $alamat = $_POST['alamat'];
+    
+    $stmt = $conn->prepare("INSERT INTO manajer(nama, departemen, telepon, alamat) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $nama, $departemen, $telepon, $alamat);
+  
+    if ($stmt->execute()) {
+      echo "Buku Berhasil Ditambahkan";
+  } else {
+      echo "Error: " . $stmt->error;
+  }
+  }
 ?>
 
 <!DOCTYPE html>
@@ -69,6 +84,10 @@
             </tr>
           </thead>
           <tbody>
+            <?php 
+              $query = "SELECT * FROM manajer";
+              $result = mysqli_query($conn, $query);
+            ?>
             <?php if(mysqli_num_rows($result) > 0): ?>
                   <?php while($row = mysqli_fetch_assoc($result)) : ?>
                       <tr>
@@ -93,30 +112,30 @@
     </div>
   </div>  
 
-  <form action="insert.php" method="POST">
-  <div class="container border border-black row" id="managerForm">
-    <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add Manager</header>
-    <div class="col-md-6 d-flex align-items-center">
-      <label for="managerName" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Name</label>
-      <input name="nama" type="text" id="managerName" class="form-control flex-grow-1" value=""><br>
+  <form action="" method="POST">
+    <div class="container border border-black row" id="managerForm">
+      <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add Manager</header>
+      <div class="col-md-6 d-flex align-items-center">
+        <label for="managerName" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Name</label>
+        <input name="nama" type="text" id="managerName" class="form-control flex-grow-1"><br>
+      </div>
+      <div class="col-md-6 d-flex align-items-center">
+        <label for="departmentName" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Department</label>
+        <input name="departemen" type="text" id="departmentName" class="form-control flex-grow-1"><br>
+      </div>
+      <div class="col-md-6 d-flex align-items-center">
+        <label for="managerNumber" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Phone Number</label>
+        <input name="telepon" type="text" id="managerNumber" class="form-control flex-grow-1"><br>
+      </div>
+      <div class="col-md-6 d-flex align-items-center">
+        <label for="managerAddress" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Address</label>
+        <input name="alamat" type="text" id="managerAddress" class="form-control flex-grow-1"><br>
+      </div>
+      <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingManager">Save</button>
     </div>
-    <div class="col-md-6 d-flex align-items-center">
-      <label for="departmentName" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Department</label>
-      <input name="departemen" type="text" id="departmentName" class="form-control flex-grow-1" value=""><br>
-    </div>
-    <div class="col-md-6 d-flex align-items-center">
-      <label for="managerNumber" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Phone Number</label>
-      <input name="telepon" type="text" id="managerNumber" class="form-control flex-grow-1" value=""><br>
-    </div>
-    <div class="col-md-6 d-flex align-items-center">
-      <label for="managerAddress" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Address</label>
-      <input name="alamat" type="text" id="managerAddress" class="form-control flex-grow-1" value=""><br>
-    </div>
-    <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingManager">Save</button>
-  </div>
   </form>
 
-    <script src="manager.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
