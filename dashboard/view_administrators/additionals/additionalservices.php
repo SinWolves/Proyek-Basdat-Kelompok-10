@@ -5,12 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moonlit</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="staff.css"> 
+    <link rel="stylesheet" href="addition.css"> 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orelega+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Luxurious+Roman&display=swap" rel="stylesheet">
+    <style>
+       .form-control {
+        border: 1px solid #0d335d;
+        margin-bottom: 10px;
+      }
+
+      .section-title {
+        font-size: 18px;
+        color: #000000;
+      }
+    </style>
 </head>
-<body>
+<b>
      <!-- Navbar -->
    <nav class="navbar d-flex justify-content-between">
     <button id="menu-toggle" class="menu-toggle">
@@ -32,39 +43,39 @@
       <h3 class="text-white mb-0 nav-links">Administrator</h3>
     </div>
     <ul class="nav-links">
-      <li><a href="../dashboard.html">Dashboard</a></li>
-      <li><a href="../rooms/room.html">Room Management</a></li>
-      <li><a href="../customers/customer.html">Customer Management</a></li>
-      <li><a href="../bookings/booking.html">Booking Management</a></li>
-      <li><a href="../payments/payment.html">Payment Management</a></li>
-      <li><a href="../additionals/additionalservices.html">Additional Services Management</a></li>
-      <li><a href="staff.html">Staff Management</a></li>
-      <li><a href="../salarys/staffsalary.html">Staff Salary Management</a></li>
-      <li><a href="../managers/manager.html">Manager Management</a></li>
+      <li><a href="../dashboard.php">Dashboard</a></li>
+      <li><a href="../rooms/room.php">Room Management</a></li>
+      <li><a href="../customers/customer.php">Customer Management</a></li>
+      <li><a href="../bookings/booking.php">Booking Management</a></li>
+      <li><a href="../payments/payment.php">Payment Management</a></li>
+      <li><a href="additionalservices.php">Additional Services Management</a></li>
+      <li><a href="../staffs/staff.php">Staff Management</a></li>
+      <li><a href="../salarys/staffsalary.php">Staff Salary Management</a></li>
+      <li><a href="../managers/manager.php">Manager Management</a></li>
     </ul>
   </div>
 
   <div class="container">
-    <h1 class="mb-4">Staff Management</h1>
+    <h1 class="mb-4">Additional Services Management</h1>
   </div>
 
+  <!--table-->
   <div class="container">
     <div class="row">
       <div class="col-md-6">
         <table class="table table-bordered">
           <thead class="table-primary">
             <tr>
-              <th>ID Staff</th>
+              <th>ID Add Service</th>
               <th>Name</th>
-              <th>Department</th>
-              <th>Phone Number</th>
-              <th>Address</th>
+              <th>Description</th>
+              <th>Price</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td colspan="6" class="text-center">No more data available</td>
+              <td colspan="5" class="text-center">No more data available</td>
             </tr>
           </tbody>
         </table>
@@ -72,28 +83,36 @@
     </div>
   </div>  
 
-  <div class="container border border-black row" id="staffForm">
-    <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add Staff</header>
+
+  <div class="container border border-black row" id="serviceForm">
+    <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add New Service</header>
+    <!--service name-->
     <div class="col-md-6 d-flex align-items-center">
-      <label for="staffName" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Name</label>
-      <input type="text" id="staffName" class="form-control flex-grow-1" value=""><br>
+      <label for="serviceName" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Service Name</label>
+      <input type="text" id="serviceName" class="form-control flex-grow-1" value=""><br>
     </div>
+    <!--description-->
     <div class="col-md-6 d-flex align-items-center">
-      <label for="departmentName" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Department</label>
-      <input type="text" id="departmentName" class="form-control flex-grow-1" value=""><br>
+      <label for="serviceDescription" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Description</label>
+      <input type="text" id="serviceDescription" class="form-control flex-grow-1" value=""><br>
     </div>
+    <!--price-->
     <div class="col-md-6 d-flex align-items-center">
-      <label for="staffNumber" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Phone Number</label>
-      <input type="text" id="staffNumber" class="form-control flex-grow-1" value=""><br>
+      <label for="servicePrice" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Price</label>
+      <input type="text" id="servicePrice" class="form-control flex-grow-1" value=""><br>
     </div>
-    <div class="col-md-6 d-flex align-items-center">
-      <label for="staffAddress" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Address</label>
-      <input type="text" id="staffAddress" class="form-control flex-grow-1" value=""><br>
+    <!--submit button-->
+    <div class="col-md-12 text-end">
+    <button type="submit" class="btn btn-primary rounded-3 fw-bold " id="addingService">Save</button>
     </div>
-    <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingStaff">Save</button>
   </div>
 
-    <script src="staff.js"></script>
+
+
+  
+
+    <script src="addition.js"></script>
+    <script src="../../sidebar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>

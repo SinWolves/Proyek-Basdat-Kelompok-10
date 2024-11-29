@@ -71,14 +71,14 @@ $result = mysqli_query($conn, $query);
       <h3 class="text-white mb-0 nav-links">Administrator</h3>
     </div>
     <ul class="nav-links">
-      <li><a href="dashboard.html">Dashboard</a></li>
-      <li><a href="rooms/room.html">Room Management</a></li>
-      <li><a href="customers/customer.html">Customer Management</a></li>
-      <li><a href="bookings/booking.html">Booking Management</a></li>
-      <li><a href="payments/payment.html">Payment Management</a></li>
-      <li><a href="additionals/additionalservices.html">Additional Services Management</a></li>
-      <li><a href="staffs/staff.html">Staff Management</a></li>
-      <li><a href="salarys/staffsalary.html">Staff Salary Management</a></li>
+      <li><a href="dashboard.php">Dashboard</a></li>
+      <li><a href="rooms/room.php">Room Management</a></li>
+      <li><a href="customers/customer.php">Customer Management</a></li>
+      <li><a href="bookings/booking.php">Booking Management</a></li>
+      <li><a href="payments/payment.php">Payment Management</a></li>
+      <li><a href="additionals/additionalservices.php">Additional Services Management</a></li>
+      <li><a href="staffs/staff.php">Staff Management</a></li>
+      <li><a href="salarys/staffsalary.php">Staff Salary Management</a></li>
       <li><a href="managers/manager.php">Manager Management</a></li>
     </ul>
   </div>
@@ -175,6 +175,7 @@ $result = mysqli_query($conn, $query);
 
     </div>
     <script src="admin.js"></script>
+    <script src="../sidebar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>

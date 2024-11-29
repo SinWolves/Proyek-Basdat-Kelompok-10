@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moonlit</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="salary.css"> 
+    <link rel="stylesheet" href="payment.css"> 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orelega+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Luxurious+Roman&display=swap" rel="stylesheet">
@@ -32,20 +32,20 @@
       <h3 class="text-white mb-0 nav-links">Administrator</h3>
     </div>
     <ul class="nav-links">
-      <li><a href="../dashboard.html">Dashboard</a></li>
-      <li><a href="../rooms/room.html">Room Management</a></li>
-      <li><a href="../customers/customer.html">Customer Management</a></li>
-      <li><a href="../bookings/booking.html">Booking Management</a></li>
-      <li><a href="../payments/payment.html">Payment Management</a></li>
-      <li><a href="../additionals/additionalservices.html">Additional Services Management</a></li>
-      <li><a href="../staffs/staff.html">Staff Management</a></li>
-      <li><a href="staffsalary.html">Staff Salary Management</a></li>
-      <li><a href="../managers/manager.html">Manager Management</a></li>
+      <li><a href="../dashboard.php">Dashboard</a></li>
+      <li><a href="../rooms/room.php">Room Management</a></li>
+      <li><a href="../customers/customer.php">Customer Management</a></li>
+      <li><a href="../bookings/booking.php">Booking Management</a></li>
+      <li><a href="payment.php">Payment Management</a></li>
+      <li><a href="../additionals/additionalservices.php">Additional Services Management</a></li>
+      <li><a href="../staffs/staff.php">Staff Management</a></li>
+      <li><a href="../salarys/staffsalary.php">Staff Salary Management</a></li>
+      <li><a href="../managers/manager.php">Manager Management</a></li>
     </ul>
   </div>
 
   <div class="container">
-    <h1 class="mb-4">Staff Salary Management</h1>
+    <h1 class="mb-4">Payment Management</h1>
   </div>
 
   <div class="container">
@@ -54,26 +54,42 @@
         <table class="table table-bordered">
           <thead class="table-primary">
             <tr>
-              <th>ID Salary</th>
-              <th>Staff Name</th>
-              <th>Salary Amount</th>
-              <th>Month</th>
-              <th>Year</th>
+              <th>ID Payment</th>
+              <th>Name</th>
               <th>Status</th>
+              <th>Date</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td colspan="7" class="text-center">No more data available</td>
+              <td colspan="5" class="text-center">No more data available</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-  </div> 
+  </div>  
 
-    <script src="salary.js"></script>
+  <div class="container border border-black row" id="paymentForm">
+    <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add Payment Method</header>
+    <div class="col-md-6 d-flex align-items-center">
+      <label for="paymentName" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Method Name</label>
+      <input type="text" id="paymentName" class="form-control flex-grow-1" value=""><br>
+    </div>
+    <div class="col-md-6 d-flex align-items-center">
+      <label for="paymentStatus" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Status</label>
+      <input type="text" id="paymentStatus" class="form-control flex-grow-1" value=""><br>
+    </div>
+    <div class="col-md-6 d-flex align-items-center">
+      <label for="paymentDate" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Date</label>
+      <input type="text" id="paymentDate" class="form-control flex-grow-1" value=""><br>
+    </div>
+    <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingPayment">Save</button>
+  </div>
+
+    <script src="payment.js"></script>
+    <script src="../../sidebar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
