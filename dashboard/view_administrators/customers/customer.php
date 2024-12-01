@@ -1,3 +1,32 @@
+<?php
+  include '../../conn.php';
+
+  if($_SERVER['REQUEST_METHOD']==='POST'){
+  
+    //htmlspecialchars memastikan data yang di input tidak berupa kode sql injection
+    $name = htmlspecialchars($_POST['name']);
+    $email = htmlspecialchars($_POST['email']);
+    $telepon = htmlspecialchars($_POST['telepon']);
+    $username = htmlspecialchars($_POST['username']);
+    $tanggal_lahir = htmlspecialchars($_POST['birth']);
+    
+    //prepare agar tidak terjadi SQL injection
+    $stmt = $pdo->prepare("INSERT INTO customer(nama, email, telepon, username, tanggal_lahir) VALUES (:nama, :email, :telepon, :username, :tanggal_lahir)");
+    $stmt->bindParam(':nama', $name);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':telepon', $telepon);
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':tanggal_lahir', $tanggal_lahir);
+  
+    //jalankan kode
+    $stmt->execute();
+
+    //agar submit tidak diulangi ketika web di refresh
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit(); 
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -59,16 +88,78 @@
               <th>Email</th>
               <th>Phone Number</th>
               <th>Username</th>
-              <th>Date Of Birth</th>
+              <th>telepon Of Birth</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td colspan="7" class="text-center">No more data available</td>
-            </tr>
+            <?php 
+              $data = [];
+              try {
+                  $stmt = $pdo->query("SELECT * FROM customer ORDER BY id");
+                  $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+              } catch (Exception $e) {
+                  $message = "Error fetching data: " . $e->getMessage();
+              }
+            ?>
+            <?php if(!empty($data)) : ?>
+              <?php foreach($data as $item): ?>
+                      <tr>
+                          <td><?php echo htmlspecialchars($item['id']); ?></td>
+                          <td><?php echo htmlspecialchars($item['nama']); ?></td>
+                          <td><?php echo htmlspecialchars($item['email']); ?></td>
+                          <td><?php echo htmlspecialchars($item['telepon']); ?></td>
+                          <td><?php echo htmlspecialchars($item['username']); ?></td>
+                          <td><?php echo htmlspecialchars($item['tanggal_lahir']); ?></td>
+                          <td>
+                              <button class="btn btn-danger btn-sm">Delete</button>
+                          </td>
+                      </tr>
+                  <?php endforeach; ?>
+              <?php else: ?>
+                <tr>
+                    <td colspan="6" class="text-center">No data available</td>
+                </tr>
+              <?php endif; ?>
           </tbody>
         </table>
+      </div>
+
+      <div class="col-md-6">
+        <form action="" method="POST">
+        <div class="border border-black p-3" id="serviceForm">
+          <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add New Booking</header>
+          <!-- ID Customer -->
+          <div class="d-flex align-items-center mb-3">
+            <label for="idcustomer" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Nama</label>
+            <input name="name" type="text" id="idcustomer" class="form-control flex-grow-1" value="">
+          </div>
+          <!-- Check-In -->
+          <div class="d-flex align-items-center mb-3">
+            <label for="checkIncheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Email</label>
+            <input name="email" type="check_out" id="check_out" class="form-control flex-grow-1">
+          </div>
+          <!-- Check-Out -->
+          <div class="d-flex align-items-center mb-3">
+            <label for="checkOutcheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">telepon</label>
+            <input name="telepon" type="check_out" id="check_out" class="form-control flex-grow-1">
+          </div>
+          <div class="d-flex align-items-center mb-3">
+            <label for="checkOutcheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Username</label>
+            <input name="username" type="check_out" id="check_out" class="form-control flex-grow-1">
+          </div>
+          <div class="d-flex align-items-center mb-3">
+            <label for="checkOutcheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Tanggal lahir</label>
+            <input name="birth" type="telepon" id="check_out" class="form-control flex-grow-1">
+          </div>
+
+          
+          <!-- Submit Button -->
+          <div class="text-end">
+            <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingService">Save</button>
+          </div>
+        </div>
+        </form>
       </div>
     </div>
   </div> 

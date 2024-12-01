@@ -1,9 +1,13 @@
-<?php
-  require_once '../conn_local.php';
+<?php 
+  include '../conn.php';
 
-  // Query untuk mengambil data dari database
-$query = "SELECT * FROM manajer";
-$result = mysqli_query($conn, $query);
+  $stmt = $pdo->query("SELECT COUNT(*) AS jmlh_booking FROM booking");
+  $result = $stmt->fetch(PDO::FETCH_ASSOC);
+  $booking = $result['jmlh_booking'];
+
+  $stmt = $pdo->query("SELECT COUNT(*) AS jmlh_customer FROM customer");
+  $result = $stmt->fetch(PDO::FETCH_ASSOC);
+  $customer = $result['jmlh_customer'];
 
 ?>
 <!DOCTYPE html>
@@ -106,11 +110,11 @@ $result = mysqli_query($conn, $query);
         <!-- Total Bookings and Total Customers Section -->
         <div class="col-md-6 d-flex align-items-center">
           <label for="totalBookings" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Total Bookings</label>
-          <input type="text" id="totalBookings" class="form-control flex-grow-1">
+          <input type="text" id="totalBookings" class="form-control flex-grow-1" value="<?php echo $booking ?>">
         </div>
         <div class="col-md-6 d-flex align-items-center">
           <label for="totalCustomers" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Total Customers</label>
-          <input type="text" id="totalCustomers" class="form-control flex-grow-1">
+          <input type="text" id="totalCustomers" class="form-control flex-grow-1" value="<?php echo $customer?>">
         </div>
       </div>
       

@@ -140,7 +140,7 @@
     </div>
     <div class="col-md-6 d-flex align-items-center">
       <label for="staffAddress" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Address</label>
-      <input name="alamt" type="text" id="staffAddress" class="form-control flex-grow-1" value=""><br>
+      <input name="alamat" type="text" id="staffAddress" class="form-control flex-grow-1" value=""><br>
     </div>
     <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingStaff">Save</button>
   </div>
