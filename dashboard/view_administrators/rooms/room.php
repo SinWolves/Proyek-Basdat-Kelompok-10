@@ -1,3 +1,26 @@
+<?php
+  include '../../conn.php';
+
+  if($_SERVER['REQUEST_METHOD']==='POST'){
+  
+    //htmlspecialchars memastikan data yang di input tidak berupa kode sql injection
+    $room = htmlspecialchars($_POST['room']);
+    $price = htmlspecialchars($_POST['price']);
+    
+    //prepare agar tidak terjadi SQL injection
+    $stmt = $pdo->prepare("INSERT INTO room(room_type, price) VALUES (:room, :price)");
+    $stmt->bindParam(':room', $room);
+    $stmt->bindParam(':price', $price);
+  
+    //jalankan kode
+    $stmt->execute();
+
+    //agar submit tidak diulangi ketika web di refresh
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit(); 
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -73,9 +96,31 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td colspan="4" class="text-center">No more data available</td>
-            </tr>
+            <?php 
+              $data = [];
+              try {
+                  $stmt = $pdo->query("SELECT * FROM room ORDER BY id");
+                  $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+              } catch (Exception $e) {
+                  $message = "Error fetching data: " . $e->getMessage();
+              }
+            ?>
+            <?php if(!empty($data)) : ?>
+              <?php foreach($data as $item): ?>
+                      <tr>
+                          <td><?php echo htmlspecialchars($item['id']); ?></td>
+                          <td><?php echo htmlspecialchars($item['room_type']); ?></td>
+                          <td><?php echo htmlspecialchars($item['price']); ?></td>
+                          <td>
+                              <button class="btn btn-danger btn-sm">Delete</button>
+                          </td>
+                      </tr>
+                  <?php endforeach; ?>
+              <?php else: ?>
+                <tr>
+                    <td colspan="6" class="text-center">No data available</td>
+                </tr>
+              <?php endif; ?>
           </tbody>
         </table>
       </div>
@@ -84,20 +129,22 @@
       <div class="col-md-6">
         <div class="row">
           <!-- Room Form -->
+          <form action="" method="POST">
           <div class="col-md-12">
             <div class="border border-black" id="roomForm">
               <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add Room</header>
               <div class="col-md-12 d-flex align-items-center">
                 <label for="roomType" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Room Type</label>
-                <input type="text" id="roomType" class="form-control flex-grow-1" value=""><br>
+                <input name="room" type="text" id="roomType" class="form-control flex-grow-1" value=""><br>
               </div>
               <div class="col-md-12 d-flex align-items-center">
                 <label for="roomPrice" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Price</label>
-                <input type="text" id="roomPrice" class="form-control flex-grow-1" value=""><br>
+                <input name="price" type="text" id="roomPrice" class="form-control flex-grow-1" value=""><br>
               </div>
               <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingRooms">Save</button>
             </div>
           </div>
+        </form>
   
           <!-- Availability Rooms -->
           <div class="col-md-9 mt-5">
@@ -142,8 +189,6 @@
     </div>
   </div>
   
-
-    <script src="room.js"></script>
     <script src="../../sidebar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

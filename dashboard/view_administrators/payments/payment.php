@@ -1,3 +1,28 @@
+<?php
+  include '../../conn.php';
+
+  if($_SERVER['REQUEST_METHOD']==='POST'){
+  
+    //htmlspecialchars memastikan data yang di input tidak berupa kode sql injection
+    $name = htmlspecialchars($_POST['name']);
+    $status = htmlspecialchars($_POST['status']);
+    $date = htmlspecialchars($_POST['date']);
+    
+    //prepare agar tidak terjadi SQL injection
+    $stmt = $pdo->prepare("INSERT INTO payment(name, status, date) VALUES (:name, :status, :date)");
+    $stmt->bindParam(':name', $name);
+    $stmt->bindParam(':status', $status);
+    $stmt->bindParam(':date', $date);
+  
+    //jalankan kode
+    $stmt->execute();
+
+    //agar submit tidak diulangi ketika web di refresh
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit(); 
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -62,33 +87,57 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td colspan="5" class="text-center">No more data available</td>
-            </tr>
+            <?php 
+              $data = [];
+              try {
+                  $stmt = $pdo->query("SELECT * FROM payment ORDER BY id");
+                  $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+              } catch (Exception $e) {
+                  $message = "Error fetching data: " . $e->getMessage();
+              }
+            ?>
+            <?php if(!empty($data)) : ?>
+              <?php foreach($data as $item): ?>
+                      <tr>
+                          <td><?php echo htmlspecialchars($item['id']); ?></td>
+                          <td><?php echo htmlspecialchars($item['name']); ?></td>
+                          <td><?php echo htmlspecialchars($item['status']); ?></td>
+                          <td><?php echo htmlspecialchars($item['date']); ?></td>
+                          <td>
+                              <button class="btn btn-danger btn-sm">Delete</button>
+                          </td>
+                      </tr>
+                  <?php endforeach; ?>
+              <?php else: ?>
+                <tr>
+                    <td colspan="6" class="text-center">No data available</td>
+                </tr>
+              <?php endif; ?>
           </tbody>
         </table>
       </div>
     </div>
   </div>  
 
+  <form action="" method="POST">
   <div class="container border border-black row" id="paymentForm">
     <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add Payment Method</header>
     <div class="col-md-6 d-flex align-items-center">
       <label for="paymentName" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Method Name</label>
-      <input type="text" id="paymentName" class="form-control flex-grow-1" value=""><br>
+      <input name="name" type="text" id="paymentName" class="form-control flex-grow-1" value=""><br>
     </div>
     <div class="col-md-6 d-flex align-items-center">
       <label for="paymentStatus" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Status</label>
-      <input type="text" id="paymentStatus" class="form-control flex-grow-1" value=""><br>
+      <input name="status" type="text" id="paymentStatus" class="form-control flex-grow-1" value=""><br>
     </div>
     <div class="col-md-6 d-flex align-items-center">
       <label for="paymentDate" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Date</label>
-      <input type="text" id="paymentDate" class="form-control flex-grow-1" value=""><br>
+      <input name="date" type="text" id="paymentDate" class="form-control flex-grow-1" value=""><br>
     </div>
     <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingPayment">Save</button>
   </div>
+</form>
 
-    <script src="payment.js"></script>
     <script src="../../sidebar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
