@@ -197,7 +197,7 @@
             <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingService">Save</button>
           </div>
         </div>
-      </form>
+        </form>
       </div>
     </div>
   </div>
