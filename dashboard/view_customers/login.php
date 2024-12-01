@@ -3,30 +3,29 @@ session_start();
 include '../conn.php';
 
 if (isset($_POST['username']) && isset($_POST['password'])) {
-    $username = $_POST['username'];
-    $password = ($_POST['password']); // Menggunakan MD5 untuk hashing (sebaiknya gunakan bcrypt pada sistem nyata)
+    $username = htmlspecialchars($_POST['username']);
+    $password = htmlspecialchars($_POST['password']); // Menggunakan MD5 untuk hashing (sebaiknya gunakan bcrypt pada sistem nyata)
 
     // Query untuk mengecek username dan password
-    $query = mysqli_query($conn, "SELECT * FROM akun WHERE username='$username' AND password='$password'");
+    $query = "SELECT * FROM akun WHERE username = :username";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([':username' => $username]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (mysqli_num_rows($query) > 0) {
-        // Jika ditemukan user
-        $data = mysqli_fetch_array($query); 
-        $_SESSION['akun'] = $data; // Menyimpan data user ke sesi
-        echo "<script>
-                alert('Selamat datang, {$data['username']}');
-                location.href = 'index.php';
-              </script>";
+    if ($result) {
+        if (password_verify($password, $result['password'])) {
+            $_SESSION['akun'] = $result['username'];
+
+            header("Location: index.php");
+            exit();
+        } else {
+            echo "<script>alert('Username atau password salah!');</script>";
+        }
     } else {
-        // Jika username atau password salah
-        echo "<script>
-                alert('Username atau password Anda tidak sesuai!');
-                location.href = 'login.php';
-              </script>";
+        echo "<script>alert('Username atau password salah!');</script>";
     }
 }
 ?>
-
 
 <!--untuk kerangka html -->
 <!DOCTYPE html>
