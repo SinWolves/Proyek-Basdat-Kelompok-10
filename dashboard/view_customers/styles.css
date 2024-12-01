@@ -13,7 +13,7 @@ body, html {
 }
   
 .hero img {
-    width: 100%;
+    width: 80%;
     height: auto;
     margin-top: -4px; /* Pastikan gambar menyatu dengan navbar */
     display: block;
@@ -57,19 +57,26 @@ body, html {
     padding-bottom: 10px; /* Optional, adds space between the text and the line */
 }
 
-/* Apply flexbox to the parent container */
 .container1 {
     padding-top: 3rem;
     display: flex;
-    justify-content: space-between; /* Space between the two items */
-    align-items: center; /* Vertically center the items */
+    justify-content: space-between; /* Memberi jarak antar elemen dalam kontainer */
+    align-items: center; /* Menyelaraskan elemen secara vertikal */
 }
 
-/* Ensure both child elements are displayed side by side */
 .roomPicture {
-    flex: 1; /* Optional: allows roomPicture to take equal space or adjust as needed */
-    margin-right: 20px; /* Optional: adds space between the image and the text */
+    flex: 1; /* Membuat elemen mengambil ruang fleksibel dalam kontainer */
+    margin-right: 20px; /* Memberi jarak antara gambar dan teks */
+    width: 80px; /* Membatasi lebar elemen */
+    height: 50px; /* Membuat tinggi fleksibel mengikuti isi */
 }
+
+.roomPicture img {
+    width: 50px !important; /* Memaksa gambar untuk memiliki lebar 50px */
+    height: 50px !important; /* Memaksa gambar untuk memiliki tinggi 50px */
+    object-fit: contain; /* Memastikan gambar tetap terlihat sepenuhnya dalam ukuran tersebut */
+}
+
 
 .explain {
     flex: 2; /* Optional: adjust the space it takes compared to roomPicture */
