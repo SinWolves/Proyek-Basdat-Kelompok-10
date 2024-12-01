@@ -1,3 +1,28 @@
+<?php
+  include '../../conn.php';
+
+  if($_SERVER['REQUEST_METHOD']==='POST'){
+  
+    //htmlspecialchars memastikan data yang di input tidak berupa kode sql injection
+    $name = htmlspecialchars($_POST['name']);
+    $description = htmlspecialchars($_POST['description']);
+    $price = htmlspecialchars($_POST['price']);
+    
+    //prepare agar tidak terjadi SQL injection
+    $stmt = $pdo->prepare("INSERT INTO additional_service(name, description, price) VALUES (:name, :description, :price)");
+    $stmt->bindParam(':name', $name);
+    $stmt->bindParam(':description', $description);
+    $stmt->bindParam(':price', $price);
+  
+    //jalankan kode
+    $stmt->execute();
+
+    //agar submit tidak diulangi ketika web di refresh
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit(); 
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -74,9 +99,32 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td colspan="5" class="text-center">No more data available</td>
-            </tr>
+            <?php 
+              $data = [];
+              try {
+                  $stmt = $pdo->query("SELECT * FROM additional_service ORDER BY id");
+                  $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+              } catch (Exception $e) {
+                  $message = "Error fetching data: " . $e->getMessage();
+              }
+            ?>
+            <?php if(!empty($data)) : ?>
+              <?php foreach($data as $item): ?>
+                      <tr>
+                          <td><?php echo htmlspecialchars($item['id']); ?></td>
+                          <td><?php echo htmlspecialchars($item['name']); ?></td>
+                          <td><?php echo htmlspecialchars($item['description']); ?></td>
+                          <td><?php echo htmlspecialchars($item['price']); ?></td>
+                          <td>
+                              <button class="btn btn-danger btn-sm">Delete</button>
+                          </td>
+                      </tr>
+                  <?php endforeach; ?>
+              <?php else: ?>
+                <tr>
+                    <td colspan="6" class="text-center">No data available</td>
+                </tr>
+              <?php endif; ?>
           </tbody>
         </table>
       </div>
@@ -84,34 +132,34 @@
   </div>  
 
 
+  <form action="" method="POST">
   <div class="container border border-black row" id="serviceForm">
     <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add New Service</header>
     <!--service name-->
     <div class="col-md-6 d-flex align-items-center">
       <label for="serviceName" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Service Name</label>
-      <input type="text" id="serviceName" class="form-control flex-grow-1" value=""><br>
+      <input name="name" type="text" id="serviceName" class="form-control flex-grow-1" value=""><br>
     </div>
     <!--description-->
     <div class="col-md-6 d-flex align-items-center">
       <label for="serviceDescription" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Description</label>
-      <input type="text" id="serviceDescription" class="form-control flex-grow-1" value=""><br>
+      <input name="description" type="text" id="serviceDescription" class="form-control flex-grow-1" value=""><br>
     </div>
     <!--price-->
     <div class="col-md-6 d-flex align-items-center">
       <label for="servicePrice" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Price</label>
-      <input type="text" id="servicePrice" class="form-control flex-grow-1" value=""><br>
+      <input name="price" type="text" id="servicePrice" class="form-control flex-grow-1" value=""><br>
     </div>
     <!--submit button-->
     <div class="col-md-12 text-end">
     <button type="submit" class="btn btn-primary rounded-3 fw-bold " id="addingService">Save</button>
     </div>
   </div>
+</form>
 
 
 
   
-
-    <script src="addition.js"></script>
     <script src="../../sidebar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
