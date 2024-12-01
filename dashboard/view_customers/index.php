@@ -1,3 +1,13 @@
+<? php 
+session_start(); 
+
+// akan dilakukan pemeriksaan apakah ada session user yang aktif, jika tidak arahkan ke login.php 
+if(!isset($_SESSION['akun'])) {
+header('location: login.php'); 
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -19,6 +29,7 @@
         .modal-footer .btn:hover {
             background-color: #2c5099;
         }
+
         </style>
     </head>
     <body>
@@ -36,12 +47,11 @@
                 <li class="nav-item"><a class="nav-link" href="#rooms">Rooms & Suites</a></li>
                 <li class="nav-item"><a class="nav-link" href="#facilities">Facilities</a></li>
                 <li class="nav-item"><a class="nav-link" href="#additionalservices">Additional Services</a></li>
-                <li class="nav-item"><a class="nav-link" href="reservasi.html">Booking</a></li>
                 <li class="nav-item"><a class="nav-link" href="#contactus">Contact Us</a></li>
                 </ul>
                 <div class="d-flex ms-3">
-                    <a href="login.html" class="btn btn-outline-light me-2">Login</a>
-                    <a href="signup.html" class="btn btn-primary" style="background-color: rgb(182, 182, 182);">Sign up</a>
+                    <a href="login.php" class="btn btn-outline-light me-2">Login</a>
+                    <a href="signup.php" class="btn btn-primary" style="background-color: rgb(182, 182, 182);">Sign up</a>
                 </div>
                 
             </div>
@@ -50,7 +60,7 @@
         
         <!-- Hero Section -->
         <section class="hero" id="hero">
-            <img src="/dashboard/view_customers/img/landingpage.png" alt="Home">
+            <img src="../view_customers/img/landingpage.png" alt="Home">
         </section>
 
         <section id="about">
@@ -83,7 +93,7 @@
                 <!--executive-->
                 <div class="container2">
                     <div class="card" style="width: 18rem;">
-                        <img src="/dashboard/view_customers/img/executive.png" class="card-img-top" alt="Executive Suite">
+                        <img src="../view_customers/img/executive.png" class="card-img-top" alt="Executive Suite">
                         <div class="card-body">
                             <h5 class="card-title">Executive Suite</h5>
                             <!-- Button to trigger modal -->
@@ -103,7 +113,7 @@
                             <div class="modal-body d-flex align-items-start">
                                 <!-- Gambar Kamar -->
                                 <div class="me-4" style="flex: 1;">
-                                    <img src="/dashboard/view_customers/img/executive.png" alt="Executive Suite" class="img-fluid rounded">
+                                    <img src="../view_customers/img/executive.png" alt="Executive Suite" class="img-fluid rounded">
                                 </div>
                                 <!-- Detail Deskripsi -->
                                 <div style="flex: 2;">
@@ -132,6 +142,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" onclick="window.location.href='reservasi.html';"> Payment</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>
@@ -141,7 +152,7 @@
                 <!--luxury-->
                 <div class="container2">
                     <div class="card" style="width: 18rem;">
-                        <img src="/dashboard/view_customers/img/luxury.png" class="card-img-top" alt="Executive Suite">
+                        <img src="../view_customers/img/luxury.png" class="card-img-top" alt="Executive Suite">
                         <div class="card-body">
                             <h5 class="card-title">Luxury Suite</h5>
                             <!-- Button to trigger modal -->
@@ -192,6 +203,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" onclick="window.location.href='reservasi.html';"> Payment</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>
@@ -201,7 +213,7 @@
                 <!--presidential-->
                 <div class="container2">
                     <div class="card" style="width: 18rem;">
-                        <img src="/dashboard/view_customers/img/presidential.png" class="card-img-top" alt="Presidential Suite">
+                        <img src="../view_customers/img/presidential.png" class="card-img-top" alt="Presidential Suite">
                         <div class="card-body">
                             <h5 class="card-title">Presidential Suite</h5>
                             <!-- Button to trigger modal -->
@@ -253,6 +265,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" onclick="window.location.href='reservasi.html';"> Payment</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>
@@ -274,7 +287,7 @@
             <div class="container">
             <div class="row align-items-center mb-4">
                 <div class="col-md-6">
-                    <img src="/dashboard/view_customers/img/fitnees.png" class="img-fluid" alt="Modern fitness center with infinity pool">
+                    <img src="../view_customers/img/fitnees.png" class="img-fluid" alt="Modern fitness center with infinity pool">
                 </div>
                 <div class="col-md-6" >
                     <h3 style="color: #2c5099;font-family: 'Orelega One', cursive;">Fitness Center and Pool</h3>
@@ -285,7 +298,7 @@
                 <div class="container">
                 <div class="row align-items-center mb-4">
                     <div class="col-md-6 order-md-2">
-                        <img src="/dashboard/view_customers/img/spa.png" class="img-fluid" alt="Spa and wellness center with relaxation lounge">
+                        <img src="../view_customers/img/spa.png" class="img-fluid" alt="Spa and wellness center with relaxation lounge">
                     </div>
                     <div class="col-md-6 order-md-1">
                         <h3 style="color: #2c5099; font-family: 'Orelega One', cursive;">Spa and Wellness Center</h3>
@@ -296,7 +309,7 @@
                 <div class="container">
                 <div class="row align-items-center mb-4">
                     <div class="col-md-6">
-                        <img src="/dashboard/view_customers/img/gourment dining.png" class="img-fluid" alt="Fine dining restaurant with elegant decor">
+                        <img src="../view_customers/img/gourment dining.png" class="img-fluid" alt="Fine dining restaurant with elegant decor">
                     </div>
                     <div class="col-md-6">
                         <h3 style="color: #2c5099; font-family: 'Orelega One', cursive;">Gourmet Dining and Exclusive Bars</h3>
@@ -315,25 +328,25 @@
             <div class="row" style="margin-top: 40px;">
                 <div class="col-md-6">
                  <div class="service-card" style="background-color: #757A92; color: #F5F0DD; text-align: center; padding: 20px; margin-bottom: 20px; height: 250px;">
-                  <img alt="A table set for in-room dining with a waiter in the background" src="/dashboard/view_customers/img/personalized in roon dining.png" style="width: 100%; height: 150px; object-fit: cover;"/>
+                  <img alt="A table set for in-room dining with a waiter in the background" src="../view_customers/img/personalized in roon dining.png" style="width: 100%; height: 150px; object-fit: cover;"/>
                   <p style="font-family:'Orelega One'; font-size: larger;">Personalized In-Room Dining</p>
                  </div>
                 </div>
                 <div class="col-md-6">
                  <div class="service-card" style="background-color: #757A92; color: #F5F0DD; text-align: center; padding: 20px; margin-bottom: 20px; height: 250px;">
-                  <img alt="A personal fitness trainer assisting a person in a gym" src="/dashboard/view_customers/img/personal fitness training.png" style="width: 100%; height: 150px; object-fit: cover;"/>
+                  <img alt="A personal fitness trainer assisting a person in a gym" src="../view_customers/img/personal fitness training.png" style="width: 100%; height: 150px; object-fit: cover;"/>
                   <p style="font-family:'Orelega One'; font-size: larger;">Personal Fitness Trainer &amp; Wellness Coach</p>
                  </div>
                 </div>
                 <div class="col-md-6">
                  <div class="service-card" style="background-color: #757A92; color: #F5F0DD; text-align: center; padding: 20px; margin-bottom: 20px; height: 250px;">
-                  <img alt="A person receiving a spa treatment in a luxurious room" src="/dashboard/view_customers/img/247 spa services.png" style="width: 100%; height: 150px; object-fit: cover;"/>
+                  <img alt="A person receiving a spa treatment in a luxurious room" src="../view_customers/img/247 spa services.png" style="width: 100%; height: 150px; object-fit: cover;"/>
                   <p style="font-family:'Orelega One'; font-size: larger;">24/7 In-Room Spa Services</p>
                  </div>
                 </div>
                 <div class="col-md-6">
                  <div class="service-card" style="background-color: #757A92; color: #F5F0DD; text-align: center; padding: 20px; margin-bottom: 20px; height: 250px;">
-                  <img alt="Children participating in activities at a kids club" src="/dashboard/view_customers/img/kids club.png" style="width: 100%; height: 150px; object-fit: cover;"/>
+                  <img alt="Children participating in activities at a kids club" src="../view_customers/img/kids club.png" style="width: 100%; height: 150px; object-fit: cover;"/>
                   <p style="font-family:'Orelega One'; font-size: larger;">Exclusive Kids Club with Personalized Activities</p>
                  </div>
                 </div>
@@ -356,6 +369,7 @@
                  <textarea placeholder="Share your experience" style="width: 100%; height: 100px; margin-bottom: 10px;"></textarea>
                  <button class="btn" style="float: right; width: 100px; height: 40px; border-radius: 0; font-family: 'Plus Jakarta Sans', sans-serif; background-color: #15274B; color: white;">Send</button>
                 </div>
+                
                </div>
                <hr style="border: 1px solid #2c3e50; margin-top: 20px;"/>
                <div class="footer" style="text-align: center; margin-top: 20px; font-size: 12px; color: #2c3e50;">
