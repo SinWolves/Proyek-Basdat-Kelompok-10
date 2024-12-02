@@ -1,60 +1,66 @@
 <?php
   include '../../conn.php';
 
+    // Mulai session untuk notifikasi
+    session_start();
 
-  // Inisialisasi variabel notifikasi
-$error = $_SESSION['error'] ?? '';
-$success = $_SESSION['success'] ?? '';
+    // Inisialisasi variabel notifikasi
+    $error = $_SESSION['error'] ?? '';
+    $success = $_SESSION['success'] ?? '';
 
-
-  // Initialize message variable
-  $message = '';
-  $messageType = '';
-
-  // Handle delete operation
-  if(isset($_GET['delete']) && is_numeric($_GET['delete'])) {
-    $staffId = $_GET['delete'];
-    try {
-      $stmt = $pdo->prepare("DELETE FROM staff WHERE id = :id");
-      $stmt->bindParam(':id', $staffId, PDO::PARAM_INT);
-      $stmt->execute();
-
-      // Set error message for delete 
-      $message = "Data berhasil dihapus!";
-      $messageType = "danger"; 
-    } catch (Exception $e) {
-      // Set error message
-      $message = "Gagal menghapus data: " . $e->getMessage();
-      $messageType = "danger";
-    }
-  }
+    // Hapus notifikasi setelah ditampilkan
+    unset($_SESSION['error'], $_SESSION['success']);
 
   // Handle add staff operation
   if($_SERVER['REQUEST_METHOD']==='POST'){
+    if (isset($_POST['submit_add'])) {
+        try {
+            // Sanitize input
+            $nama = htmlspecialchars($_POST['nama']);
+            $departemen = htmlspecialchars($_POST['departemen']);
+            $telepon = htmlspecialchars($_POST['telepon']);
+            $alamat = htmlspecialchars($_POST['alamat']);
+            
+            // Prepare and execute insert
+            $stmt = $pdo->prepare("INSERT INTO staff(nama, departemen, telepon, alamat) VALUES (:nama, :departemen, :telepon, :alamat)");
+            $stmt->bindParam(':nama', $nama);
+            $stmt->bindParam(':departemen', $departemen);
+            $stmt->bindParam(':telepon', $telepon);
+            $stmt->bindParam(':alamat', $alamat);
+            $stmt->execute();
+
+            // Pesan sukses
+            $_SESSION['success'] = "New data added successfully!";
+            //agar submit tidak diulangi ketika web di refresh
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit(); 
+        }catch (PDOException $e) {
+            $_SESSION['error'] = "Error adding data: " . $e->getMessage();
+        }
+    }   
+
+    // Menghapus data berdasarkan ID
+    if (isset($_POST['submit_delete'])) {
+        $id = htmlspecialchars($_POST['id']);
+
     try {
-      // Sanitize input
-      $nama = htmlspecialchars($_POST['nama']);
-      $departemen = htmlspecialchars($_POST['departemen']);
-      $telepon = htmlspecialchars($_POST['telepon']);
-      $alamat = htmlspecialchars($_POST['alamat']);
-      
-      // Prepare and execute insert
-      $stmt = $pdo->prepare("INSERT INTO staff(nama, departemen, telepon, alamat) VALUES (:nama, :departemen, :telepon, :alamat)");
-      $stmt->bindParam(':nama', $nama);
-      $stmt->bindParam(':departemen', $departemen);
-      $stmt->bindParam(':telepon', $telepon);
-      $stmt->bindParam(':alamat', $alamat);
-      $stmt->execute();
+        // Prepare statement untuk menghapus data
+        $stmt = $pdo->prepare("DELETE FROM staff  WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
+        // Eksekusi query
+        $stmt->execute();
 
-      // Prevent form resubmission
-      header("Location: " . $_SERVER['PHP_SELF']);
-      exit(); 
-    } catch (Exception $e) {
-      // Set error message
-      $message = "Gagal menambahkan data: " . $e->getMessage();
-      $messageType = "danger";
+        // Pesan sukses
+        $_SESSION['success'] = "data deleted successfully!";
+    } catch (PDOException $e) {
+        $_SESSION['error'] = "Error deleting data: " . $e->getMessage();
     }
+
+        // Redirect untuk mencegah form resubmission
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
+    } 
   }
 
   // Fetch staff data
@@ -81,16 +87,6 @@ $success = $_SESSION['success'] ?? '';
     <link href="https://fonts.googleapis.com/css2?family=Luxurious+Roman&display=swap" rel="stylesheet">
 </head>
 <body>
-
-    <!-- Navbar -->
-    <nav class="navbar d-flex justify-content-between">
-        <button id="menu-toggle" class="menu-toggle">
-            <i class="fas fa-bars"></i> 
-        </button>
-        <div class="logout-container">
-            <a href="../../view_customers/login.html" class="logout">Logout</a>
-        </div>
-    </nav>
 
      <!-- Navbar -->
    <nav class="navbar d-flex justify-content-between">
@@ -127,15 +123,21 @@ $success = $_SESSION['success'] ?? '';
     </div>
 
     <div class="container">
-        <!-- Notification Alert -->
-        <?php if (!empty($message)): ?>
-    <div class="alert alert-<?php echo $messageType; ?> alert-dismissible fade show" role="alert">
-        <?php echo $message; ?>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+        <h1 class="mb-4">Staff Management</h1>
+        <!-- Notifikasi -->
+    <?php if (!empty($error)): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?php echo htmlspecialchars($error); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
+    <?php if (!empty($success)): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?php echo htmlspecialchars($success); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     <?php endif; ?>
 
-        <h1 class="mb-4">Staff Management</h1>
     </div>
 
     <div class="container">
@@ -162,11 +164,11 @@ $success = $_SESSION['success'] ?? '';
                                     <td><?php echo htmlspecialchars($staff['telepon']); ?></td>
                                     <td><?php echo htmlspecialchars($staff['alamat']); ?></td>
                                     <td>
-                                        <a href="?delete=<?php echo $staff['id']; ?>" 
-                                           class="btn btn-danger btn-sm" 
-                                           onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
-                                            Delete
-                                        </a>
+                                    <form method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline;">
+                                        <input type="hidden" name="submit_delete" value="1">
+                                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($staff['id']); ?>">
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -182,6 +184,7 @@ $success = $_SESSION['success'] ?? '';
     </div>  
 
     <form action="" method="POST">
+        <input type="hidden" name="submit_add" value="1">
         <div class="container border border-black row" id="staffForm">
             <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Tambah Staff</header> 
             <div class="col-md-6 d-flex align-items-center">

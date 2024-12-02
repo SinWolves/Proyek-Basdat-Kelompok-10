@@ -1,29 +1,69 @@
 <?php
   include '../../conn.php';
 
-  if($_SERVER['REQUEST_METHOD']==='POST'){
-  
-    //htmlspecialchars memastikan data yang di input tidak berupa kode sql injection
-    $name = htmlspecialchars($_POST['name']);
-    $email = htmlspecialchars($_POST['email']);
-    $telepon = htmlspecialchars($_POST['telepon']);
-    $username = htmlspecialchars($_POST['username']);
-    $tanggal_lahir = htmlspecialchars($_POST['birth']);
-    
-    //prepare agar tidak terjadi SQL injection
-    $stmt = $pdo->prepare("INSERT INTO customer(nama, email, telepon, username, tanggal_lahir) VALUES (:nama, :email, :telepon, :username, :tanggal_lahir)");
-    $stmt->bindParam(':nama', $name);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':telepon', $telepon);
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':tanggal_lahir', $tanggal_lahir);
-  
-    //jalankan kode
-    $stmt->execute();
+  // Mulai session untuk notifikasi
+  session_start();
 
-    //agar submit tidak diulangi ketika web di refresh
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit(); 
+  // Inisialisasi variabel notifikasi
+  $error = $_SESSION['error'] ?? '';
+  $success = $_SESSION['success'] ?? '';
+
+  // Hapus notifikasi setelah ditampilkan
+  unset($_SESSION['error'], $_SESSION['success']);
+
+  if($_SERVER['REQUEST_METHOD']==='POST'){
+    if (isset($_POST['submit_add'])) {
+      try{
+        //htmlspecialchars memastikan data yang di input tidak berupa kode sql injection
+        $name = htmlspecialchars($_POST['name']);
+        $email = htmlspecialchars($_POST['email']);
+        $telepon = htmlspecialchars($_POST['telepon']);
+        $username = htmlspecialchars($_POST['username']);
+        $tanggal_lahir = htmlspecialchars($_POST['birth']);
+        
+        //prepare agar tidak terjadi SQL injection
+        $stmt = $pdo->prepare("INSERT INTO customer(nama, email, telepon, username, tanggal_lahir) VALUES (:nama, :email, :telepon, :username, :tanggal_lahir)");
+        $stmt->bindParam(':nama', $name);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':telepon', $telepon);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':tanggal_lahir', $tanggal_lahir);
+      
+        //jalankan kode
+        $stmt->execute();
+
+        // Pesan sukses
+        $_SESSION['success'] = "New data added successfully!";
+        //agar submit tidak diulangi ketika web di refresh
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit(); 
+      }catch (PDOException $e) {
+        $_SESSION['error'] = "Error adding data: " . $e->getMessage();
+      }
+    }
+    
+    // Menghapus data berdasarkan ID
+    if (isset($_POST['submit_delete'])) {
+      $id = htmlspecialchars($_POST['id']);
+
+      try {
+          // Prepare statement untuk menghapus data
+          $stmt = $pdo->prepare("DELETE FROM customer  WHERE id = :id");
+          $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+          // Eksekusi query
+          $stmt->execute();
+
+          // Pesan sukses
+          $_SESSION['success'] = "data deleted successfully!";
+      } catch (PDOException $e) {
+          $_SESSION['error'] = "Error deleting data: " . $e->getMessage();
+      }
+
+      // Redirect untuk mencegah form resubmission
+      header("Location: " . $_SERVER['PHP_SELF']);
+      exit();
+    } 
   }
 ?>
 
@@ -75,6 +115,20 @@
 
   <div class="container">
     <h1 class="mb-4">Customer Management</h1>
+
+    <!-- Notifikasi -->
+    <?php if (!empty($error)): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?php echo htmlspecialchars($error); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
+    <?php if (!empty($success)): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?php echo htmlspecialchars($success); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
   </div>
 
   <div class="container">
@@ -112,8 +166,11 @@
                           <td><?php echo htmlspecialchars($item['username']); ?></td>
                           <td><?php echo htmlspecialchars($item['tanggal_lahir']); ?></td>
                           <td>
-                              <button class="btn btn-danger btn-sm">Delete</button>
-                          </td>
+                            <form method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline;">
+                              <input type="hidden" name="submit_delete" value="1">
+                              <input type="hidden" name="id" value="<?php echo htmlspecialchars($item['id']); ?>">
+                              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
                       </tr>
                   <?php endforeach; ?>
               <?php else: ?>
@@ -127,6 +184,7 @@
 
       <div class="col-md-6">
         <form action="" method="POST">
+        <input type="hidden" name="submit_add" value="1">
         <div class="border border-black p-3" id="serviceForm">
           <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add New Booking</header>
           <!-- ID Customer -->
