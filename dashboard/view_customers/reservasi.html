@@ -90,7 +90,44 @@
             width: 60px;
             text-align: center;
         }
-    </style>
+
+        .additional-service-item span.service-name {
+        font-size: 1rem;
+        color: black;
+        font-family: 'Luxurious Roman', serif;
+    }
+
+        .additional-service-item span.service-price {
+            font-size: 0.9rem;
+            color: #6c757d; 
+            font-family: 'Arial', sans-serif;
+            display: block; 
+            margin-top: 5px;
+        }
+
+        .btn-book-now {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-size: 0.9rem; 
+            padding: 5px 15px; 
+            background-color: #eae2be; 
+            color: #15274b; 
+            border: none;
+            border-radius: 5px; 
+        }
+
+        .btn-book-now:hover {
+            background-color: #d4c69d; 
+        }
+
+        .card.mb-4 {
+            height: 80%
+        }
+
+        
+
+            </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
@@ -181,7 +218,7 @@
                             <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer" value="bankTransfer">
                             <label class="form-check-label" style="font-family: 'Luxurious Roman';" for="bankTransfer">Bank Transfer</label>
                         </div>
-                        <button class="btn btn-primary w-100 mt-3">Book Now</button>
+                        <button class="btn btn-book-now">Book Now</button>
                     </div>
                 </div>
             </div>
@@ -190,19 +227,12 @@
             <div class="card-header" style="background-color:white; color:#001f54; font-family: 'Luxurious Roman';">Additional Services</div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span style="font-family: 'Luxurious Roman'; color: black;">Personalized In-Room Dining</span>
-                            <div class="increment-buttons">
-                                <button class="btn btn-sm btn-light">-</button>
-                                <input type="text" value="0" readonly>
-                                <button class="btn btn-sm btn-light">+</button>
+                    <div class="col-md-6">
+                        <div class="additional-service-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="service-name">Personalized In-Room Dining</span>
+                                <span class="service-price">IDR 500,000/session</span>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span style="font-family: 'Luxurious Roman'; color: black;">24/7 In-Room Spa Services</span>
                             <div class="increment-buttons">
                                 <button class="btn btn-sm btn-light">-</button>
                                 <input type="text" value="0" readonly>
@@ -211,8 +241,11 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span style="font-family: 'Luxurious Roman'; color: black;">Personal Fitness Trainer & Wellness Coach</span>
+                        <div class="additional-service-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="service-name">24/7 In-Room Spa Services</span>
+                                <span class="service-price">IDR 1,000,000/session</span>
+                            </div>
                             <div class="increment-buttons">
                                 <button class="btn btn-sm btn-light">-</button>
                                 <input type="text" value="0" readonly>
@@ -221,8 +254,24 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span style="font-family: 'Luxurious Roman'; color: black;">Exclusive Kids Club with Personalized Activities</span>
+                        <div class="additional-service-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="service-name">Personal Fitness Trainer & Wellness Coach</span>
+                                <span class="service-price">IDR 800,000/hour</span>
+                            </div>
+                            <div class="increment-buttons">
+                                <button class="btn btn-sm btn-light">-</button>
+                                <input type="text" value="0" readonly>
+                                <button class="btn btn-sm btn-light">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="additional-service-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="service-name">Exclusive Kids Club with Personalized Activities</span>
+                                <span class="service-price">IDR 400,000/day/child</span>
+                            </div>
                             <div class="increment-buttons">
                                 <button class="btn btn-sm btn-light">-</button>
                                 <input type="text" value="0" readonly>
@@ -236,5 +285,88 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const roomPrices = {
+            executive: 3500000,
+            luxury: 7500000,
+            presidential: 15000000
+        };
+    
+        const servicePrices = {
+            dining: 500000,
+            spa: 1000000,
+            fitness: 800000,
+            kidsClub: 400000
+        };
+    
+        function updateValue(button, operation) {
+            const input = button.parentElement.querySelector('input'); 
+            let currentValue = parseInt(input.value); 
+    
+            if (operation === 'increment') {
+                input.value = currentValue + 1;
+            } else if (operation === 'decrement' && currentValue > 0) {
+                input.value = currentValue - 1; 
+            }
+    
+            updateTotal(); 
+        }
+    
+        function calculateDays() {
+            const checkInDate = new Date(document.getElementById('checkIn').value);
+            const checkOutDate = new Date(document.getElementById('checkOut').value);
+    
+            if (checkInDate && checkOutDate && checkOutDate > checkInDate) {
+                const timeDiff = checkOutDate - checkInDate;
+                const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+                return days;
+            }
+            return 0; 
+        }
+    
+        function updateTotal() {
+            let total = 0;
+    
+            // harga kamar
+            const executiveCount = parseInt(document.querySelector('.increment-buttons input').value);
+            const luxuryCount = parseInt(document.querySelectorAll('.increment-buttons input')[1].value);
+            const presidentialCount = parseInt(document.querySelectorAll('.increment-buttons input')[2].value);
+    
+            const days = calculateDays();
+            total += executiveCount * roomPrices.executive * days;
+            total += luxuryCount * roomPrices.luxury * days;
+            total += presidentialCount * roomPrices.presidential * days;
+    
+            // harga layanan tambahan
+            const diningCount = parseInt(document.querySelectorAll('.increment-buttons input')[3].value);
+            const spaCount = parseInt(document.querySelectorAll('.increment-buttons input')[4].value);
+            const fitnessCount = parseInt(document.querySelectorAll('.increment-buttons input')[5].value);
+            const kidsClubCount = parseInt(document.querySelectorAll('.increment-buttons input')[6].value);
+    
+            total += diningCount * servicePrices.dining;
+            total += spaCount * servicePrices.spa;
+            total += fitnessCount * servicePrices.fitness;
+            total += kidsClubCount * servicePrices.kidsClub;
+    
+            
+            document.querySelector('.text-highlight').textContent = `IDR ${total.toLocaleString()}`;
+        }
+    
+       
+        document.querySelectorAll('.increment-buttons button').forEach(button => {
+            button.addEventListener('click', function () {
+                if (this.textContent === '+') {
+                    updateValue(this, 'increment'); 
+                } else if (this.textContent === '-') {
+                    updateValue(this, 'decrement');
+                }
+            });
+        });
+    
+       
+        document.getElementById('checkIn').addEventListener('change', updateTotal);
+        document.getElementById('checkOut').addEventListener('change', updateTotal);
+    </script>
+    
 </body>
 </html>
