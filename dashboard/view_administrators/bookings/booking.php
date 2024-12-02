@@ -1,40 +1,81 @@
 <?php
   include '../../conn.php';
 
+  // Mulai session untuk notifikasi
+  session_start();
+
+  // Inisialisasi variabel notifikasi
+  $error = $_SESSION['error'] ?? '';
+  $success = $_SESSION['success'] ?? '';
+
+  // Hapus notifikasi setelah ditampilkan
+  unset($_SESSION['error'], $_SESSION['success']);
+
   if($_SERVER['REQUEST_METHOD']==='POST'){
-  
-    //htmlspecialchars memastikan data yang di input tidak berupa kode sql injection
-    $id_customer = htmlspecialchars($_POST['id_customer']);
-    $check_in = htmlspecialchars($_POST['check_in']);
-    $check_out = htmlspecialchars($_POST['check_out']);
-    $room = htmlspecialchars($_POST['room']);
-    $quantity = htmlspecialchars($_POST['quantity']);
-    
-    switch ($room){
-      case "executive":
-        $total_price = htmlspecialchars("2000");
-        break;
-      case "luxury":
-        $total_price = htmlspecialchars("55000");
-        break;
-      case "presidential":
-        $total_price = htmlspecialchars("150000");
-        break;
+    if (isset($_POST['submit_add'])) {
+      try{
+        //htmlspecialchars memastikan data yang di input tidak berupa kode sql injection
+        $id_customer = htmlspecialchars($_POST['id_customer']);
+        $check_in = htmlspecialchars($_POST['check_in']);
+        $check_out = htmlspecialchars($_POST['check_out']);
+        $room = htmlspecialchars($_POST['room']);
+        $quantity = htmlspecialchars($_POST['quantity']);
+        
+        switch ($room){
+          case "executive":
+            $total_price = htmlspecialchars("2000");
+            break;
+          case "luxury":
+            $total_price = htmlspecialchars("55000");
+            break;
+          case "presidential":
+            $total_price = htmlspecialchars("150000");
+            break;
+        }
+        for($i = 0; $i < $quantity; $i++){
+          $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, total_price) VALUES (:id_customer, :check_in, :check_out, :room, :total_price)");
+          $stmt->bindParam(':id_customer', $id_customer);
+          $stmt->bindParam(':check_in', $check_in);
+          $stmt->bindParam(':check_out', $check_out);
+          $stmt->bindParam(':room', $room);
+          $stmt->bindParam(':total_price', $total_price);
+        
+          //jalankan kode
+          $stmt->execute();
+
+        }
+        // Pesan sukses
+        $_SESSION['success'] = "New data added successfully!";
+        //agar submit tidak diulangi ketika web di refresh
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit(); 
+      }catch (PDOException $e) {
+        $_SESSION['error'] = "Error adding data: " . $e->getMessage();
+      }
     }
-    for($i = 0; $i < $quantity; $i++){
-      $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, total_price) VALUES (:id_customer, :check_in, :check_out, :room, :total_price)");
-      $stmt->bindParam(':id_customer', $id_customer);
-      $stmt->bindParam(':check_in', $check_in);
-      $stmt->bindParam(':check_out', $check_out);
-      $stmt->bindParam(':room', $room);
-      $stmt->bindParam(':total_price', $total_price);
-    
-      //jalankan kode
-      $stmt->execute();
+
+    // Menghapus data berdasarkan ID
+    if (isset($_POST['submit_delete'])) {
+      $id = htmlspecialchars($_POST['id']);
+
+      try {
+          // Prepare statement untuk menghapus data
+          $stmt = $pdo->prepare("DELETE FROM booking  WHERE id = :id");
+          $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+          // Eksekusi query
+          $stmt->execute();
+
+          // Pesan sukses
+          $_SESSION['success'] = "data deleted successfully!";
+      } catch (PDOException $e) {
+          $_SESSION['error'] = "Error deleting data: " . $e->getMessage();
+      }
+
+      // Redirect untuk mencegah form resubmission
+      header("Location: " . $_SERVER['PHP_SELF']);
+      exit();
     }
-    //agar submit tidak diulangi ketika web di refresh
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit(); 
   }
 ?>
 
@@ -97,6 +138,20 @@
 
   <div class="container">
     <h1 class="mb-4">Booking Management</h1>
+
+    <!-- Notifikasi -->
+    <?php if (!empty($error)): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?php echo htmlspecialchars($error); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
+    <?php if (!empty($success)): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?php echo htmlspecialchars($success); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
     
     <div class="row">
       <!-- Tabel -->
@@ -133,7 +188,11 @@
                           <td><?php echo htmlspecialchars($item['room']); ?></td>
                           <td><?php echo htmlspecialchars($item['total_price']); ?></td>
                           <td>
-                              <button class="btn btn-danger btn-sm">Delete</button>
+                            <form method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline;">
+                              <input type="hidden" name="submit_delete" value="1">
+                              <input type="hidden" name="id" value="<?php echo htmlspecialchars($item['id']); ?>">
+                              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
                           </td>
                       </tr>
                   <?php endforeach; ?>
@@ -149,6 +208,7 @@
       <!-- Form Add New Booking -->
       <div class="col-md-6">
         <form action="" method="POST">
+        <input type="hidden" name="submit_add" value="1">
         <div class="border border-black p-3" id="serviceForm">
           <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add New Booking</header>
           <!-- ID Customer -->

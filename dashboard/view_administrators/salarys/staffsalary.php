@@ -1,3 +1,68 @@
+<?php
+  include '../../conn.php';
+
+  // Mulai session untuk notifikasi
+  session_start();
+
+  // Inisialisasi variabel notifikasi
+  $error = $_SESSION['error'] ?? '';
+  $success = $_SESSION['success'] ?? '';
+
+  // Hapus notifikasi setelah ditampilkan
+  unset($_SESSION['error'], $_SESSION['success']);
+
+  if($_SERVER['REQUEST_METHOD']==='POST'){
+    if (isset($_POST['submit_add'])) {
+      try{
+        //htmlspecialchars memastikan data yang di input tidak berupa kode sql injection
+        $name = htmlspecialchars($_POST['name']);
+        $gaji = htmlspecialchars($_POST['gaji']);
+        $status = htmlspecialchars($_POST['status']);
+        
+        //prepare agar tidak terjadi SQL injection
+        $stmt = $pdo->prepare("INSERT INTO salary(nama_staf, gaji, status_gaji) VALUES (:name, :gaji, :status)");
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':gaji', $gaji);
+        $stmt->bindParam(':status', $status);
+      
+        //jalankan kode
+        $stmt->execute();
+
+        // Pesan sukses
+        $_SESSION['success'] = "New data added successfully!";
+        //agar submit tidak diulangi ketika web di refresh
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit(); 
+      }catch (PDOException $e) {
+        $_SESSION['error'] = "Error adding data: " . $e->getMessage();
+      }
+    }
+
+    // Menghapus data berdasarkan ID
+    if (isset($_POST['submit_delete'])) {
+      $id = htmlspecialchars($_POST['id']);
+
+      try {
+          // Prepare statement untuk menghapus data
+          $stmt = $pdo->prepare("DELETE FROM salary  WHERE id = :id");
+          $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+          // Eksekusi query
+          $stmt->execute();
+
+          // Pesan sukses
+          $_SESSION['success'] = "data deleted successfully!";
+      } catch (PDOException $e) {
+          $_SESSION['error'] = "Error deleting data: " . $e->getMessage();
+      }
+
+      // Redirect untuk mencegah form resubmission
+      header("Location: " . $_SERVER['PHP_SELF']);
+      exit();
+    } 
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -46,6 +111,20 @@
 
   <div class="container">
     <h1 class="mb-4">Staff Salary Management</h1>
+
+    <!-- Notifikasi -->
+    <?php if (!empty($error)): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?php echo htmlspecialchars($error); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
+    <?php if (!empty($success)): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?php echo htmlspecialchars($success); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
   </div>
 
   <div class="container">
@@ -57,22 +136,50 @@
               <th>ID Salary</th>
               <th>Staff Name</th>
               <th>Salary Amount</th>
-              <th>Month</th>
               <th>Year</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
+          <?php 
+              $data = [];
+              try {
+                  $stmt = $pdo->query("SELECT * FROM salary ORDER BY id");
+                  $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+              } catch (Exception $e) {
+                  $message = "Error fetching data: " . $e->getMessage();
+              }
+            ?>
+            <?php if(!empty($data)) : ?>
+              <?php foreach($data as $item): ?>
                 <tr>
-                    <td colspan="6" class="text-center">No data available</td>
+                  <td><?php echo htmlspecialchars($item['id']); ?></td>
+                  <td><?php echo htmlspecialchars($item['nama_staf']); ?></td>
+                  <td><?php echo htmlspecialchars($item['gaji']); ?></td>
+                  <td><?php echo htmlspecialchars($item['tahun']); ?></td>
+                  <td><?php echo htmlspecialchars($item['status_gaji']); ?></td>
+                  <td>
+                    <form method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline;">
+                      <input type="hidden" name="submit_delete" value="1">
+                      <input type="hidden" name="id" value="<?php echo htmlspecialchars($item['id']); ?>">
+                      <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                  </td>
                 </tr>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <tr>
+                <td colspan="6" class="text-center">No data available</td>
+              </tr>
+            <?php endif; ?>
           </tbody>
         </table>
       </div>
 
       <div class="col-md-6">
         <form action="" method="POST">
+        <input type="hidden" name="submit_add" value="1">
         <div class="border border-black p-3" id="serviceForm">
           <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add New Salary</header>
           <!-- ID Customer -->
@@ -83,20 +190,11 @@
           <!-- Check-In -->
           <div class="d-flex align-items-center mb-3">
             <label for="checkIncheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Salary Amount</label>
-            <input name="email" type="check_out" id="check_out" class="form-control flex-grow-1">
-          </div>
-          <!-- Check-Out -->
-          <div class="d-flex align-items-center mb-3">
-            <label for="checkOutcheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Month</label>
-            <input name="telepon" type="check_out" id="check_out" class="form-control flex-grow-1">
-          </div>
-          <div class="d-flex align-items-center mb-3">
-            <label for="checkOutcheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Year</label>
-            <input name="username" type="check_out" id="check_out" class="form-control flex-grow-1">
+            <input name="gaji" type="check_out" id="check_out" class="form-control flex-grow-1">
           </div>
           <div class="d-flex align-items-center mb-3">
             <label for="checkOutcheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Status</label>
-            <input name="birth" type="telepon" id="check_out" class="form-control flex-grow-1">
+            <input name="status" type="telepon" id="check_out" class="form-control flex-grow-1">
           </div>
 
           
@@ -110,7 +208,6 @@
     </div>
   </div> 
 
-    <script src="salary.js"></script>
     <script src="../../sidebar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
