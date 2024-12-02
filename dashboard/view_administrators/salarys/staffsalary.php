@@ -17,7 +17,7 @@
       <i class="fas fa-bars"></i> 
     </button>
     <div class="logout-container">
-      <a href="../../view_customers/login.html" class="logout">Logout</a>
+    <a href="../../view_customers/login.php" class="logout">Logout</a>
     </div>
   </nav>
 
@@ -64,11 +64,48 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td colspan="7" class="text-center">No more data available</td>
-            </tr>
+                <tr>
+                    <td colspan="6" class="text-center">No data available</td>
+                </tr>
           </tbody>
         </table>
+      </div>
+
+      <div class="col-md-6">
+        <form action="" method="POST">
+        <div class="border border-black p-3" id="serviceForm">
+          <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add New Salary</header>
+          <!-- ID Customer -->
+          <div class="d-flex align-items-center mb-3">
+            <label for="idcustomer" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Staff Name</label>
+            <input name="name" type="text" id="idcustomer" class="form-control flex-grow-1" value="">
+          </div>
+          <!-- Check-In -->
+          <div class="d-flex align-items-center mb-3">
+            <label for="checkIncheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Salary Amount</label>
+            <input name="email" type="check_out" id="check_out" class="form-control flex-grow-1">
+          </div>
+          <!-- Check-Out -->
+          <div class="d-flex align-items-center mb-3">
+            <label for="checkOutcheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Month</label>
+            <input name="telepon" type="check_out" id="check_out" class="form-control flex-grow-1">
+          </div>
+          <div class="d-flex align-items-center mb-3">
+            <label for="checkOutcheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Year</label>
+            <input name="username" type="check_out" id="check_out" class="form-control flex-grow-1">
+          </div>
+          <div class="d-flex align-items-center mb-3">
+            <label for="checkOutcheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Status</label>
+            <input name="birth" type="telepon" id="check_out" class="form-control flex-grow-1">
+          </div>
+
+          
+          <!-- Submit Button -->
+          <div class="text-end">
+            <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingService">Save</button>
+          </div>
+        </div>
+        </form>
       </div>
     </div>
   </div> 
