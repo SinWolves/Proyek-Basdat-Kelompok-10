@@ -15,7 +15,7 @@
         if (isset($_POST['submit_add'])) {
             //memasukkan data ke 4 tabel dengan query terpisah
 
-            // pakai ini untuk bagian check in
+            // pakai ini untuk bagian check in//
             try{
               $id_customer = htmlspecialchars($_POST['id_customer']);
               $check_in = htmlspecialchars($_POST['check_in']);
