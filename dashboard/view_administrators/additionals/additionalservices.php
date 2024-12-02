@@ -1,26 +1,79 @@
 <?php
-  include '../../conn.php';
+// Menyertakan file koneksi database
+include '../../conn.php';
 
-  if($_SERVER['REQUEST_METHOD']==='POST'){
-  
-    //htmlspecialchars memastikan data yang di input tidak berupa kode sql injection
-    $name = htmlspecialchars($_POST['name']);
-    $description = htmlspecialchars($_POST['description']);
-    $price = htmlspecialchars($_POST['price']);
-    
-    //prepare agar tidak terjadi SQL injection
-    $stmt = $pdo->prepare("INSERT INTO additional_service(name, description, price) VALUES (:name, :description, :price)");
-    $stmt->bindParam(':name', $name);
-    $stmt->bindParam(':description', $description);
-    $stmt->bindParam(':price', $price);
-  
-    //jalankan kode
-    $stmt->execute();
+// Mulai session untuk notifikasi
+session_start();
 
-    //agar submit tidak diulangi ketika web di refresh
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit(); 
-  }
+// Inisialisasi variabel notifikasi
+$error = $_SESSION['error'] ?? '';
+$success = $_SESSION['success'] ?? '';
+
+// Hapus notifikasi setelah ditampilkan
+unset($_SESSION['error'], $_SESSION['success']);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Menambahkan data baru
+    if (isset($_POST['submit_add'])) {
+        // Mencegah SQL injection dengan htmlspecialchars dan prepared statements
+        $name = htmlspecialchars($_POST['name']);
+        $description = htmlspecialchars($_POST['description']);
+        $price = htmlspecialchars($_POST['price']);
+
+        try {
+            // Prepare statement untuk memasukkan data
+            $stmt = $pdo->prepare("INSERT INTO additional_service (name, description, price) VALUES (:name, :description, :price)");
+            $stmt->bindParam(':name', $name);
+            $stmt->bindParam(':description', $description);
+            $stmt->bindParam(':price', $price);
+
+            // Eksekusi query
+            $stmt->execute();
+
+            // Pesan sukses
+            $_SESSION['success'] = "New service added successfully!";
+
+        } catch (PDOException $e) {
+            $_SESSION['error'] = "Error adding service: " . $e->getMessage();
+        }
+
+        // Redirect untuk mencegah form resubmission
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
+    }
+
+    // Menghapus data berdasarkan ID
+    if (isset($_POST['submit_delete'])) {
+        $id = htmlspecialchars($_POST['id']);
+
+        try {
+            // Prepare statement untuk menghapus data
+            $stmt = $pdo->prepare("DELETE FROM additional_service WHERE id = :id");
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+            // Eksekusi query
+            $stmt->execute();
+
+            // Pesan sukses
+            $_SESSION['success'] = "Service deleted successfully!";
+        } catch (PDOException $e) {
+            $_SESSION['error'] = "Error deleting service: " . $e->getMessage();
+        }
+
+        // Redirect untuk mencegah form resubmission
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
+    }
+}
+
+// Mengambil semua data dari tabel additional_service
+try {
+    $stmt = $pdo->query("SELECT id, name, description, price FROM additional_service ORDER BY id DESC");
+    $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    $error = "Error fetching services: " . $e->getMessage();
+    $services = [];
+}
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +99,7 @@
       }
     </style>
 </head>
-<b>
+
      <!-- Navbar -->
    <nav class="navbar d-flex justify-content-between">
     <button id="menu-toggle" class="menu-toggle">
@@ -80,89 +133,115 @@
     </ul>
   </div>
 
-  <div class="container">
-    <h1 class="mb-4">Additional Services Management</h1>
-  </div>
 
-  <!--table-->
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <table class="table table-bordered">
-          <thead class="table-primary">
-            <tr>
-              <th>ID Add Service</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Price</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php 
-              $data = [];
-              try {
-                  $stmt = $pdo->query("SELECT * FROM additional_service ORDER BY id");
-                  $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-              } catch (Exception $e) {
-                  $message = "Error fetching data: " . $e->getMessage();
-              }
-            ?>
-            <?php if(!empty($data)) : ?>
-              <?php foreach($data as $item): ?>
-                      <tr>
-                          <td><?php echo htmlspecialchars($item['id']); ?></td>
-                          <td><?php echo htmlspecialchars($item['name']); ?></td>
-                          <td><?php echo htmlspecialchars($item['description']); ?></td>
-                          <td><?php echo htmlspecialchars($item['price']); ?></td>
-                          <td>
-                              <button class="btn btn-danger btn-sm">Delete</button>
-                          </td>
-                      </tr>
-                  <?php endforeach; ?>
-              <?php else: ?>
-                <tr>
-                    <td colspan="6" class="text-center">No data available</td>
-                </tr>
-              <?php endif; ?>
-          </tbody>
-        </table>
-      </div>
+<div class="container">
+    <h1>Manage Additional Services</h1>
+
+    <!-- Notifikasi -->
+    <?php if (!empty($error)): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?php echo htmlspecialchars($error); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
+    <?php if (!empty($success)): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?php echo htmlspecialchars($success); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
+
+    <!-- Form Tambah Data -->
+    <div class="card mb-4">
+        <div class="card-header">Add New Service</div>
+        <div class="card-body">
+            <form method="POST">
+                <input type="hidden" name="submit_add" value="1">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Service Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <input type="text" class="form-control" id="description" name="description" required>
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" class="form-control" id="price" name="price" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Service</button>
+            </form>
+        </div>
     </div>
-  </div>  
 
-
-  <form action="" method="POST">
-  <div class="container border border-black row" id="serviceForm">
-    <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add New Service</header>
-    <!--service name-->
-    <div class="col-md-6 d-flex align-items-center">
-      <label for="serviceName" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Service Name</label>
-      <input name="name" type="text" id="serviceName" class="form-control flex-grow-1" value=""><br>
+    <!-- Tabel Data -->
+    <div class="card">
+        <div class="card-header">List of Services</div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (empty($services)): ?>
+                        <tr>
+                            <td colspan="5" class="text-center">No services available.</td>
+                        </tr>
+                    <?php else: ?>
+                        <?php foreach ($services as $service): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($service['id']); ?></td>
+                                <td><?php echo htmlspecialchars($service['name']); ?></td>
+                                <td><?php echo htmlspecialchars($service['description']); ?></td>
+                                <td><?php echo htmlspecialchars($service['price']); ?></td>
+                                <td>
+                                    <!-- Form Hapus Data -->
+                                    <form method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline;">
+                                        <input type="hidden" name="submit_delete" value="1">
+                                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($service['id']); ?>">
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <!--description-->
-    <div class="col-md-6 d-flex align-items-center">
-      <label for="serviceDescription" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Description</label>
-      <input name="description" type="text" id="serviceDescription" class="form-control flex-grow-1" value=""><br>
-    </div>
-    <!--price-->
-    <div class="col-md-6 d-flex align-items-center">
-      <label for="servicePrice" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Price</label>
-      <input name="price" type="text" id="servicePrice" class="form-control flex-grow-1" value=""><br>
-    </div>
-    <!--submit button-->
-    <div class="col-md-12 text-end">
-    <button type="submit" class="btn btn-primary rounded-3 fw-bold " id="addingService">Save</button>
-    </div>
-  </div>
-</form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="addition.js"></script>
+  <!-- JavaScript -->
+  <script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.querySelector('.overlay');
+    const closeIcon = document.querySelector('.close-icon i');
 
+    // Toggle Sidebar
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+      overlay.classList.toggle('active');
+    });
 
+    // Close Sidebar when clicking close icon or overlay
+    closeIcon.addEventListener('click', () => {
+      sidebar.classList.remove('active');
+      overlay.classList.remove('active');
+    });
 
-  
-    <script src="../../sidebar.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-  </body>
+    overlay.addEventListener('click', () => {
+      sidebar.classList.remove('active');
+      overlay.classList.remove('active');
+    });
+  </script>
+
+</body>
 </html>
