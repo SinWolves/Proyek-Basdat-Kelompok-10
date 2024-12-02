@@ -1,10 +1,5 @@
 <?php 
-session_start(); 
 
-// akan dilakukan pemeriksaan apakah ada session user yang aktif, jika tidak arahkan ke login.php 
-if(!isset($_SESSION['akun'])) {
-header('location: login.php'); 
-}
 
 ?>
 

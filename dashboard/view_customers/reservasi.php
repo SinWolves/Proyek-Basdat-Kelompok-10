@@ -1,3 +1,144 @@
+<?php
+  include '../../conn.php';
+
+  // Mulai session untuk notifikasi
+  session_start();
+
+  // Inisialisasi variabel notifikasi
+  $error = $_SESSION['error'] ?? '';
+  $success = $_SESSION['success'] ?? '';
+
+  // Hapus notifikasi setelah ditampilkan
+  unset($_SESSION['error'], $_SESSION['success']);
+
+    if($_SERVER['REQUEST_METHOD']==='POST'){
+        if (isset($_POST['submit_add'])) {
+            //memasukkan data ke 4 tabel dengan query terpisah
+
+            // pakai ini untuk bagian check in//
+            try{
+              $id_customer = htmlspecialchars($_POST['id_customer']);
+              $check_in = htmlspecialchars($_POST['check_in']);
+              $check_out = htmlspecialchars($_POST['check_out']);
+              $room = htmlspecialchars($_POST['room']);
+              $quantity = htmlspecialchars($_POST['quantity']); //sesuai pada front
+              
+              switch ($room){
+                case "executive":
+                  $total_price = htmlspecialchars("2000");
+                  break;
+                case "luxury":
+                  $total_price = htmlspecialchars("55000");
+                  break;
+                case "presidential":
+                  $total_price = htmlspecialchars("150000");
+                  break;
+              }
+                $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, total_price) VALUES (:id_customer, :check_in, :check_out, :room, :total_price)");
+                $stmt->bindParam(':id_customer', $id_customer);
+                $stmt->bindParam(':check_in', $check_in);
+                $stmt->bindParam(':check_out', $check_out);
+                $stmt->bindParam(':room', $room);
+                $stmt->bindParam(':total_price', $total_price);
+              
+                //jalankan kode
+                $stmt->execute();
+              // Pesan sukses
+              $_SESSION['success'] = "New data added successfully!";
+              //agar submit tidak diulangi ketika web di refresh
+              header("Location: " . $_SERVER['PHP_SELF']);
+              exit(); 
+            }catch (PDOException $e) {
+              $_SESSION['error'] = "Error adding data: " . $e->getMessage();
+            }
+
+            //pakai ini untuk bagian additional services
+            //bisa juga kalian set untuk harga additional service
+            //description bisa buat sendiri sesuai quantity
+            //contoh description value ("spa selama {$quantity_addition}")
+            try {
+                $name = htmlspecialchars($_POST['name']);
+                $description = htmlspecialchars($_POST['description']);
+                $price = htmlspecialchars($_POST['price']);
+                $quantity_addition = htmlspecialchars($_POST['quantity_addition']);
+                // Prepare statement untuk memasukkan data
+                $stmt = $pdo->prepare("INSERT INTO additional_service (name, description, price) VALUES (:name, :description, :price)");
+                $stmt->bindParam(':name', $name);
+                $stmt->bindParam(':description', $description);
+                $stmt->bindParam(':price', $price);
+
+                // Eksekusi query
+                $stmt->execute();
+
+                // Pesan sukses
+                $_SESSION['success'] = "New service added successfully!";
+
+            } catch (PDOException $e) {
+                $_SESSION['error'] = "Error adding service: " . $e->getMessage();
+            }
+
+            // Redirect untuk mencegah form resubmission
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
+
+
+            //pakai ini untuk mengisi tabel room sesuai pilihan user
+            //pricenya bisa dipakai sesuai ketentuan pada line 26
+            //sisanya tinggal improvisasi kode
+
+            try{
+                //htmlspecialchars memastikan data yang di input tidak berupa kode sql injection
+                $room = htmlspecialchars($_POST['room']);
+                $price = htmlspecialchars($_POST['price']);
+                
+                //prepare agar tidak terjadi SQL injection
+                $stmt = $pdo->prepare("INSERT INTO room(room_type, price) VALUES (:room, :price)");
+                $stmt->bindParam(':room', $room);
+                $stmt->bindParam(':price', $price);
+              
+                //jalankan kode
+                $stmt->execute();
+        
+                // Pesan sukses
+                $_SESSION['success'] = "New data added successfully!";
+                //agar submit tidak diulangi ketika web di refresh
+                header("Location: " . $_SERVER['PHP_SELF']);
+                exit(); 
+              }catch (PDOException $e) {
+                $_SESSION['error'] = "Error adding data: " . $e->getMessage();
+            }
+
+            //pakai ini untuk mengisi tabel payment
+            //kolom "payment-name" akan diisi sesuai pilihan user pada <select>
+            //status dan date silahkan isi sendiri melalui kode
+            try{
+                //htmlspecialchars memastikan data yang di input tidak berupa kode sql injection
+                $name = htmlspecialchars($_POST['name']);
+                $status = htmlspecialchars($_POST['status']);
+                $date = htmlspecialchars($_POST['date']);
+                
+                //prepare agar tidak terjadi SQL injection
+                $stmt = $pdo->prepare("INSERT INTO payment(name, status, date) VALUES (:name, :status, :date)");
+                $stmt->bindParam(':name', $name);
+                $stmt->bindParam(':status', $status);
+                $stmt->bindParam(':date', $date);
+              
+                //jalankan kode
+                $stmt->execute();
+        
+                // Pesan sukses
+                $_SESSION['success'] = "New data added successfully!";
+                //agar submit tidak diulangi ketika web di refresh
+                header("Location: " . $_SERVER['PHP_SELF']);
+                exit(); 
+              }catch (PDOException $e) {
+                $_SESSION['error'] = "Error adding data: " . $e->getMessage();
+            }
+        }
+        //untuk total price, bisa buat kodenya sendiri agar muncul di tampilan
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
