@@ -11,6 +11,39 @@
   // Hapus notifikasi setelah ditampilkan
   unset($_SESSION['error'], $_SESSION['success']);
 
+  // Fungsi untuk mendapatkan total kamar untuk tipe tertentu
+  function getTotalRooms($pdo, $room_type) {
+    try {
+      $stmt = $pdo->prepare("SELECT COUNT(*) as total FROM room WHERE room_type = :room_type");
+      $stmt->bindParam(':room_type', $room_type);
+      $stmt->execute();
+      $result = $stmt->fetch(PDO::FETCH_ASSOC);
+      return $result['total'];
+    } catch (PDOException $e) {
+      return 0;
+    }
+  }
+
+  // Fungsi untuk mendapatkan total ketersediaan kamar
+  function getRoomAvailability($pdo) {
+    $room_types = [
+      'Executive Suite' => 65,
+      'Luxury Suite' => 25,
+      'Presidential Suite' => 10
+    ];
+
+    $availability = [];
+    foreach ($room_types as $type => $total) {
+      $current_count = getTotalRooms($pdo, $type);
+      $availability[$type] = [
+        'total' => $total,
+        'empty' => $total - $current_count
+      ];
+    }
+
+    return $availability;
+  }
+
   if($_SERVER['REQUEST_METHOD']==='POST'){
     if (isset($_POST['submit_add'])) {
       try{
@@ -36,29 +69,34 @@
       }
     }
 
-    // Menghapus data berdasarkan ID
-    if (isset($_POST['submit_delete'])) {
-      $id = htmlspecialchars($_POST['id']);
+// Menghapus data berdasarkan ID
+if (isset($_POST['submit_delete'])) {
+  $id = htmlspecialchars($_POST['id']);
 
-      try {
-          // Prepare statement untuk menghapus data
-          $stmt = $pdo->prepare("DELETE FROM room  WHERE id = :id");
-          $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+  try {
+      // Prepare statement untuk menghapus data
+      $stmt = $pdo->prepare("DELETE FROM room WHERE id = :id");
+      $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
-          // Eksekusi query
-          $stmt->execute();
+      // Eksekusi query
+      $stmt->execute();
 
-          // Pesan sukses
-          $_SESSION['success'] = "data deleted successfully!";
-      } catch (PDOException $e) {
-          $_SESSION['error'] = "Error deleting data: " . $e->getMessage();
-      }
+      // Pesan sukses dan tandai sebagai hapus
+      $_SESSION['success'] = "Data deleted successfully!";
+      $_SESSION['isDelete'] = true; // Tandai notifikasi sebagai penghapusan
+  } catch (PDOException $e) {
+      $_SESSION['error'] = "Error deleting data: " . $e->getMessage();
+  }
+
 
       // Redirect untuk mencegah form resubmission
       header("Location: " . $_SERVER['PHP_SELF']);
       exit();
     }
   }
+
+  // Get room availability
+  $room_availability = getRoomAvailability($pdo);
 ?>
 
 <!DOCTYPE html>
@@ -72,17 +110,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orelega+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Luxurious+Roman&display=swap" rel="stylesheet">
-    <style>
-      .form-control {
-       border: 1px solid #0d335d;
-       margin-bottom: 10px;
-     }
 
-     .section-title {
-       font-size: 18px;
-       color: #000000;
-     }
-   </style>
 </head>
 <body>
      <!-- Navbar -->
@@ -121,20 +149,33 @@
   <div class="container">
     <h1 class="mb-4">Room Management</h1>
 
-    <!-- Notifikasi -->
-    <?php if (!empty($error)): ?>
+<!-- Notifikasi -->
+<?php if (!empty($error)): ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <?php echo htmlspecialchars($error); ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<?php endif; ?>
+
+<?php if (!empty($success)): ?>
+    <?php if (!empty($_SESSION['isDelete']) && $_SESSION['isDelete']): ?>
+        <!-- Notifikasi sukses penghapusan data -->
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <?php echo htmlspecialchars($error); ?>
+            <?php echo htmlspecialchars($success); ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    <?php endif; ?>
-    <?php if (!empty($success)): ?>
+    <?php else: ?>
+        <!-- Notifikasi sukses umum -->
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <?php echo htmlspecialchars($success); ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif; ?>
-  </div>
+<?php endif; ?>
+
+<!-- Hapus tanda penghapusan setelah ditampilkan -->
+<?php unset($_SESSION['isDelete']); ?>
+
 
   <div class="container">
     <div class="row">
@@ -209,35 +250,35 @@
           <div class="col-md-9 mt-5">
             <div class="card text-white p-4 shadow" style="background-color:#1a2946;">
               <h1 class="card-title text-left mb-4">Availability Rooms</h1>
-              <div class="availability-section"> <!-- Add this class for left alignment -->
-                <div class="row mb-3">
-                  <div class="col-6 text-start">Executive Suite</div>
-                  <div class="col-6 text-end">
-                    <div class="d-flex justify-content-end align-items-center">
-                      <input type="text" class="form-control text-center me-1 availability-input" id="executive-empty" value="10" readonly>
-                      <span class="mx-1">/</span>
-                      <input type="text" class="form-control text-center availability-input" id="executive-total" value="65" readonly>
-                    </div>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <div class="col-6 text-start">Luxury Suite</div>
-                  <div class="col-6 text-end">
-                    <div class="d-flex justify-content-end align-items-center">
-                      <input type="text" class="form-control text-center me-1 availability-input" id="luxury-empty" value="5" readonly>
-                      <span class="mx-1">/</span>
-                      <input type="text" class="form-control text-center availability-input" id="luxury-total" value="25" readonly>
-                    </div>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <div class="col-6 text-start">Presidential Suite</div>
-                  <div class="col-6 text-end">
-                    <div class="d-flex justify-content-end align-items-center">
-                      <input type="text" class="form-control text-center me-1 availability-input" id="presidential-empty" value="2" readonly>
-                      <span class="mx-1">/</span>
-                      <input type="text" class="form-control text-center availability-input" id="presidential-total" value="10" readonly>
-                    </div>
+              <div class="availability-section">
+    <div class="row mb-3">
+      <div class="col-6 text-start">Executive Suite</div>
+      <div class="col-6 text-end">
+        <div class="d-flex justify-content-end align-items-center">
+          <input type="text" class="form-control text-center me-1 availability-input" id="executive-empty" value="<?php echo $room_availability['Executive Suite']['empty']; ?>" readonly>
+          <span class="mx-1">/</span>
+          <input type="text" class="form-control text-center availability-input" id="executive-total" value="<?php echo $room_availability['Executive Suite']['total']; ?>" readonly>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-6 text-start">Luxury Suite</div>
+      <div class="col-6 text-end">
+        <div class="d-flex justify-content-end align-items-center">
+          <input type="text" class="form-control text-center me-1 availability-input" id="luxury-empty" value="<?php echo $room_availability['Luxury Suite']['empty']; ?>" readonly>
+          <span class="mx-1">/</span>
+          <input type="text" class="form-control text-center availability-input" id="luxury-total" value="<?php echo $room_availability['Luxury Suite']['total']; ?>" readonly>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-6 text-start">Presidential Suite</div>
+      <div class="col-6 text-end">
+        <div class="d-flex justify-content-end align-items-center">
+          <input type="text" class="form-control text-center me-1 availability-input" id="presidential-empty" value="<?php echo $room_availability['Presidential Suite']['empty']; ?>" readonly>
+          <span class="mx-1">/</span>
+          <input type="text" class="form-control text-center availability-input" id="presidential-total" value="<?php echo $room_availability['Presidential Suite']['total']; ?>" readonly>
+        </div>
                   </div>
                 </div>
               </div>

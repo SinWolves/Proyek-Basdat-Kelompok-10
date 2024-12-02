@@ -137,6 +137,7 @@ h1 {
 table {
   width: 100%;
   border-collapse: collapse;
+  word-wrap: break-word; 
 }
 
 table thead, table tbody {
@@ -169,3 +170,10 @@ table th, table td {
   color: #ffffff;
   text-align: center;
 }
+
+#serviceFormContainer {
+    margin: 50px 90px; /* Menambah margin di atas dan bawah, dan auto untuk horizontal */
+    max-width: 600px; /* Membatasi lebar */
+    text-align: center; /* Memastikan konten di tengah */
+}
+

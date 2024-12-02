@@ -131,12 +131,22 @@ h1 {
     color: #0d335d;
 }
 
-/* Table*/
+.form-control {
+    border: 1px solid #0d335d;
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-size: 18px;
+    color: #000000;
+  }
 
 /* Make the table body scrollable */
 table {
   width: 100%;
   border-collapse: collapse;
+  word-wrap: break-word; 
+
 }
 
 table thead, table tbody {
@@ -177,3 +187,29 @@ table th, table td {
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
+
+.notification {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+
+  .error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+
+  .success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+
+#serviceFormContainer {
+    margin: 50px 90px; /* Menambah margin di atas dan bawah, dan auto untuk horizontal */
+    max-width: 600px; /* Membatasi lebar */
+    text-align: center; /* Memastikan konten di tengah */
+}
+

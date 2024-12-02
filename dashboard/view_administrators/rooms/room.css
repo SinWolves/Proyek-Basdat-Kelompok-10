@@ -5,6 +5,16 @@ body, html {
     font-family: 'Luxurious Roman', cursive;
 }
 
+.form-control {
+  border: 1px solid #0d335d;
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-size: 18px;
+  color: #000000;
+}
+
 /* Navbar */
 .navbar {
     background-color: #15274B; 
@@ -207,6 +217,7 @@ body, html {
   span {
     color: white;
   }
+
   
   /* Mobile Responsiveness */
   @media (max-width: 768px) {

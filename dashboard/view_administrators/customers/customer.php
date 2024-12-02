@@ -116,26 +116,37 @@
   <div class="container">
     <h1 class="mb-4">Customer Management</h1>
 
-    <!-- Notifikasi -->
-    <?php if (!empty($error)): ?>
+
+<!-- Notifikasi -->
+<?php if (!empty($error)): ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <?php echo htmlspecialchars($error); ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<?php endif; ?>
+
+<?php if (!empty($success)): ?>
+    <?php if (!empty($_SESSION['isDelete']) && $_SESSION['isDelete']): ?>
+        <!-- Notifikasi delete berhasil (warna merah) -->
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <?php echo htmlspecialchars($error); ?>
+            <?php echo htmlspecialchars($success); ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    <?php endif; ?>
-    <?php if (!empty($success)): ?>
+    <?php else: ?>
+        <!-- Notifikasi umum (warna hijau) -->
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <?php echo htmlspecialchars($success); ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif; ?>
-  </div>
+<?php endif; ?>
+
 
   <div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <table class="table table-bordered">
-          <thead class="table-primary">
+  <div class="row">
+    <div class="col-12"> 
+      <table class="table table-bordered w-100">
+        <thead class="table-primary">
             <tr>
               <th>ID Customer</th>
               <th>Name</th>
@@ -182,7 +193,7 @@
         </table>
       </div>
 
-      <div class="col-md-6">
+      <div id="serviceFormContainer">
         <form action="" method="POST">
         <input type="hidden" name="submit_add" value="1">
         <div class="border border-black p-3" id="serviceForm">
@@ -208,7 +219,7 @@
           </div>
           <div class="d-flex align-items-center mb-3">
             <label for="checkOutcheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Tanggal lahir</label>
-            <input name="birth" type="telepon" id="check_out" class="form-control flex-grow-1">
+            <input name="birth" type="date" id="check_out" class="form-control flex-grow-1">
           </div>
 
           
