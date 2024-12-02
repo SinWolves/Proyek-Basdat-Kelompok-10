@@ -44,7 +44,7 @@
       <i class="fas fa-bars"></i> 
     </button>
     <div class="logout-container">
-      <a href="../../view_customers/login.html" class="logout">Logout</a>
+    <a href="../../view_customers/login.php" class="logout">Logout</a>
     </div>
   </nav>
 

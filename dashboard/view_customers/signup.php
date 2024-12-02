@@ -1,28 +1,22 @@
 <?php
-session_start(); 
 include '../conn.php'; // File untuk koneksi database
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
-    $name = mysqli_real_escape_string($conn, trim($_POST['name']));
-    $email = mysqli_real_escape_string($conn, trim($_POST['email']));
-    $username = mysqli_real_escape_string($conn, trim($_POST['username']));
+    $name = trim($_POST['name']);
+    $email = trim($_POST['email']);
+    $username = trim($_POST['username']);
     $password = trim($_POST['password']);
     $password2 = trim($_POST['password2']);
 
     // Cek apakah username sudah terdaftar
-    $cek_user = mysqli_query($conn, "SELECT * FROM akun WHERE username = '$username'");
-    if (!$cek_user) {
-        die("Query Error: " . mysqli_error($conn));
-    }
-    $cek_login = mysqli_num_rows($cek_user);
-
-    if ($cek_login > 0) {
+    $stmt = $pdo->query("SELECT * FROM akun WHERE username = '$username'");
+    $cek_user = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($cek_user) {
         echo "<script>
             alert('Username telah terdaftar');
             window.location = 'signup.php';
         </script>";
-    } else {
-        // Cek apakah password cocok
+    } else {    
         if ($password !== $password2) {
             echo "<script>
                 alert('Password tidak sesuai');
@@ -33,17 +27,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
             // Masukkan data ke tabel akun
-            $insert = mysqli_query($conn, "INSERT INTO akun (name, email, username, password) VALUES ('$name', '$email', '$username', '$hashed_password')");
-            if ($insert) {
+            $insert = $pdo->prepare("INSERT INTO akun (name, email, username, password) VALUES (:name, :email, :username, :hashed_password)");
+            try {
+                $insert->execute([
+                    ":name" => $name,
+                    ":email" => $email,
+                    ":username" => $username,
+                    ":hashed_password" => $hashed_password,
+                ]);
                 echo "<script>
                     alert('Data berhasil ditambahkan');
                     window.location = 'index.php';
                 </script>";
-            } else {
-                echo "<script>
-                    alert('Error: " . mysqli_error($conn) . "');
-                    window.location = 'signup.php';
-                </script>";
+                header("Location: login.php");
+                exit();
+            } catch (PDOException $e) {
+                // Handle any errors that occur during the insert process
+                echo "Error: " . $e->getMessage();
             }
         }
     }

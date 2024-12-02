@@ -81,6 +81,7 @@ $success = $_SESSION['success'] ?? '';
     <link href="https://fonts.googleapis.com/css2?family=Luxurious+Roman&display=swap" rel="stylesheet">
 </head>
 <body>
+
     <!-- Navbar -->
     <nav class="navbar d-flex justify-content-between">
         <button id="menu-toggle" class="menu-toggle">
@@ -90,6 +91,17 @@ $success = $_SESSION['success'] ?? '';
             <a href="../../view_customers/login.html" class="logout">Logout</a>
         </div>
     </nav>
+
+     <!-- Navbar -->
+   <nav class="navbar d-flex justify-content-between">
+    <button id="menu-toggle" class="menu-toggle">
+      <i class="fas fa-bars"></i> 
+    </button>
+    <div class="logout-container">
+      <a href="../../view_customers/login.php" class="logout">Logout</a>
+    </div>
+  </nav>
+
 
     <!-- Sidebar -->
     <div class="overlay"></div>
