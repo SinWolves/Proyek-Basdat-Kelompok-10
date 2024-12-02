@@ -182,3 +182,18 @@ table th, table td {
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
+
+.alert-success {
+    background-color: #d4edda; /* Hijau muda */
+    border-color: #c3e6cb;   /* Hijau sedikit lebih gelap */
+    color: #155724;         /* Hijau tua untuk teks */
+}
+.alert-danger {
+    background-color: #f8d7da; /* Merah muda */
+    border-color: #f5c6cb;   /* Merah sedikit lebih gelap */
+    color: #721c24;         /* Merah tua untuk teks */
+}
+
+body { padding-top: 20px; }
+.error { color: red; }
+.success { color: green; }

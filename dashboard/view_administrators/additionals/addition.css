@@ -81,6 +81,16 @@ body, html {
     font-weight: bold;
 }
 
+.form-control {
+    border: 1px solid #0d335d;
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-size: 18px;
+    color: #000000;
+  }
+
 /* Overlay */
 .overlay {
     position: fixed;
@@ -302,3 +312,14 @@ body, html {
       margin-top: 1rem;
       margin-bottom: 1rem;
   }
+
+  body { padding-top: 20px; }
+  .error { color: red; }
+  .success { color: green; }
+
+
+
+
+
+
+  

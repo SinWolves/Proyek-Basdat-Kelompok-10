@@ -83,7 +83,6 @@ document.getElementById("addingService").addEventListener("click", function(even
       row.remove();  // Remove the row from the table
     });
   });
-
   // Add functionality to Edit Button
   const editBtns = document.querySelectorAll(".editBtn");
   editBtns.forEach(btn => {
