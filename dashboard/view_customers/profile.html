@@ -1,0 +1,64 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title> Profile</title>
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: 'Arial', sans-serif;">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 50px;">
+   <div class="container-fluid">
+    <div class="ms-auto d-flex align-items-center">
+     <span class="me-2"> Cindy Melisa </span>
+     <img alt="User profile icon" class="rounded-circle" height="30" src="#" width="30"/>
+    </div>
+   </div>
+  </nav>
+  <div class="container">
+   <div class="row">
+    <div class="col-md-3">
+     <div class="sidebar" style="border: 1px solid #000; padding: 20px; margin-top: 50px;">
+      <a href="#" style="display: block; margin-bottom: 20px; font-weight: bold; color: #000; text-decoration: none;"> My Booking </a>
+      <a href="#" style="display: block; margin-bottom: 20px; font-weight: bold; color: #000; text-decoration: none;"> Change Profile </a>
+      <a href="#" style="display: block; margin-bottom: 20px; font-weight: bold; color: #000; text-decoration: none;"> Logout </a>
+     </div>
+    </div>
+    <div class="col-md-9">
+     <div class="profile-container position-relative" style="border: 1px solid #000; padding: 20px; margin-top: 50px;">
+      <div class="d-flex align-items-center mb-4 position-relative">
+       <img alt="User profile picture" height="100" src="#" style="border-radius: 50%;" width="100"/>
+       <div class="edit-icon" style="position: absolute; bottom: 0; left: 50px; background-color: white; border-radius: 50%; padding: 10px;">
+        <i class="fas fa-pencil-alt"> </i>
+       </div>
+       <div class="ms-3">
+        <label class="form-label" for="name"> Name</label>
+        <input class="form-control" id="name" style="margin-bottom: 20px;" type="text"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-md-6">
+        <label class="form-label" for="username"> Username</label>
+        <input class="form-control" id="username" style="margin-bottom: 20px;" type="text"/>
+       </div>
+       <div class="col-md-6">
+        <label class="form-label" for="dob"> Date of Birth</label>
+        <input class="form-control" id="dob" style="margin-bottom: 20px;" type="text"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-md-6">
+        <label class="form-label" for="email"> E-mail </label>
+        <input class="form-control" id="email" style="margin-bottom: 20px;" type="email"/>
+       </div>
+       <div class="col-md-6">
+        <label class="form-label" for="phone"> Phone Number </label>
+        <input class="form-control" id="phone" style="margin-bottom: 20px;" type="text"/>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+ </body>
+</html>
