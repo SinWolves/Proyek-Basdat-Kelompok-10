@@ -1,5 +1,5 @@
 <?php
-  include '../../conn.php';
+  include '../conn.php';
 
   // Mulai session untuk notifikasi
   session_start();
@@ -279,13 +279,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link" href="/index.html">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
-            <li class="nav-item"><a class="nav-link" href="#rooms">Rooms & Suites</a></li>
-            <li class="nav-item"><a class="nav-link" href="#facilities">Facilities</a></li>
-            <li class="nav-item"><a class="nav-link" href="#additionalservices">Additional Services</a></li>
-            <li class="nav-item"><a class="nav-link" href="reservasi.html">Booking</a></li>
-            <li class="nav-item"><a class="nav-link" href="#contactus">Contact Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.php#about">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.php#rooms">Rooms & Suites</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.php#facilities">Facilities</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.php#additionalservices">Additional Services</a></li>
+            <li class="nav-item"><a class="nav-link" href="reservasi.php">Booking</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.php#contactus">Contact Us</a></li>
             </ul>
             <div class="d-flex ms-3">
             <button class="btn btn-outline-light me-2"  onclick="window.location.href='login.html';">Login</button>
