@@ -30,7 +30,8 @@
           $staffName = $staff['nama'];
 
           // Prepare the query to insert the salary data
-          $stmt = $pdo->prepare("INSERT INTO salary(nama_staf, gaji, status_gaji) VALUES (:name, :gaji, :status)");
+          $stmt = $pdo->prepare("INSERT INTO salary(staff_id, nama_staf, gaji, status_gaji) VALUES (:idstaf, :name, :gaji, :status)");
+          $stmt->bindParam(':idstaf', $idStaff);
           $stmt->bindParam(':name', $staffName);
           $stmt->bindParam(':gaji', $gaji);
           $stmt->bindParam(':status', $status);
