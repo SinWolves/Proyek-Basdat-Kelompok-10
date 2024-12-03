@@ -137,7 +137,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" onclick="window.location.href='reservasi.html';"> Payment</button>
+                            <button type="button" class="btn btn-secondary" onclick="window.location.href='reservasi.php';"> Payment</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>
@@ -164,6 +164,7 @@
                                 <h5 class="modal-title" id="luxuryModalLabel">Luxury Suite</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
+                            
                             <div class="modal-body d-flex align-items-start">
                                 <!-- Gambar Kamar -->
                                 <div class="me-4" style="flex: 1;">

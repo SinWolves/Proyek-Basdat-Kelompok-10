@@ -12,32 +12,25 @@ document.getElementById("addingPayment").addEventListener("click", function(even
 
   // Validate inputs
   if (paymentName && paymentStatus && paymentDate) {
-    // Get the table body where new rows will be added
     const tableBody = document.querySelector("table tbody");
 
-    // If editing an existing row
     if (editingRow) {
-      // Update the cells in the existing row
       const cells = editingRow.querySelectorAll("td");
       cells[1].textContent = paymentName;
       cells[2].textContent = paymentStatus;
       cells[3].textContent = paymentDate;
 
-      // Reset the form and button
       document.getElementById("paymentName").value = "";
       document.getElementById("paymentStatus").value = "";
       document.getElementById("paymentDate").value = "";
       document.getElementById("addingPayment").textContent = "Save";
 
-      // Clear the reference to the row being edited
       editingRow = null;
     } else {
-      // Create a new row if not editing an existing row
       const newRow = document.createElement("tr");
 
-      // Create and append table cells with the input data and auto-incremented ID
       const idCell = document.createElement("td");
-      idCell.textContent = currentPaymentID;  // Set the auto-incremented ID
+      idCell.textContent = currentPaymentID;
       newRow.appendChild(idCell);
 
       const nameCell = document.createElement("td");
@@ -52,7 +45,6 @@ document.getElementById("addingPayment").addEventListener("click", function(even
       dateCell.textContent = paymentDate;
       newRow.appendChild(dateCell);
 
-      // Add action cell (Edit and Delete buttons)
       const actionCell = document.createElement("td");
       actionCell.innerHTML = `
         <button class="btn btn-warning btn-sm editBtn">Edit</button>
@@ -60,13 +52,9 @@ document.getElementById("addingPayment").addEventListener("click", function(even
       `;
       newRow.appendChild(actionCell);
 
-      // Append the new row to the table
-      tableBody.insertBefore(newRow, tableBody.lastElementChild);  // Insert before the "No more data available" row
-
-      // Increment the manager ID for the next entry
+      tableBody.insertBefore(newRow, tableBody.lastElementChild);
       currentPaymentID++;
 
-      // Clear the form fields after adding the data
       document.getElementById("paymentName").value = "";
       document.getElementById("paymentStatus").value = "";
       document.getElementById("paymentDate").value = "";
@@ -75,32 +63,31 @@ document.getElementById("addingPayment").addEventListener("click", function(even
     alert("Please fill all fields.");
   }
 
-  // Add functionality to Delete Button
   const deleteBtns = document.querySelectorAll(".deleteBtn");
   deleteBtns.forEach(btn => {
     btn.addEventListener("click", function() {
       const row = this.closest("tr");
-      row.remove();  // Remove the row from the table
+      row.remove();
     });
   });
 
-  // Add functionality to Edit Button
   const editBtns = document.querySelectorAll(".editBtn");
   editBtns.forEach(btn => {
     btn.addEventListener("click", function() {
       const row = this.closest("tr");
       const cells = row.querySelectorAll("td");
 
-      // Fill the form fields with the current row data
       document.getElementById("paymentName").value = cells[1].textContent;
       document.getElementById("paymentStatus").value = cells[2].textContent;
       document.getElementById("paymentDate").value = cells[3].textContent;
 
-      // Set the editing row reference
       editingRow = row;
-
-      // Change the "Save" button to "Update"
       document.getElementById("addingPayment").textContent = "Update";
     });
   });
+});
+
+// ini digunakan unntuk menampilkan select pembayaran status 
+document.getElementById('paymentStatus').addEventListener('change', function() {
+  alert('Status pembayaran: ' + this.options[this.selectedIndex].text);
 });
