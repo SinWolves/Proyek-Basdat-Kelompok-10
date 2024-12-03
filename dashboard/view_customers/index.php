@@ -38,11 +38,12 @@
                 <li class="nav-item"><a class="nav-link" href="#rooms">Rooms & Suites</a></li>
                 <li class="nav-item"><a class="nav-link" href="#facilities">Facilities</a></li>
                 <li class="nav-item"><a class="nav-link" href="#additionalservices">Additional Services</a></li>
+                <li class="nav-item"><a class="nav-link" href="reservasi.php">Booking</a></li>
                 <li class="nav-item"><a class="nav-link" href="#contactus">Contact Us</a></li>
                 </ul>
                 <div class="d-flex ms-3">
                     <a href="login.php" class="btn btn-outline-light me-2">Login</a>
-                    <a href="signup.php" class="btn btn-primary" style="background-color: rgb(182, 182, 182);">Sign up</a>
+                    <a href="signup.php" class="btn btn-dark btn-outline-light">Sign up</a>
                 </div>
                 
             </div>
@@ -133,7 +134,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" onclick="window.location.href='reservasi.html';"> Payment</button>
+                            <button type="button" class="btn btn-secondary" onclick="window.location.href='reservasi.php';"> Payment</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>
@@ -194,7 +195,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" onclick="window.location.href='reservasi.html';"> Payment</button>
+                            <button type="button" class="btn btn-secondary" onclick="window.location.href='reservasi.php';"> Payment</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>
@@ -256,7 +257,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" onclick="window.location.href='reservasi.html';"> Payment</button>
+                            <button type="button" class="btn btn-secondary" onclick="window.location.href='reservasi.php';"> Payment</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>
