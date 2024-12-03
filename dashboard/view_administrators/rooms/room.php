@@ -68,6 +68,7 @@
         $_SESSION['error'] = "Error adding data: " . $e->getMessage();
       }
     }
+    
 
 // Menghapus data berdasarkan ID
 if (isset($_POST['submit_delete'])) {
@@ -202,11 +203,21 @@ if (isset($_POST['submit_delete'])) {
             ?>
             <?php if(!empty($data)) : ?>
               <?php foreach($data as $item): ?>
-                      <tr>
+                      <tr>                     
                           <td><?php echo htmlspecialchars($item['id']); ?></td>
                           <td><?php echo htmlspecialchars($item['room_type']); ?></td>
                           <td><?php echo htmlspecialchars($item['price']); ?></td>
                           <td>
+                          <button 
+                              type="button" 
+                              class="btn btn-success btn-sm editBtn"
+                              data-bs-toggle="modal" 
+                              data-bs-target="#editModal"
+                              data-id="<?php echo htmlspecialchars($item['id']); ?>"
+                              data-room="<?php echo htmlspecialchars($item['room_type']); ?>"
+                              data-price="<?php echo htmlspecialchars($item['price']); ?>">
+                              Edit
+                            </button>
                             <form method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline;">
                               <input type="hidden" name="submit_delete" value="1">
                               <input type="hidden" name="id" value="<?php echo htmlspecialchars($item['id']); ?>">
@@ -223,7 +234,7 @@ if (isset($_POST['submit_delete'])) {
           </tbody>
         </table>
       </div>
-  
+
       <!-- Room Form and Availability Room Section (Right Side) -->
       <div class="col-md-6">
         <div class="row">
@@ -251,34 +262,34 @@ if (isset($_POST['submit_delete'])) {
             <div class="card text-white p-4 shadow" style="background-color:#1a2946;">
               <h1 class="card-title text-left mb-4">Availability Rooms</h1>
               <div class="availability-section">
-    <div class="row mb-3">
-      <div class="col-6 text-start">Executive Suite</div>
-      <div class="col-6 text-end">
-        <div class="d-flex justify-content-end align-items-center">
-          <input type="text" class="form-control text-center me-1 availability-input" id="executive-empty" value="<?php echo $room_availability['Executive Suite']['empty']; ?>" readonly>
-          <span class="mx-1">/</span>
-          <input type="text" class="form-control text-center availability-input" id="executive-total" value="<?php echo $room_availability['Executive Suite']['total']; ?>" readonly>
-        </div>
-      </div>
-    </div>
-    <div class="row mb-3">
-      <div class="col-6 text-start">Luxury Suite</div>
-      <div class="col-6 text-end">
-        <div class="d-flex justify-content-end align-items-center">
-          <input type="text" class="form-control text-center me-1 availability-input" id="luxury-empty" value="<?php echo $room_availability['Luxury Suite']['empty']; ?>" readonly>
-          <span class="mx-1">/</span>
-          <input type="text" class="form-control text-center availability-input" id="luxury-total" value="<?php echo $room_availability['Luxury Suite']['total']; ?>" readonly>
-        </div>
-      </div>
-    </div>
-    <div class="row mb-3">
-      <div class="col-6 text-start">Presidential Suite</div>
-      <div class="col-6 text-end">
-        <div class="d-flex justify-content-end align-items-center">
-          <input type="text" class="form-control text-center me-1 availability-input" id="presidential-empty" value="<?php echo $room_availability['Presidential Suite']['empty']; ?>" readonly>
-          <span class="mx-1">/</span>
-          <input type="text" class="form-control text-center availability-input" id="presidential-total" value="<?php echo $room_availability['Presidential Suite']['total']; ?>" readonly>
-        </div>
+              <div class="row mb-3">
+                <div class="col-6 text-start">Executive Suite</div>
+                <div class="col-6 text-end">
+                  <div class="d-flex justify-content-end align-items-center">
+                    <input type="text" class="form-control text-center me-1 availability-input" id="executive-empty" value="<?php echo $room_availability['Executive Suite']['empty']; ?>" readonly>
+                    <span class="mx-1">/</span>
+                    <input type="text" class="form-control text-center availability-input" id="executive-total" value="<?php echo $room_availability['Executive Suite']['total']; ?>" readonly>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-6 text-start">Luxury Suite</div>
+                <div class="col-6 text-end">
+                  <div class="d-flex justify-content-end align-items-center">
+                    <input type="text" class="form-control text-center me-1 availability-input" id="luxury-empty" value="<?php echo $room_availability['Luxury Suite']['empty']; ?>" readonly>
+                    <span class="mx-1">/</span>
+                    <input type="text" class="form-control text-center availability-input" id="luxury-total" value="<?php echo $room_availability['Luxury Suite']['total']; ?>" readonly>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-6 text-start">Presidential Suite</div>
+                <div class="col-6 text-end">
+                  <div class="d-flex justify-content-end align-items-center">
+                    <input type="text" class="form-control text-center me-1 availability-input" id="presidential-empty" value="<?php echo $room_availability['Presidential Suite']['empty']; ?>" readonly>
+                    <span class="mx-1">/</span>
+                    <input type="text" class="form-control text-center availability-input" id="presidential-total" value="<?php echo $room_availability['Presidential Suite']['total']; ?>" readonly>
+                  </div>
                   </div>
                 </div>
               </div>
@@ -288,6 +299,32 @@ if (isset($_POST['submit_delete'])) {
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit Room</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editForm">
+          <input type="hidden" id="editRoomId" name="id" value="">
+          <div class="mb-3">
+            <label for="editRoomType" class="form-label">Room Type</label>
+            <input type="text" class="form-control" id="editRoomType" name="room" required>
+          </div>
+          <div class="mb-3">
+            <label for="editRoomPrice" class="form-label">Price</label>
+            <input type="text" class="form-control" id="editRoomPrice" name="price" required>
+          </div>
+          <button type="button" class="btn btn-primary" id="saveEditChanges">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
   
     <script src="../../sidebar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
