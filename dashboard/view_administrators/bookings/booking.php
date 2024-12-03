@@ -260,12 +260,12 @@
           <!-- Check-In -->
           <div class="d-flex align-items-center mb-3">
             <label for="checkIncheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Check-In</label>
-            <input name="check_in" type="datetime-local" id="check_out" class="form-control flex-grow-1">
+            <input name="check_in" type="date" id="check_out" class="form-control flex-grow-1">
           </div>
           <!-- Check-Out -->
           <div class="d-flex align-items-center mb-3">
             <label for="checkOutcheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Check-Out</label>
-            <input name="check_out" type="datetime-local" id="check_out" class="form-control flex-grow-1">
+            <input name="check_out" type="date" id="check_out" class="form-control flex-grow-1">
           </div>
 
           <!-- Rooms -->

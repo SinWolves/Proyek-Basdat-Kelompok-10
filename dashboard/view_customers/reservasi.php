@@ -1,5 +1,5 @@
 <?php
-  include '../../conn.php';
+  include '../conn.php';
 
   // Mulai session untuk notifikasi
   session_start();
@@ -16,112 +16,175 @@
             //memasukkan data ke 4 tabel dengan query terpisah
 
             // pakai ini untuk bagian check in//
-            try{
-              $id_customer = htmlspecialchars($_POST['id_customer']);
-              $check_in = htmlspecialchars($_POST['check_in']);
-              $check_out = htmlspecialchars($_POST['check_out']);
-              $room = htmlspecialchars($_POST['room']);
-              $quantity = htmlspecialchars($_POST['quantity']); //sesuai pada front
-              
-              switch ($room){
-                case "executive":
-                  $total_price = htmlspecialchars("2000");
-                  break;
-                case "luxury":
-                  $total_price = htmlspecialchars("55000");
-                  break;
-                case "presidential":
-                  $total_price = htmlspecialchars("150000");
-                  break;
-              }
-                $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, total_price) VALUES (:id_customer, :check_in, :check_out, :room, :total_price)");
-                $stmt->bindParam(':id_customer', $id_customer);
-                $stmt->bindParam(':check_in', $check_in);
-                $stmt->bindParam(':check_out', $check_out);
-                $stmt->bindParam(':room', $room);
-                $stmt->bindParam(':total_price', $total_price);
-              
-                //jalankan kode
-                $stmt->execute();
-              // Pesan sukses
-              $_SESSION['success'] = "New data added successfully!";
-              //agar submit tidak diulangi ketika web di refresh
-              header("Location: " . $_SERVER['PHP_SELF']);
-              exit(); 
-            }catch (PDOException $e) {
-              $_SESSION['error'] = "Error adding data: " . $e->getMessage();
-            }
-
-            //pakai ini untuk bagian additional services
-            //bisa juga kalian set untuk harga additional service
-            //description bisa buat sendiri sesuai quantity
-            //contoh description value ("spa selama {$quantity_addition}")
             try {
-                $name = htmlspecialchars($_POST['name']);
-                $description = htmlspecialchars($_POST['description']);
-                $price = htmlspecialchars($_POST['price']);
-                $quantity_addition = htmlspecialchars($_POST['quantity_addition']);
-                // Prepare statement untuk memasukkan data
-                $stmt = $pdo->prepare("INSERT INTO additional_service (name, description, price) VALUES (:name, :description, :price)");
-                $stmt->bindParam(':name', $name);
-                $stmt->bindParam(':description', $description);
-                $stmt->bindParam(':price', $price);
-
-                // Eksekusi query
-                $stmt->execute();
-
-                // Pesan sukses
-                $_SESSION['success'] = "New service added successfully!";
-
-            } catch (PDOException $e) {
-                $_SESSION['error'] = "Error adding service: " . $e->getMessage();
-            }
-
-            // Redirect untuk mencegah form resubmission
-            header("Location: " . $_SERVER['PHP_SELF']);
-            exit();
-
-
-            //pakai ini untuk mengisi tabel room sesuai pilihan user
-            //pricenya bisa dipakai sesuai ketentuan pada line 26
-            //sisanya tinggal improvisasi kode
-
-            try{
-                //htmlspecialchars memastikan data yang di input tidak berupa kode sql injection
-                $room = htmlspecialchars($_POST['room']);
-                $price = htmlspecialchars($_POST['price']);
-                
-                //prepare agar tidak terjadi SQL injection
-                $stmt = $pdo->prepare("INSERT INTO room(room_type, price) VALUES (:room, :price)");
-                $stmt->bindParam(':room', $room);
-                $stmt->bindParam(':price', $price);
-              
-                //jalankan kode
-                $stmt->execute();
-        
-                // Pesan sukses
-                $_SESSION['success'] = "New data added successfully!";
-                //agar submit tidak diulangi ketika web di refresh
-                header("Location: " . $_SERVER['PHP_SELF']);
-                exit(); 
-              }catch (PDOException $e) {
+                $nama_InRoomDining = "Personalized In-Room Dining";
+                $nama_InRoomSpa = "24/7 In-Room Spa Services";
+                $nama_Fitness = "Personal Fitness Trainer & Wellness Coach";
+                $nama_KidsClub = "Exclusive Kids Club with Personalized Activities";
+            
+                //nilai
+                $valueInRoomDining = (int) htmlspecialchars($_POST['in_room_dining']); 
+                $valueInRoomSpa = (int) htmlspecialchars($_POST['in_room_spa']);
+                $valueFitness = (int) htmlspecialchars($_POST['fitness']);  
+                $valueKidsClub = (int) htmlspecialchars($_POST['kids_club']);
+            
+                //description
+                $descriptionInRoomDining = "$nama_InRoomDining selama $valueInRoomDining session";
+                $descriptionInRoomSpa = "$nama_InRoomSpa selama $valueInRoomSpa session";
+                $descriptionFitna_ss = "$nameFitness selama $valueFitness jam";
+                $descriptionKidsClub = "$nama_KidsClub selama $valueKidsClub child";
+            
+                // harga
+                $priceInRoomDining = 500000;  
+                $priceInRoomSpa = 1000000;  
+                $priceFitness = 800000; 
+                $priceKidsClub = 400000;  
+            
+                //total
+                $totalPriceInRoomDining = $priceInRoomDining * $valueInRoomDining;
+                $totalPriceInRoomSpa = $priceInRoomSpa * $valueInRoomSpa;
+                $totalPriceFitness = $priceFitness * $valueFitness;
+                $totalPriceKidsClub = $priceKidsClub * $valueKidsClub;
+     
+                if ($valueInRoomDining > 0) {
+                    $stmt = $pdo->prepare("INSERT INTO additional_service (name, description, price) VALUES (:name, :description, :price)");
+                    $stmt->bindParam(':name', $nama_InRoomDining);
+                    $stmt->bindParam(':description', $descriptionInRoomDining);
+                    $stmt->bindParam(':price', $totalPriceInRoomDining);
+                    $stmt->execute();
+                }
+            
+                if ($valueInRoomSpa > 0) {
+                    $stmt = $pdo->prepare("INSERT INTO additional_service (name, description, price) VALUES (:name, :description, :price)");
+                    $stmt->bindParam(':name', $nama_InRoomSpa);
+                    $stmt->bindParam(':description', $descriptionInRoomSpa);
+                    $stmt->bindParam(':price', $totalPriceInRoomSpa);
+                    $stmt->execute();
+                }
+            
+                if ($valueFitness > 0) {
+                    $stmt = $pdo->prepare("INSERT INTO additional_service (name, description, price) VALUES (:name, :description, :price)");
+                    $stmt->bindParam(':name', $nama_Fitness);
+                    $stmt->bindParam(':description', $descriptionFitness);
+                    $stmt->bindParam(':price', $totalPriceFitness);
+                    $stmt->execute();
+                }
+            
+                if ($valueKidsClub > 0) {
+                    $stmt = $pdo->prepare("INSERT INTO additional_service (name, description, price) VALUES (:name, :description, :price)");
+                    $stmt->bindParam(':name', $nama_KidsClub);
+                    $stmt->bindParam(':description', $descriptionKidsClub);
+                    $stmt->bindParam(':price', $totalPriceKidsClub);
+                    $stmt->execute();
+                }
+            }catch (PDOException $e) {
                 $_SESSION['error'] = "Error adding data: " . $e->getMessage();
-            }
+            }     
+            
+            try {
+                // Room: Executive Suite
+                if ($_POST['executive-quantity'] > 0) { 
+                    for ($i = 0; $i < $_POST['executive-quantity']; $i++) {
+                        $stmt = $pdo->prepare("INSERT INTO room(room_type, price) VALUES ('Executive', :price)");
+                        $stmt->bindValue(':price', 3500000.00);
+                        $stmt->execute();
+                    }
+            
+                    $id_customer = 2;  
+                    $check_in = htmlspecialchars($_POST['check_in']);
+                    $check_out = htmlspecialchars($_POST['check_out']);
+                    $total_price = 3500000.00 * $_POST['executive-quantity'];
+            
 
-            //pakai ini untuk mengisi tabel payment
-            //kolom "payment-name" akan diisi sesuai pilihan user pada <select>
-            //status dan date silahkan isi sendiri melalui kode
+                    if ($total_price <= 0) {
+                        $_SESSION['error'] = "Error adding service: Executive room price calculation failed.";
+                        header("Location: " . $_SERVER['PHP_SELF']);
+                        exit(); 
+                    }
+            
+                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, total_price) VALUES (:id_customer, :check_in, :check_out, 'Executive', :total_price)");
+                    $stmt->bindParam(':id_customer', $id_customer);
+                    $stmt->bindParam(':check_in', $check_in);
+                    $stmt->bindParam(':check_out', $check_out);
+                    $stmt->bindParam(':total_price', $total_price);
+                    $stmt->execute();
+                }
+            
+                // Room: Luxury Suite
+                if ($_POST['luxury-quantity'] > 0) {
+                    for ($i = 0; $i < $_POST['luxury-quantity']; $i++) {
+                        $stmt = $pdo->prepare("INSERT INTO room(room_type, price) VALUES ('Luxury', :price)");
+                        $stmt->bindValue(':price', 7500000.00);
+                        $stmt->execute();
+                    }
+            
+                    $id_customer = 2;  
+                    $check_in = htmlspecialchars($_POST['check_in']);
+                    $check_out = htmlspecialchars($_POST['check_out']);
+                    $total_price = 7500000.00 * $_POST['luxury-quantity'];
+            
+                    if ($total_price <= 0) {
+                        $_SESSION['error'] = "Error adding service: Luxury room price calculation failed.";
+                        header("Location: " . $_SERVER['PHP_SELF']);
+                        exit(); 
+                    }
+            
+                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, total_price) VALUES (:id_customer, :check_in, :check_out, 'Luxury', :total_price)");
+                    $stmt->bindParam(':id_customer', $id_customer);
+                    $stmt->bindParam(':check_in', $check_in);
+                    $stmt->bindParam(':check_out', $check_out);
+                    $stmt->bindParam(':total_price', $total_price);
+                    $stmt->execute();
+                }
+            
+                // Room: Presidential Suite
+                if ($_POST['presidential-quantity'] > 0) {
+                    for ($i = 0; $i < $_POST['presidential-quantity']; $i++) {
+                        $stmt = $pdo->prepare("INSERT INTO room(room_type, price) VALUES ('Presidential', :price)");
+                        $stmt->bindValue(':price', 15000000.00);
+                        $stmt->execute();
+                    }
+            
+                    $id_customer = 2;  // Assuming this is the current customer ID
+                    $check_in = htmlspecialchars($_POST['check_in']);
+                    $check_out = htmlspecialchars($_POST['check_out']);
+                    $total_price = 15000000.00 * $_POST['presidential-quantity'];
+            
+                    // Check if total price is valid
+                    if ($total_price <= 0) {
+                        $_SESSION['error'] = "Error adding service: Presidential room price calculation failed.";
+                        header("Location: " . $_SERVER['PHP_SELF']);
+                        exit(); 
+                    }
+            
+                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, total_price) VALUES (:id_customer, :check_in, :check_out, 'Presidential', :total_price)");
+                    $stmt->bindParam(':id_customer', $id_customer);
+                    $stmt->bindParam(':check_in', $check_in);
+                    $stmt->bindParam(':check_out', $check_out);
+                    $stmt->bindParam(':total_price', $total_price);
+                    $stmt->execute();
+                }
+            } catch (PDOException $e) {
+                $_SESSION['error'] = "Error adding data: " . $e->getMessage();
+                header("Location: " . $_SERVER['PHP_SELF']);
+                exit();
+            }
+        
+
             try{
                 //htmlspecialchars memastikan data yang di input tidak berupa kode sql injection
-                $name = htmlspecialchars($_POST['name']);
-                $status = htmlspecialchars($_POST['status']);
-                $date = htmlspecialchars($_POST['date']);
+                if (empty($_POST['paymentMethod'])) {
+                    $_SESSION['error'] = "Please select a payment method.";
+                    header("Location: " . $_SERVER['PHP_SELF']);
+                    exit();
+                }
+                $name = htmlspecialchars($_POST['paymentMethod']);
+                $status = "PAID";
                 
                 //prepare agar tidak terjadi SQL injection
-                $stmt = $pdo->prepare("INSERT INTO payment(name, status, date) VALUES (:name, :status, :date)");
+                $stmt = $pdo->prepare("INSERT INTO payment(name, status) VALUES (:name, :status)");
                 $stmt->bindParam(':name', $name);
                 $stmt->bindParam(':status', $status);
-                $stmt->bindParam(':date', $date);
               
                 //jalankan kode
                 $stmt->execute();
@@ -131,11 +194,10 @@
                 //agar submit tidak diulangi ketika web di refresh
                 header("Location: " . $_SERVER['PHP_SELF']);
                 exit(); 
-              }catch (PDOException $e) {
+            }catch (PDOException $e) {
                 $_SESSION['error'] = "Error adding data: " . $e->getMessage();
             }
         }
-        //untuk total price, bisa buat kodenya sendiri agar muncul di tampilan
     }
 ?>
 
@@ -297,16 +359,18 @@
 
     <div class="reservation-header ">Reservation</div>
 
+    <form action="" method="POST">
+    <input type="hidden" name="submit_add" value="1">
     <div class="reservation-form container-fluid">
         <div class="row">
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="checkIn" class="form-label">Check-In</label>
-                    <input type="date" class="form-control" id="checkIn">
+                    <input name="check_in" type="date" class="form-control" id="checkIn">
                 </div>
                 <div class="mb-3">
                     <label for="checkOut" class="form-label">Check-Out</label>
-                    <input type="date" class="form-control" id="checkOut">
+                    <input name="check_out" type="date" class="form-control" id="checkOut">
                 </div>
                 <div class="card">
                     <div class="card-header" style="background-color: #001f54; color: #eae2be; font-family: 'Luxurious Roman';">Rooms & Suites</div>
@@ -315,7 +379,7 @@
                             <span style="font-family: 'Luxurious Roman';" >Executive Suite</span>
                             <div class="increment-buttons">
                                 <button class="btn btn-sm btn-light">-</button>
-                                <input type="text" value="0" readonly>
+                                <input name="executive-quantity" type="text" value="0" readonly>
                                 <button class="btn btn-sm btn-light">+</button>
                             </div>
                         </div>
@@ -323,7 +387,7 @@
                             <span style="font-family: 'Luxurious Roman';" >Luxury Suite</span>
                             <div class="increment-buttons">
                                 <button class="btn btn-sm btn-light">-</button>
-                                <input type="text" value="0" readonly>
+                                <input name="luxury-quantity" type="text" value="0" readonly>
                                 <button class="btn btn-sm btn-light">+</button>
                             </div>
                         </div>
@@ -331,7 +395,7 @@
                             <span style="font-family: 'Luxurious Roman';" >Presidential Suite</span>
                             <div class="increment-buttons">
                                 <button class="btn btn-sm btn-light">-</button>
-                                <input type="text" value="0" readonly>
+                                <input name="presidential-quantity" type="text" value="0" readonly>
                                 <button class="btn btn-sm btn-light">+</button>
                             </div>
                         </div>
@@ -376,7 +440,7 @@
                             </div>
                             <div class="increment-buttons">
                                 <button class="btn btn-sm btn-light">-</button>
-                                <input type="text" value="0" readonly>
+                                <input name="in_room_dining" type="text" value="0" readonly>
                                 <button class="btn btn-sm btn-light">+</button>
                             </div>
                         </div>
@@ -389,7 +453,7 @@
                             </div>
                             <div class="increment-buttons">
                                 <button class="btn btn-sm btn-light">-</button>
-                                <input type="text" value="0" readonly>
+                                <input name="in_room_spa" type="text" value="0" readonly>
                                 <button class="btn btn-sm btn-light">+</button>
                             </div>
                         </div>
@@ -402,7 +466,7 @@
                             </div>
                             <div class="increment-buttons">
                                 <button class="btn btn-sm btn-light">-</button>
-                                <input type="text" value="0" readonly>
+                                <input name="fitness" type="text" value="0" readonly>
                                 <button class="btn btn-sm btn-light">+</button>
                             </div>
                         </div>
@@ -415,7 +479,7 @@
                             </div>
                             <div class="increment-buttons">
                                 <button class="btn btn-sm btn-light">-</button>
-                                <input type="text" value="0" readonly>
+                                <input name="kids_club" type="text" value="0" readonly>
                                 <button class="btn btn-sm btn-light">+</button>
                             </div>
                         </div>
@@ -424,90 +488,77 @@
             </div>
         </div>
     </div>
+    </form>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+    // dynamic totalprice di ui
+    function updateTotalPrice() {
+        // Room prices
         const roomPrices = {
             executive: 3500000,
             luxury: 7500000,
             presidential: 15000000
         };
-    
+
+        // Additional service prices
         const servicePrices = {
-            dining: 500000,
-            spa: 1000000,
+            in_room_dining: 500000,
+            in_room_spa: 1000000,
             fitness: 800000,
-            kidsClub: 400000
+            kids_club: 400000
         };
-    
-        function updateValue(button, operation) {
-            const input = button.parentElement.querySelector('input'); 
-            let currentValue = parseInt(input.value); 
-    
-            if (operation === 'increment') {
+
+        let executiveQuantity = parseInt(document.querySelector('[name="executive-quantity"]').value) || 0;
+        let luxuryQuantity = parseInt(document.querySelector('[name="luxury-quantity"]').value) || 0;
+        let presidentialQuantity = parseInt(document.querySelector('[name="presidential-quantity"]').value) || 0;
+
+        // Get values from the inputs for additional services
+        let inRoomDining = parseInt(document.querySelector('[name="in_room_dining"]').value) || 0;
+        let inRoomSpa = parseInt(document.querySelector('[name="in_room_spa"]').value) || 0;
+        let fitness = parseInt(document.querySelector('[name="fitness"]').value) || 0;
+        let kidsClub = parseInt(document.querySelector('[name="kids_club"]').value) || 0;
+
+        // room
+        let totalRoomPrice = (executiveQuantity * roomPrices.executive) +
+                             (luxuryQuantity * roomPrices.luxury) +
+                             (presidentialQuantity * roomPrices.presidential);
+
+        // servis
+        let totalServicePrice = (inRoomDining * servicePrices.in_room_dining) +
+                                (inRoomSpa * servicePrices.in_room_spa) +
+                                (fitness * servicePrices.fitness) +
+                                (kidsClub * servicePrices.kids_club);
+
+        // total
+        let totalPrice = totalRoomPrice + totalServicePrice;
+
+        // Update total di ui
+        document.querySelector('.reservation-form .payment .card-body .text-highlight').textContent = `IDR ${totalPrice.toLocaleString()}`;
+        document.getElementById('totalPriceInput').value = totalPrice;
+    }
+
+    // Add event listeners to all quantity input fields
+    document.querySelectorAll('.increment-buttons button').forEach(button => {
+        button.addEventListener('click', function() {
+            const input = this.parentElement.querySelector('input');
+            let currentValue = parseInt(input.value) || 0;
+
+            // Increment or decrement based on button clicked
+            if (this.textContent === '+') {
                 input.value = currentValue + 1;
-            } else if (operation === 'decrement' && currentValue > 0) {
-                input.value = currentValue - 1; 
+            } else if (this.textContent === '-') {
+                input.value = currentValue > 0 ? currentValue - 1 : 0;
             }
-    
-            updateTotal(); 
-        }
-    
-        function calculateDays() {
-            const checkInDate = new Date(document.getElementById('checkIn').value);
-            const checkOutDate = new Date(document.getElementById('checkOut').value);
-    
-            if (checkInDate && checkOutDate && checkOutDate > checkInDate) {
-                const timeDiff = checkOutDate - checkInDate;
-                const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-                return days;
-            }
-            return 0; 
-        }
-    
-        function updateTotal() {
-            let total = 0;
-    
-            // harga kamar
-            const executiveCount = parseInt(document.querySelector('.increment-buttons input').value);
-            const luxuryCount = parseInt(document.querySelectorAll('.increment-buttons input')[1].value);
-            const presidentialCount = parseInt(document.querySelectorAll('.increment-buttons input')[2].value);
-    
-            const days = calculateDays();
-            total += executiveCount * roomPrices.executive * days;
-            total += luxuryCount * roomPrices.luxury * days;
-            total += presidentialCount * roomPrices.presidential * days;
-    
-            // harga layanan tambahan
-            const diningCount = parseInt(document.querySelectorAll('.increment-buttons input')[3].value);
-            const spaCount = parseInt(document.querySelectorAll('.increment-buttons input')[4].value);
-            const fitnessCount = parseInt(document.querySelectorAll('.increment-buttons input')[5].value);
-            const kidsClubCount = parseInt(document.querySelectorAll('.increment-buttons input')[6].value);
-    
-            total += diningCount * servicePrices.dining;
-            total += spaCount * servicePrices.spa;
-            total += fitnessCount * servicePrices.fitness;
-            total += kidsClubCount * servicePrices.kidsClub;
-    
-            
-            document.querySelector('.text-highlight').textContent = `IDR ${total.toLocaleString()}`;
-        }
-    
-       
-        document.querySelectorAll('.increment-buttons button').forEach(button => {
-            button.addEventListener('click', function () {
-                if (this.textContent === '+') {
-                    updateValue(this, 'increment'); 
-                } else if (this.textContent === '-') {
-                    updateValue(this, 'decrement');
-                }
-            });
+
+            // Update the total price
+            updateTotalPrice();
         });
-    
-       
-        document.getElementById('checkIn').addEventListener('change', updateTotal);
-        document.getElementById('checkOut').addEventListener('change', updateTotal);
-    </script>
+    });
+
+    // Initialize total price on page load
+    updateTotalPrice();
+</script>
     
 </body>
 </html>

@@ -17,13 +17,11 @@
         //htmlspecialchars memastikan data yang di input tidak berupa kode sql injection
         $name = htmlspecialchars($_POST['name']);
         $status = htmlspecialchars($_POST['status']);
-        $date = htmlspecialchars($_POST['date']);
         
         //prepare agar tidak terjadi SQL injection
-        $stmt = $pdo->prepare("INSERT INTO payment(name, status, date) VALUES (:name, :status, :date)");
+        $stmt = $pdo->prepare("INSERT INTO payment(name, status) VALUES (:name, :statu)");
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':status', $status);
-        $stmt->bindParam(':date', $date);
       
         //jalankan kode
         $stmt->execute();
@@ -155,7 +153,6 @@
                           <td><?php echo htmlspecialchars($item['id']); ?></td>
                           <td><?php echo htmlspecialchars($item['name']); ?></td>
                           <td><?php echo htmlspecialchars($item['status']); ?></td>
-                          <td><?php echo htmlspecialchars($item['date']); ?></td>
                           <td>
                             <form method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline;">
                               <input type="hidden" name="submit_delete" value="1">
@@ -187,10 +184,6 @@
     <div class="col-md-6 d-flex align-items-center">
       <label for="paymentStatus" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Status</label>
       <input name="status" type="text" id="paymentStatus" class="form-control flex-grow-1" value=""><br>
-    </div>
-    <div class="col-md-6 d-flex align-items-center">
-      <label for="paymentDate" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Date</label>
-      <input name="date" type="text" id="paymentDate" class="form-control flex-grow-1" value=""><br>
     </div>
     <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingPayment">Save</button>
   </div>
