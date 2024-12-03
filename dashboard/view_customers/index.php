@@ -1,7 +1,3 @@
-<?php 
-
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -65,7 +61,7 @@
 
             <div class="container1">
                 <div class="roomPicture">
-                    <img src="" alt="">
+                    <img src="img/4f0fed5d-78ff-445b-ab07-108b624b92fd.jpg" alt="hotel">
                 </div>
                 <div class="explain">
                     <p>Welcome to Moonlit Hotel, where luxury meets comfort in the heart of Indonesia. 
@@ -81,7 +77,7 @@
 
         <section class="rooms" id="rooms">
             <header class="caption">
-                <h1>Rooms & Suites</h1>
+                <h1 style="margin-top: 100px;">Rooms & Suites</h1>
             </header>
 
             <div class="container2">
@@ -167,7 +163,7 @@
                             <div class="modal-body d-flex align-items-start">
                                 <!-- Gambar Kamar -->
                                 <div class="me-4" style="flex: 1;">
-                                    <img src="/dashboard/view_customers/img/luxury.png" alt="Luxury Suite" class="img-fluid rounded">
+                                    <img src="img/luxury.png" alt="Luxury Suite" class="img-fluid rounded">
                                 </div>
                                 <!-- Detail Deskripsi -->
                                 <div style="flex: 2;">
@@ -228,7 +224,7 @@
                             <div class="modal-body d-flex align-items-start">
                                 <!-- Gambar Kamar -->
                                 <div class="me-4" style="flex: 1;">
-                                    <img src="/dashboard/view_customers/img/presidential.png" alt="Luxury Suite" class="img-fluid rounded">
+                                    <img src="img/presidential.png" alt="Luxury Suite" class="img-fluid rounded">
                                 </div>
                                 <!-- Detail Deskripsi -->
                                 <div style="flex: 2;">
@@ -273,9 +269,9 @@
         <!--section facilites-->
         
         <!-- judul -->
-        <section id="facilites">
+        <section class="facilities" id="facilities">
             <header class="title">
-                <h1 style="color: #2c5099; font-family: 'Orelega One', cursive; margin-top: 20px; margin-bottom: 20px; letter-spacing: 5px;"> FACILITES </h1>
+                <h1 style="padding-top:4rem; color: #2c5099; font-family: 'Orelega One', cursive; margin-top: 20px; margin-bottom: 20px; letter-spacing: 5px;"> FACILITIES </h1>
             </header>
         
             <!-- content 1 -->
@@ -317,7 +313,7 @@
         <!--section additional services-->
         <section id="additionalservices">
             <header class="title">
-                <h1 style="color: #2c5099; font-family: 'Orelega One', cursive; margin-top: 100px; margin-bottom: 20px; letter-spacing: 5px;"> ADDITIONAL SERVICES </h1>
+                <h1 style="padding-top:4rem; color: #2c5099; font-family: 'Orelega One', cursive; margin-top: 100px; margin-bottom: 20px; letter-spacing: 5px;"> ADDITIONAL SERVICES </h1>
             </header>
             <div class="container">
             <div class="row" style="margin-top: 40px;">
