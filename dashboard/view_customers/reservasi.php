@@ -352,19 +352,22 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link" href="/index.html">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
-            <li class="nav-item"><a class="nav-link" href="#rooms">Rooms & Suites</a></li>
-            <li class="nav-item"><a class="nav-link" href="#facilities">Facilities</a></li>
-            <li class="nav-item"><a class="nav-link" href="#additionalservices">Additional Services</a></li>
-            <li class="nav-item"><a class="nav-link" href="reservasi.html">Booking</a></li>
-            <li class="nav-item"><a class="nav-link" href="#contactus">Contact Us</a></li>
+            <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.php">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.php">Rooms & Suites</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.php">Facilities</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.php">Additional Services</a></li>
+            <li class="nav-item"><a class="nav-link" href="reservasi.php">Booking</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.php">Contact Us</a></li>
             </ul>
             <div class="d-flex ms-3">
             <button class="btn btn-outline-light me-2"  onclick="window.location.href='login.html';">Login</button>
             <button class="btn btn-primary" style="background-color: black; color: white;" onclick="window.location.href='signup.html';">Sign up</button>
             </div>
+            <div class="ms-auto d-flex align-items-center">
+                <img id="profile-account" alt="pp user" class="rounded-circle" height="30" src="img/f10ff70a7155e5ab666bcdd1b45b726d.jpg" width="30"/>
+                </div>
         </div>
         </div>
     </nav>

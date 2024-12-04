@@ -1,14 +1,15 @@
-let currentRoomID = 1; // Initial ID
-let editingRow = null; // Reference for editing row
+let currentRoomID = 1; 
+let editingRow = null; 
 
-// Room data (Initial setup)
+// Room data 
 const rooms = {
   executive: { empty: 65, total: 65 },
   luxury: { empty: 25, total: 25 },
   presidential: { empty: 10, total: 10 },
 };
 
-// Function to update the availability for a room type (increase or decrease)
+// Function to update the availability for a room type 
+
 function updateAvailability(type, change) {
   if (rooms[type].empty + change <= rooms[type].total && rooms[type].empty + change >= 0) {
     rooms[type].empty += change; // Add or subtract based on change

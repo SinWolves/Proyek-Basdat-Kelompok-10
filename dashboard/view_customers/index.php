@@ -32,7 +32,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
                 <li class="nav-item"><a class="nav-link" href="#rooms">Rooms & Suites</a></li>
@@ -45,7 +45,10 @@
                     <a href="login.php" class="btn btn-outline-light me-2">Login</a>
                     <a href="signup.php" class="btn btn-dark btn-outline-light">Sign up</a>
                 </div>
-                
+                <div class="ms-auto d-flex align-items-center">
+                <img id="profile-account" alt="pp user" class="rounded-circle" height="30" src="img/f10ff70a7155e5ab666bcdd1b45b726d.jpg" width="30"/>
+                </div>
+            </div>       
             </div>
             </div>
         </nav>
