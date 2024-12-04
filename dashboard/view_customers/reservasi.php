@@ -381,11 +381,11 @@
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="checkIn" class="form-label">Check-In</label>
-                    <input name="check_in" type="date" class="form-control" id="checkIn">
+                    <input name="check_in" type="date" class="form-control" id="checkIn" required>
                 </div>
                 <div class="mb-3">
                     <label for="checkOut" class="form-label">Check-Out</label>
-                    <input name="check_out" type="date" class="form-control" id="checkOut">
+                    <input name="check_out" type="date" class="form-control" id="checkOut" required>
                 </div>
                 <div class="card">
                     <div class="card-header" style="background-color: #001f54; color: #eae2be; font-family: 'Luxurious Roman';">Rooms & Suites</div>
