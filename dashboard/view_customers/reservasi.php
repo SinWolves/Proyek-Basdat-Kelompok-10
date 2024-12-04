@@ -15,7 +15,8 @@
         if (isset($_POST['submit_add'])) {
             //memasukkan data ke 4 tabel dengan query terpisah
 
-            // pakai ini untuk bagian check in//
+            //total keseluruhan nantinya (mulai dari 0 dulu)
+            $universal_total_price = 0;
             try {
                 $nama_InRoomDining = "Personalized In-Room Dining";
                 $nama_InRoomSpa = "24/7 In-Room Spa Services";
@@ -45,6 +46,10 @@
                 $totalPriceInRoomSpa = $priceInRoomSpa * $valueInRoomSpa;
                 $totalPriceFitness = $priceFitness * $valueFitness;
                 $totalPriceKidsClub = $priceKidsClub * $valueKidsClub;
+
+                $total_addition = $totalPriceInRoomDining + $totalPriceInRoomSpa + $totalPriceFitness + $totalPriceKidsClub;
+                // universal total dari addition
+                $universal_total_price += $total_addition;
      
                 if ($valueInRoomDining > 0) {
                     $stmt = $pdo->prepare("INSERT INTO additional_service (name, description, price) VALUES (:name, :description, :price)");
@@ -95,6 +100,7 @@
                     $check_out = htmlspecialchars($_POST['check_out']);
                     $total_price = 3500000.00 * $_POST['executive-quantity'];
             
+                    $universal_total_price += $total_price;
 
                     if ($total_price <= 0) {
                         $_SESSION['error'] = "Error adding service: Executive room price calculation failed.";
@@ -122,6 +128,8 @@
                     $check_in = htmlspecialchars($_POST['check_in']);
                     $check_out = htmlspecialchars($_POST['check_out']);
                     $total_price = 7500000.00 * $_POST['luxury-quantity'];
+
+                    $universal_total_price += $total_price;
             
                     if ($total_price <= 0) {
                         $_SESSION['error'] = "Error adding service: Luxury room price calculation failed.";
@@ -149,6 +157,8 @@
                     $check_in = htmlspecialchars($_POST['check_in']);
                     $check_out = htmlspecialchars($_POST['check_out']);
                     $total_price = 15000000.00 * $_POST['presidential-quantity'];
+
+                    $universal_total_price += $total_price;
             
                     // Check if total price is valid
                     if ($total_price <= 0) {
@@ -173,6 +183,7 @@
 
             try{
                 //htmlspecialchars memastikan data yang di input tidak berupa kode sql injection
+                
                 if (empty($_POST['paymentMethod'])) {
                     $_SESSION['error'] = "Please select a payment method.";
                     header("Location: " . $_SERVER['PHP_SELF']);
@@ -182,9 +193,10 @@
                 $status = "PAID";
                 
                 //prepare agar tidak terjadi SQL injection
-                $stmt = $pdo->prepare("INSERT INTO payment(name, status) VALUES (:name, :status)");
+                $stmt = $pdo->prepare("INSERT INTO payment(name, status, price) VALUES (:name, :status, :price)");
                 $stmt->bindParam(':name', $name);
                 $stmt->bindParam(':status', $status);
+                $stmt->bindParam(':price', $universal_total_price);
               
                 //jalankan kode
                 $stmt->execute();
