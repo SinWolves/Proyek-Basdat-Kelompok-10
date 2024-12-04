@@ -182,8 +182,7 @@
         
 
             try{
-                //htmlspecialchars memastikan data yang di input tidak berupa kode sql injection
-                
+                //htmlspecialchars memastikan data yang di input tidak berupa kode sql injection     
                 if (empty($_POST['paymentMethod'])) {
                     $_SESSION['error'] = "Please select a payment method.";
                     header("Location: " . $_SERVER['PHP_SELF']);
@@ -227,7 +226,7 @@
     <style>
         body {
             background-color: #f8f9fa;
-            font-family: 'Arial', sans-serif;
+            font-family:'Luxurious Roman', cursive;
         }
 
         .navbar {

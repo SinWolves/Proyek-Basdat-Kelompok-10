@@ -318,7 +318,9 @@ if (isset($_POST['submit_delete'])) {
             <label for="editRoomPrice" class="form-label">Price</label>
             <input type="text" class="form-control" id="editRoomPrice" name="price" required>
           </div>
-          <button type="button" class="btn btn-primary" id="saveEditChanges">Save Changes</button>
+          <button type="button" class="btn" id="saveEditChanges" 
+          style="background-color: #0d335d;
+                color: white;">Save Changes</button>
         </form>
       </div>
     </div>

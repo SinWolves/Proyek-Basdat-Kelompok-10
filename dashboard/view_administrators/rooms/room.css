@@ -130,6 +130,8 @@ body, html {
     margin: 5px 0; /* Jarak antar item */
 }
 
+
+
 .container {
     margin-top: 20px;
   }
@@ -145,6 +147,8 @@ body, html {
     width: 100%;
     border-collapse: collapse;
   }
+
+ 
   
   table thead, table tbody {
     display: table;
@@ -154,9 +158,9 @@ body, html {
   
   table tbody {
     display: table;
-    max-height: 200px; /* Adjust this height as needed */
+    max-height: 200px; 
     overflow-y: scroll;
-    padding-right: 17px; /* Padding to account for scrollbar */
+    padding-right: 17px; 
   }
   
   table th, table td {
@@ -201,6 +205,11 @@ body, html {
     max-width: 500px;
     margin: 0 auto;
     border-radius: 10px;
+  }
+
+  .btn #saveEditChanges {
+    background-color: #0d335d;
+    color: white;
   }
   
   /* Align the availability section left like in word processors */

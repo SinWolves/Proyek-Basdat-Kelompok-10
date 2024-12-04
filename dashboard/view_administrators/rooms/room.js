@@ -9,7 +9,6 @@ const rooms = {
 };
 
 // Function to update the availability for a room type 
-
 function updateAvailability(type, change) {
   if (rooms[type].empty + change <= rooms[type].total && rooms[type].empty + change >= 0) {
     rooms[type].empty += change; // Add or subtract based on change
