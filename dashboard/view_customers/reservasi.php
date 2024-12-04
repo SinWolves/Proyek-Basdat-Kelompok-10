@@ -31,7 +31,7 @@
                 //description
                 $descriptionInRoomDining = "$nama_InRoomDining selama $valueInRoomDining session";
                 $descriptionInRoomSpa = "$nama_InRoomSpa selama $valueInRoomSpa session";
-                $descriptionFitna_ss = "$nameFitness selama $valueFitness jam";
+                $descriptionFitness = "$nameFitness selama $valueFitness jam";
                 $descriptionKidsClub = "$nama_KidsClub selama $valueKidsClub child";
             
                 // harga
@@ -102,7 +102,7 @@
                         exit(); 
                     }
             
-                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, total_price) VALUES (:id_customer, :check_in, :check_out, 'Executive', :total_price)");
+                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price) VALUES (:id_customer, :check_in, :check_out, 'Executive', :total_price)");
                     $stmt->bindParam(':id_customer', $id_customer);
                     $stmt->bindParam(':check_in', $check_in);
                     $stmt->bindParam(':check_out', $check_out);
@@ -129,7 +129,7 @@
                         exit(); 
                     }
             
-                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, total_price) VALUES (:id_customer, :check_in, :check_out, 'Luxury', :total_price)");
+                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price) VALUES (:id_customer, :check_in, :check_out, 'Luxury', :total_price)");
                     $stmt->bindParam(':id_customer', $id_customer);
                     $stmt->bindParam(':check_in', $check_in);
                     $stmt->bindParam(':check_out', $check_out);
@@ -157,7 +157,7 @@
                         exit(); 
                     }
             
-                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, total_price) VALUES (:id_customer, :check_in, :check_out, 'Presidential', :total_price)");
+                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price) VALUES (:id_customer, :check_in, :check_out, 'Presidential', :total_price)");
                     $stmt->bindParam(':id_customer', $id_customer);
                     $stmt->bindParam(':check_in', $check_in);
                     $stmt->bindParam(':check_out', $check_out);
@@ -341,13 +341,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="index.php#about">About Us</a></li>
-            <li class="nav-item"><a class="nav-link" href="index.php#rooms">Rooms & Suites</a></li>
-            <li class="nav-item"><a class="nav-link" href="index.php#facilities">Facilities</a></li>
-            <li class="nav-item"><a class="nav-link" href="index.php#additionalservices">Additional Services</a></li>
-            <li class="nav-item"><a class="nav-link" href="reservasi.php">Booking</a></li>
-            <li class="nav-item"><a class="nav-link" href="index.php#contactus">Contact Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="/index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="#rooms">Rooms & Suites</a></li>
+            <li class="nav-item"><a class="nav-link" href="#facilities">Facilities</a></li>
+            <li class="nav-item"><a class="nav-link" href="#additionalservices">Additional Services</a></li>
+            <li class="nav-item"><a class="nav-link" href="reservasi.html">Booking</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contactus">Contact Us</a></li>
             </ul>
             <div class="d-flex ms-3">
             <button class="btn btn-outline-light me-2"  onclick="window.location.href='login.html';">Login</button>
@@ -378,25 +378,25 @@
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <span style="font-family: 'Luxurious Roman';" >Executive Suite</span>
                             <div class="increment-buttons">
-                                <button class="btn btn-sm btn-light">-</button>
+                                <button type="button" class="btn btn-sm btn-light">-</button>
                                 <input name="executive-quantity" type="text" value="0" readonly>
-                                <button class="btn btn-sm btn-light">+</button>
+                                <button type="button" class="btn btn-sm btn-light">+</button>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <span style="font-family: 'Luxurious Roman';" >Luxury Suite</span>
                             <div class="increment-buttons">
-                                <button class="btn btn-sm btn-light">-</button>
+                                <button type="button" class="btn btn-sm btn-light">-</button>
                                 <input name="luxury-quantity" type="text" value="0" readonly>
-                                <button class="btn btn-sm btn-light">+</button>
+                                <button type="button" class="btn btn-sm btn-light">+</button>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
                             <span style="font-family: 'Luxurious Roman';" >Presidential Suite</span>
                             <div class="increment-buttons">
-                                <button class="btn btn-sm btn-light">-</button>
+                                <button type="button" class="btn btn-sm btn-light">-</button>
                                 <input name="presidential-quantity" type="text" value="0" readonly>
-                                <button class="btn btn-sm btn-light">+</button>
+                                <button type="button" class="btn btn-sm btn-light">+</button>
                             </div>
                         </div>
                     </div>
@@ -423,7 +423,7 @@
                             <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer" value="bankTransfer">
                             <label class="form-check-label" style="font-family: 'Luxurious Roman';" for="bankTransfer">Bank Transfer</label>
                         </div>
-                        <button class="btn btn-book-now">Book Now</button>
+                        <button type="submit" class="btn btn-book-now">Book Now</button>
                     </div>
                 </div>
             </div>
@@ -439,9 +439,9 @@
                                 <span class="service-price">IDR 500,000/session</span>
                             </div>
                             <div class="increment-buttons">
-                                <button class="btn btn-sm btn-light">-</button>
+                                <button type="button" class="btn btn-sm btn-light">-</button>
                                 <input name="in_room_dining" type="text" value="0" readonly>
-                                <button class="btn btn-sm btn-light">+</button>
+                                <button type="button" class="btn btn-sm btn-light">+</button>
                             </div>
                         </div>
                     </div>
@@ -452,9 +452,9 @@
                                 <span class="service-price">IDR 1,000,000/session</span>
                             </div>
                             <div class="increment-buttons">
-                                <button class="btn btn-sm btn-light">-</button>
+                                <button type="button" class="btn btn-sm btn-light">-</button>
                                 <input name="in_room_spa" type="text" value="0" readonly>
-                                <button class="btn btn-sm btn-light">+</button>
+                                <button type="button" type="button" class="btn btn-sm btn-light">+</button>
                             </div>
                         </div>
                     </div>
@@ -465,9 +465,9 @@
                                 <span class="service-price">IDR 800,000/hour</span>
                             </div>
                             <div class="increment-buttons">
-                                <button class="btn btn-sm btn-light">-</button>
+                                <button type="button" class="btn btn-sm btn-light">-</button>
                                 <input name="fitness" type="text" value="0" readonly>
-                                <button class="btn btn-sm btn-light">+</button>
+                                <button type="button" class="btn btn-sm btn-light">+</button>
                             </div>
                         </div>
                     </div>
@@ -478,9 +478,9 @@
                                 <span class="service-price">IDR 400,000/day/child</span>
                             </div>
                             <div class="increment-buttons">
-                                <button class="btn btn-sm btn-light">-</button>
+                                <button type="button" class="btn btn-sm btn-light">-</button>
                                 <input name="kids_club" type="text" value="0" readonly>
-                                <button class="btn btn-sm btn-light">+</button>
+                                <button type="button" class="btn btn-sm btn-light">+</button>
                             </div>
                         </div>
                     </div>
