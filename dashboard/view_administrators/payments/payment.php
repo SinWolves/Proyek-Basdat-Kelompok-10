@@ -133,7 +133,7 @@
               <th>ID Payment</th>
               <th>Name</th>
               <th>Status</th>
-              <th>Date</th>
+              <th>Total</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -153,6 +153,7 @@
                           <td><?php echo htmlspecialchars($item['id']); ?></td>
                           <td><?php echo htmlspecialchars($item['name']); ?></td>
                           <td><?php echo htmlspecialchars($item['status']); ?></td>
+                          <td><?php echo htmlspecialchars($item['price']); ?></td>
                           <td>
                             <form method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline;">
                               <input type="hidden" name="submit_delete" value="1">
