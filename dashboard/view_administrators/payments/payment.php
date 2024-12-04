@@ -172,24 +172,43 @@
       </div>
     </div>
   </div>  
-
   <form action="" method="POST">
   <input type="hidden" name="submit_add" value="1">
   <div class="container border border-black row" id="paymentForm">
     <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add Payment Method</header>
-    <div class="col-md-6 d-flex align-items-center">
-      <label for="paymentName" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Method Name</label>
-      <input name="name" type="text" id="paymentName" class="form-control flex-grow-1" value=""><br>
+    
+    <!-- Dropdown untuk Metode Pembayaran -->
+    <div class="col-md-6 d-flex align-items-center mb-3">
+      <label for="paymentMethod" class="me-2 flex-shrink-0" style="min-width: 130px;">Metode Pembayaran</label>
+      <select name="method" id="paymentMethod" class="form-control flex-grow-1">
+        <option value="" selected disabled hidden>Pilih Opsi Bayar </option>
+        <option value="tunai">Tunai</option>
+        <option value="transfer">Transfer Bank</option>
+      </select>
     </div>
-    <div class="col-md-6 d-flex align-items-center">
-      <label for="paymentStatus" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Status</label>
-      <input name="status" type="text" id="paymentStatus" class="form-control flex-grow-1" value=""><br>
+
+    <!-- Dropdown untuk Status -->
+    <div class="col-md-6 d-flex align-items-center mb-3">
+      <label for="paymentStatus" class="me-2 flex-shrink-0" style="min-width: 130px;">Status</label>
+      <select name="status" id="paymentStatus" class="form-control flex-grow-1">
+        <option value="" selected disabled hidden>Pilih Opsi Status</option>
+        <option value="sudah_lunas">Sudah Lunas</option>
+        <option value="belum_lunas">Belum Lunas</option>
+      </select>
     </div>
-    <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingPayment">Save</button>
-  </div>
+
+    <div class="col-md-6 d-flex align-items-center">
+      <label for="paymentDate" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Date</label>
+      <input name="date" type="date" id="paymentDate" class="form-control flex-grow-1" value=""><br>
+    </div>
+    <div class="col-12 d-flex justify-content-end">
+  <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingPayment">Save</button>
+</div>
 </form>
 
     <script src="../../sidebar.js"></script>
+      <script src="payment.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>

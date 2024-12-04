@@ -1,67 +1,87 @@
 <?php
   include '../../conn.php';
 
-  // Mulai session untuk notifikasi
+  // Start the session for notifications
   session_start();
 
-  // Inisialisasi variabel notifikasi
+  // Initialize notification variables
   $error = $_SESSION['error'] ?? '';
   $success = $_SESSION['success'] ?? '';
 
-  // Hapus notifikasi setelah ditampilkan
+  // Clear notifications after displaying
   unset($_SESSION['error'], $_SESSION['success']);
 
-  if($_SERVER['REQUEST_METHOD']==='POST'){
+  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['submit_add'])) {
-      try{
-        //htmlspecialchars memastikan data yang di input tidak berupa kode sql injection
-        $name = htmlspecialchars($_POST['name']);
+      try {
+        // Sanitize and retrieve form inputs
+        $idStaff = htmlspecialchars($_POST['idStaff']);
         $gaji = htmlspecialchars($_POST['gaji']);
         $status = htmlspecialchars($_POST['status']);
-        
-        //prepare agar tidak terjadi SQL injection
-        $stmt = $pdo->prepare("INSERT INTO salary(nama_staf, gaji, status_gaji) VALUES (:name, :gaji, :status)");
-        $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':gaji', $gaji);
-        $stmt->bindParam(':status', $status);
-      
-        //jalankan kode
-        $stmt->execute();
 
-        // Pesan sukses
-        $_SESSION['success'] = "New data added successfully!";
-        //agar submit tidak diulangi ketika web di refresh
+        // Check if the ID exists in the staff table
+        $stmt = $pdo->prepare("SELECT nama FROM staff WHERE id = :idStaff");
+        $stmt->bindParam(':idStaff', $idStaff, PDO::PARAM_INT);
+        $stmt->execute();
+        $staff = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($staff) {
+          // If staff exists, get the name
+          $staffName = $staff['nama'];
+
+          // Prepare the query to insert the salary data
+          $stmt = $pdo->prepare("INSERT INTO salary(staff_id, nama_staf, gaji, status_gaji) VALUES (:idstaf, :name, :gaji, :status)");
+          $stmt->bindParam(':idstaf', $idStaff);
+          $stmt->bindParam(':name', $staffName);
+          $stmt->bindParam(':gaji', $gaji);
+          $stmt->bindParam(':status', $status);
+
+          // Execute the insert query
+          $stmt->execute();
+
+          // Success message
+          $_SESSION['success'] = "New salary record added successfully!";
+        } else {
+          // If staff doesn't exist, show error message
+          $_SESSION['error'] = "Staff ID not found!";
+        }
+
+        // Prevent form resubmission on page refresh
         header("Location: " . $_SERVER['PHP_SELF']);
         exit(); 
-      }catch (PDOException $e) {
+
+      } catch (PDOException $e) {
+        // Handle SQL errors
         $_SESSION['error'] = "Error adding data: " . $e->getMessage();
       }
     }
 
-    // Menghapus data berdasarkan ID
+    // Delete data based on ID
     if (isset($_POST['submit_delete'])) {
       $id = htmlspecialchars($_POST['id']);
 
       try {
-          // Prepare statement untuk menghapus data
-          $stmt = $pdo->prepare("DELETE FROM salary  WHERE id = :id");
-          $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        // Prepare statement for deletion
+        $stmt = $pdo->prepare("DELETE FROM salary WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
-          // Eksekusi query
-          $stmt->execute();
+        // Execute the query
+        $stmt->execute();
 
-          // Pesan sukses
-          $_SESSION['success'] = "data deleted successfully!";
+        // Success message
+        $_SESSION['success'] = "Data deleted successfully!";
       } catch (PDOException $e) {
-          $_SESSION['error'] = "Error deleting data: " . $e->getMessage();
+        // Handle errors
+        $_SESSION['error'] = "Error deleting data: " . $e->getMessage();
       }
 
-      // Redirect untuk mencegah form resubmission
+      // Redirect to avoid resubmission
       header("Location: " . $_SERVER['PHP_SELF']);
       exit();
     } 
   }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -184,8 +204,8 @@
           <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add New Salary</header>
           <!-- ID Customer -->
           <div class="d-flex align-items-center mb-3">
-            <label for="idcustomer" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Staff Name</label>
-            <input name="name" type="text" id="idcustomer" class="form-control flex-grow-1" value="">
+            <label for="idcustomer" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Staff ID</label>
+            <input name="idStaff" type="number" id="idcustomer" class="form-control flex-grow-1" value="">
           </div>
           <!-- Check-In -->
           <div class="d-flex align-items-center mb-3">

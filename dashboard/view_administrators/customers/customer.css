@@ -138,11 +138,12 @@ table {
   width: 100%;
   border-collapse: collapse;
   word-wrap: break-word; 
+  margin: 0 -30px;
 }
 
 table thead, table tbody {
   display: table;
-  width: 100%;
+  width: 106%;
   table-layout: fixed;
 }
 
@@ -150,7 +151,7 @@ table tbody {
   display: table;
   max-height: 200px; /* Set this based on the desired height */
   overflow-y: scroll;
-  padding-right: 17px; /* Add some padding for scrollbar */
+  padding-right: 10px; /* Add some padding for scrollbar */
 }
 
 table th, table td {

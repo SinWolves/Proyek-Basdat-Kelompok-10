@@ -30,13 +30,13 @@
         // Tentukan harga berdasarkan tipe kamar
         switch ($room) {
           case "executive":
-            $total_price = 2000;
+            $price = 2000;
             break;
           case "luxury":
-            $total_price = 55000;
+            $price = 55000;
             break;
           case "presidential":
-            $total_price = 150000;
+            $price = 150000;
             break;
           default:
             throw new Exception("Invalid room type!");
@@ -72,13 +72,13 @@
         }
 
         // Booking hanya satu kali
-        $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, total_price) VALUES (:id_customer, :check_in, :check_out, :room, :total_price)");
+        $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price) VALUES (:id_customer, :check_in, :check_out, :room, :total_price)");
         $stmt->bindParam(':id_customer', $id_customer);
         $stmt->bindParam(':check_in', $check_in);
         $stmt->bindParam(':check_out', $check_out);
         $stmt->bindParam(':room', $room);
-        $total_booking_price = $total_price * $quantity;
-        $stmt->bindParam(':total_price', $total_booking_price);
+        $total_booking_price = $price * $quantity;
+        $stmt->bindParam(':price', $total_booking_price);
 
         // Jalankan kode
         $stmt->execute();
@@ -227,7 +227,7 @@
                             <td><?php echo htmlspecialchars($item['check_in']); ?></td>
                             <td><?php echo htmlspecialchars($item['check_out']); ?></td>
                             <td><?php echo htmlspecialchars($item['room']); ?></td>
-                            <td><?php echo htmlspecialchars($item['total_price']); ?></td>
+                            <td><?php echo htmlspecialchars($item['price']); ?></td>
                             <td>
                               <form method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline;">
                                 <input type="hidden" name="submit_delete" value="1">
