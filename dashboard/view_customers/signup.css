@@ -94,7 +94,6 @@ input {
 }
 
 .confirm {
-    padding-left: 50px;
     padding-top: 10px;
     padding-bottom: 30px;
     text-align: left;
@@ -128,7 +127,7 @@ button:hover{
 }
 
 .sign-up a{
-    color: #fcfcff;
+    color: #151517;
     text-decoration: none;
     font-size: larger;
     transition: transform 0.3s ease;
@@ -136,5 +135,5 @@ button:hover{
 
 .sign-up a:hover{
     transform: scale(1.1);
-    color: #cfcfd9;
+    color: #a5dd74;
 }
