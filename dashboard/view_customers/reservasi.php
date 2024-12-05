@@ -32,14 +32,14 @@
                 //description
                 $descriptionInRoomDining = "$nama_InRoomDining selama $valueInRoomDining session";
                 $descriptionInRoomSpa = "$nama_InRoomSpa selama $valueInRoomSpa session";
-                $descriptionFitness = "$nameFitness selama $valueFitness jam";
+                $descriptionFitness = "$nama_Fitness selama $valueFitness jam";
                 $descriptionKidsClub = "$nama_KidsClub selama $valueKidsClub child";
             
                 // harga
-                $priceInRoomDining = 500000;  
-                $priceInRoomSpa = 1000000;  
-                $priceFitness = 800000; 
-                $priceKidsClub = 400000;  
+                $priceInRoomDining = 500000.00;  
+                $priceInRoomSpa = 1000000.00;  
+                $priceFitness = 800000.00; 
+                $priceKidsClub = 400000.00;  
             
                 //total
                 $totalPriceInRoomDining = $priceInRoomDining * $valueInRoomDining;
