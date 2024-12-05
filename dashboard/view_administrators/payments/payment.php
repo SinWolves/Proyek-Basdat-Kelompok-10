@@ -20,7 +20,7 @@
         $total = htmlspecialchars($_POST['total']);
         
         //prepare agar tidak terjadi SQL injection
-        $stmt = $pdo->prepare("INSERT INTO payment(name, status, total) VALUES (:name, :status, :total)"); //name saja yang berubah untuk mau ganti nama kolom di supa 
+        $stmt = $pdo->prepare("INSERT INTO payment(name, status, price) VALUES (:name, :status, :total)"); //name saja yang berubah untuk mau ganti nama kolom di supa 
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':status', $status);
         $stmt->bindParam(':total', $total);
@@ -207,12 +207,13 @@
       <input name="total" type="text" id="paymentDate" class="form-control flex-grow-1"><br>
     </div>
     <div class="col-12 d-flex justify-content-end">
-  <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingPayment">Save</button>
-</div>
+    <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingPayment">Save</button>
+    </div>
+  </div>
 </form>
 
     <script src="../../sidebar.js"></script>
-      <script src="payment.js"></script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
