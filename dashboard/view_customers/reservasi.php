@@ -32,7 +32,7 @@
                 //description
                 $descriptionInRoomDining = "$nama_InRoomDining selama $valueInRoomDining session";
                 $descriptionInRoomSpa = "$nama_InRoomSpa selama $valueInRoomSpa session";
-                $descriptionFitness = "$nameFitness selama $valueFitness jam";
+                $descriptionFitness = "$nama_Fitness selama $valueFitness jam";
                 $descriptionKidsClub = "$nama_KidsClub selama $valueKidsClub child";
             
                 // harga

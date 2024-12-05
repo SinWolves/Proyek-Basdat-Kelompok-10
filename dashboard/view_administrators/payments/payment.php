@@ -17,11 +17,13 @@
         //htmlspecialchars memastikan data yang di input tidak berupa kode sql injection
         $name = htmlspecialchars($_POST['name']);
         $status = htmlspecialchars($_POST['status']);
+        $total = htmlspecialchars($_POST['total']);
         
         //prepare agar tidak terjadi SQL injection
-        $stmt = $pdo->prepare("INSERT INTO payment(name, status) VALUES (:name, :statu)");
+        $stmt = $pdo->prepare("INSERT INTO payment(name, status, total) VALUES (:name, :status, :total)"); //name saja yang berubah untuk mau ganti nama kolom di supa 
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':total', $total);
       
         //jalankan kode
         $stmt->execute();
@@ -154,7 +156,7 @@
                           <td><?php echo htmlspecialchars($item['id']); ?></td>
                           <td><?php echo htmlspecialchars($item['name']); ?></td>
                           <td><?php echo htmlspecialchars($item['status']); ?></td>
-                          <td><?php echo htmlspecialchars($item['date']); ?></td>
+                          <td><?php echo htmlspecialchars($item['created_at']); ?></td>
                           <td><?php echo htmlspecialchars($item['price']); ?></td>
                           <td>
                             <form method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline;">
@@ -183,7 +185,7 @@
     <!-- Dropdown untuk Metode Pembayaran -->
     <div class="col-md-6 d-flex align-items-center mb-3">
       <label for="paymentMethod" class="me-2 flex-shrink-0" style="min-width: 130px;">Metode Pembayaran</label>
-      <select name="method" id="paymentMethod" class="form-control flex-grow-1">
+      <select name="name" id="paymentMethod" class="form-control flex-grow-1">
         <option value="" selected disabled hidden>Pilih Opsi Bayar </option>
         <option value="tunai">Tunai</option>
         <option value="transfer">Transfer Bank</option>
@@ -201,8 +203,8 @@
     </div>
 
     <div class="col-md-6 d-flex align-items-center">
-      <label for="paymentDate" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Date</label>
-      <input name="date" type="date" id="paymentDate" class="form-control flex-grow-1" value=""><br>
+      <label for="paymentDate" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Total</label>
+      <input name="total" type="text" id="paymentDate" class="form-control flex-grow-1"><br>
     </div>
     <div class="col-12 d-flex justify-content-end">
   <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingPayment">Save</button>

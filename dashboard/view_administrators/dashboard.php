@@ -10,6 +10,7 @@
   $customer = $result['jmlh_customer'];
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -21,39 +22,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orelega+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Luxurious+Roman&display=swap" rel="stylesheet">
-    <style>
-      /* Dashboard container */
-      .container {
-        margin-top: 20px;
-      }
-
-      .section-title {
-        font-size: 20px;
-        color: #000000;
-      }
-        .form-control {
-        border: 1px solid #0d335d;
-        margin-bottom: 10px;
-      }
-
-
-      /* Table*/
-      
-      .table-bordered th,
-      .table-bordered td {
-        border: 1px solid #000000;
-      }
-
-      /* Ubah warna header tabel */
-      .table-primary th {
-      background-color: #2C5099;
-      color: #ffffff;
-      text-align: center;
-      }
-      
-    </style>
   </head>
   <body>
+    
    <!-- Navbar -->
    <nav class="navbar d-flex justify-content-between">
     <button id="menu-toggle" class="menu-toggle">
