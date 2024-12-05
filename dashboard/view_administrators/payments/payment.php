@@ -144,7 +144,7 @@
             <?php 
               $data = [];
               try {
-                  $stmt = $pdo->query("SELECT * FROM payment ORDER BY id");
+                  $stmt = $pdo->query("SELECT *, date_trunc('second', created_at) AS no_milli FROM payment ORDER BY id");
                   $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
               } catch (Exception $e) {
                   $message = "Error fetching data: " . $e->getMessage();
@@ -156,7 +156,7 @@
                           <td><?php echo htmlspecialchars($item['id']); ?></td>
                           <td><?php echo htmlspecialchars($item['name']); ?></td>
                           <td><?php echo htmlspecialchars($item['status']); ?></td>
-                          <td><?php echo htmlspecialchars($item['created_at']); ?></td>
+                          <td><?php echo htmlspecialchars($item['no_milli']); ?></td>
                           <td><?php echo htmlspecialchars($item['price']); ?></td>
                           <td>
                             <form method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline;">
