@@ -5,6 +5,35 @@ body, html {
     font-family: 'Luxurious Roman', cursive;
 }
 
+ /* Dashboard container */
+ .container {
+    margin-top: 20px;
+  }
+
+  .section-title {
+    font-size: 20px;
+    color: #000000;
+  }
+    .form-control {
+    border: 1px solid #0d335d;
+    margin-bottom: 10px;
+  }
+
+
+  /* Table*/
+  
+  .table-bordered th,
+  .table-bordered td {
+    border: 1px solid #000000;
+  }
+
+  /* Ubah warna header tabel */
+  .table-primary th {
+  background-color: #2C5099;
+  color: #ffffff;
+  text-align: center;
+  }
+  
 /* Navbar */
 .navbar {
     background-color: #15274B; 
