@@ -171,6 +171,12 @@ try {
                 </div>
                 <button type="submit" class="btn btn-primary">Add Service</button>
             </form>
+            <div class="container border border-black row" id="staffForm">
+                <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Cari Staff</header> 
+                <div class="col-md-6 d-flex align-items-center">
+                    <input type="text" id="search-table" class="search" onkeyup="searchTable('table')" placeholder="Search Books">
+                </div>
+            </div>
         </div>
     </div>
 
@@ -178,7 +184,7 @@ try {
     <div class="card">
         <div class="card-header">List of Services</div>
         <div class="card-body">
-            <table class="table table-striped">
+            <table id="table" class="table table-striped">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -216,32 +222,28 @@ try {
         </div>
     </div>
 </div>
+<script src="../../sidebar.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="addition.js"></script>
-  <!-- JavaScript -->
-  <script>
-    const menuToggle = document.getElementById('menu-toggle');
-    const sidebar = document.querySelector('.sidebar');
-    const overlay = document.querySelector('.overlay');
-    const closeIcon = document.querySelector('.close-icon i');
+<script>
+    function searchTable(tableId) {
+            const input = document.getElementById(`search-${tableId}`).value.toLowerCase();
+            const rows = document.getElementById(tableId).querySelector('tbody').getElementsByTagName('tr');
 
-    // Toggle Sidebar
-    menuToggle.addEventListener('click', () => {
-      sidebar.classList.toggle('active');
-      overlay.classList.toggle('active');
-    });
+            for (let i = 0; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                let found = false;
 
-    // Close Sidebar when clicking close icon or overlay
-    closeIcon.addEventListener('click', () => {
-      sidebar.classList.remove('active');
-      overlay.classList.remove('active');
-    });
+                for (let j = 0; j < cells.length; j++) { // Include all columns in the search
+                    if (cells[j].textContent.toLowerCase().includes(input)) {
+                        found = true;
+                        break;
+                    }
+                }
 
-    overlay.addEventListener('click', () => {
-      sidebar.classList.remove('active');
-      overlay.classList.remove('active');
-    });
-  </script>
+                rows[i].style.display = found ? '' : 'none';
+            }
+        }
+</script>
 
 </body>
 </html>

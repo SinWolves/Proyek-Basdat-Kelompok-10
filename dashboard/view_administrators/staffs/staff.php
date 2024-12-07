@@ -143,7 +143,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <table class="table table-bordered">
+                <table id="staff_table" class="table table-bordered">
                     <thead class="table-primary">
                         <tr>
                             <th>ID Staff</th>
@@ -206,8 +206,34 @@
             <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingStaff">Simpan</button>
         </div>
     </form>
+    <div class="container border border-black row" id="staffForm">
+        <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Cari Staff</header> 
+        <div class="col-md-6 d-flex align-items-center">
+            <input type="text" id="search-staff_table" class="search" onkeyup="searchTable('staff_table')" placeholder="Search Books">
+        </div>
+    </div>
 
     <script src="../../sidebar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function searchTable(tableId) {
+                const input = document.getElementById(`search-${tableId}`).value.toLowerCase();
+                const rows = document.getElementById(tableId).querySelector('tbody').getElementsByTagName('tr');
+
+                for (let i = 0; i < rows.length; i++) {
+                    const cells = rows[i].getElementsByTagName('td');
+                    let found = false;
+
+                    for (let j = 0; j < cells.length; j++) { // Include all columns in the search
+                        if (cells[j].textContent.toLowerCase().includes(input)) {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    rows[i].style.display = found ? '' : 'none';
+                }
+            }
+    </script>
 </body>
 </html>

@@ -197,7 +197,7 @@
       <!-- Tabel -->
       <div class="col-md-12">
         <div class="table-responsive"> <!-- Make the table scrollable on smaller screens -->
-          <table class="table table-bordered">
+          <table id="table" class="table table-bordered">
             <thead class="table-primary">
               <tr>
                 <th>ID Booking</th>
@@ -299,6 +299,12 @@
           </div>
         </div>
         </form>
+        <div class="container border border-black row" id="staffForm">
+          <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Cari Staff</header> 
+          <div class="col-md-6 d-flex align-items-center">
+              <input type="text" id="search-table" class="search" onkeyup="searchTable('table')" placeholder="Search Books">
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -306,6 +312,26 @@
 
 
     <script src="../../sidebar.js"></script>
+    <script>
+        function searchTable(tableId) {
+                const input = document.getElementById(`search-${tableId}`).value.toLowerCase();
+                const rows = document.getElementById(tableId).querySelector('tbody').getElementsByTagName('tr');
+
+                for (let i = 0; i < rows.length; i++) {
+                    const cells = rows[i].getElementsByTagName('td');
+                    let found = false;
+
+                    for (let j = 0; j < cells.length; j++) { // Include all columns in the search
+                        if (cells[j].textContent.toLowerCase().includes(input)) {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    rows[i].style.display = found ? '' : 'none';
+                }
+            }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
