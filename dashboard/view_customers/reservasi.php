@@ -108,7 +108,7 @@
                         exit(); 
                     }
             
-                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price) VALUES (:id_customer, :check_in, :check_out, 'Executive', :total_price)");
+                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price, status) VALUES (:id_customer, :check_in, :check_out, 'Executive', :total_price, 'Dipesan')");
                     $stmt->bindParam(':id_customer', $id_customer);
                     $stmt->bindParam(':check_in', $check_in);
                     $stmt->bindParam(':check_out', $check_out);
