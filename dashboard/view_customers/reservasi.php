@@ -232,14 +232,13 @@
         .navbar {
             background-color: #15274b;
             font-family: 'Luxurious Roman';
-            margin-bottom: 0; /* Hapus jarak di bawah navbar */
+            margin-bottom: 0; 
             position: sticky;
             top: 0;
         }
 
         .navbar-brand {
-            font-family: 'Plus Jakarta Sans', sans-serif; /* Ganti dengan font yang diinginkan */
-            font-weight: 600;
+            font-family: 'Plus Jakarta Sans', sans-serif; 
         }
         
         .navbar .btn {

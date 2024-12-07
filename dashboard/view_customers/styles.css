@@ -4,48 +4,51 @@
     font-weight: normal;
     font-style: normal;
 }
-  /* General Reset */
-body, html {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Luxurious Roman', cursive;
-}
+
   
 .hero img {
     width: 100%;
     height: auto;
-    margin-top: -4px; /* Pastikan gambar menyatu dengan navbar */
+    margin-top: -4px;
     display: block;
+}
+
+body {
+    background-color: #f8f9fa;
+    font-family:'Luxurious Roman', cursive;
 }
 
 .navbar {
     background-color: #15274b;
     font-family: 'Luxurious Roman';
-    margin-bottom: 0; /* Hapus jarak di bawah navbar */
     position: sticky;
     top: 0;
     z-index: 3;
+    padding: 1rem 5%;
 }
 
 .navbar-brand {
-    font-family: 'Plus Jakarta Sans', sans-serif; /* Ganti dengan font yang diinginkan */
-    font-weight: 600;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
-  
+
+
 .navbar .btn {
-    font-family: 'Luxurious Roman', sans-serif ;
+    font-family: 'Luxurious Roman', cursive;
+    font-size: 16px;
+    margin: 0 10px;
 }
-  
+
 .navbar .btn-outline-light {
     border-color: white;
     color: white;
 }
-  
+
 .navbar .btn-outline-light:hover {
     background-color: white;
     color: black;
 }
+
+
 
 #about {
     min-height: 100vh; /* Full viewport height */
@@ -122,4 +125,48 @@ body, html {
 
 .btn1{
     background-color: #15274b;
+}
+
+@media (min-width: 1920px) {
+    .navbar {
+        padding: 1rem 10%; 
+    }
+
+    .navbar-brand {
+        font-size: 30px; 
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 20px; 
+    }
+
+    .navbar .btn {
+        font-size: 18px;
+        padding: 10px 25px;
+    }
+
+    #about .title h1 {
+        font-size: 36px;
+    }
+
+    .container1 .roomPicture img {
+        width: 600px; 
+    }
+
+    .container1 .explain p {
+        font-size: 32px;
+    }
+
+    .rooms .caption h1 {
+        font-size: 40px;
+    }
+
+    .container2 .card {
+        width: 20rem; 
+    }
+
+    .card img {
+        height: 250px; 
+        object-fit: cover;
+    }
 }
