@@ -11,6 +11,8 @@
   // Hapus notifikasi setelah ditampilkan
   unset($_SESSION['error'], $_SESSION['success']);
 
+  $edit_id = isset($_GET['edit']) ? htmlspecialchars($_GET['edit']) : null;
+
   // Fungsi untuk mendapatkan total kamar untuk tipe tertentu
   function getTotalRooms($pdo, $room_type) {
     try {
@@ -93,6 +95,26 @@ if (isset($_POST['submit_delete'])) {
       // Redirect untuk mencegah form resubmission
       header("Location: " . $_SERVER['PHP_SELF']);
       exit();
+    }
+
+    if (isset($_POST['submit_edit'])) {
+      try {
+        $id = htmlspecialchars($_POST['id']);
+        $room_type = htmlspecialchars($_POST['room_type']);
+        $price = htmlspecialchars($_POST['price']);
+      
+        $stmt = $pdo->prepare("UPDATE room SET room_type = :room, price = :price  WHERE id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':room', $room_type);
+        $stmt->bindParam(':price', $price);
+        $stmt->execute();
+
+        $_SESSION['success'] = "Data updated successfully!";
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit(); 
+      }catch (PDOException $e) {
+        $_SESSION['error'] = "Error updating data: " . $e->getMessage();
+      }
     }
   }
 
@@ -209,29 +231,37 @@ if (isset($_POST['submit_delete'])) {
             ?>
             <?php if(!empty($data)) : ?>
               <?php foreach($data as $item): ?>
+                <?php if($edit_id == $item['id']): ?>
+                    <!-- Edit Row -->
+                    <tr class="edit-row">
+                      <form action="" method="POST">
+                        <input type="hidden" name="submit_edit" value="1">
+                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($item['id']); ?>">
+                        <td><?php echo htmlspecialchars($item['id']); ?></td>
+                        <td><input name="room_type" type="text" value="<?php echo htmlspecialchars($item['room_type']); ?>" required></td>
+                        <td><input name="price" type="text" value="<?php echo htmlspecialchars($item['price']); ?>" required></td>
+                        <td>
+                          <button type="submit" class="btn btn-success btn-sm me-1">Save</button>
+                          <a href="room.php" class="btn btn-secondary btn-sm">Cancel</a>
+                        </td>
+                      </form>
+                    </tr>
+                  <?php else: ?>
                       <tr>                     
                           <td><?php echo htmlspecialchars($item['id']); ?></td>
                           <td><?php echo htmlspecialchars($item['room_type']); ?></td>
                           <td><?php echo htmlspecialchars($item['price']); ?></td>
                           <td>
-                          <button 
-                              type="button" 
-                              class="btn btn-success btn-sm editBtn"
-                              data-bs-toggle="modal" 
-                              data-bs-target="#editModal"
-                              data-id="<?php echo htmlspecialchars($item['id']); ?>"
-                              data-room="<?php echo htmlspecialchars($item['room_type']); ?>"
-                              data-price="<?php echo htmlspecialchars($item['price']); ?>">
-                              Edit
-                            </button>
-                            <form method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline;">
+                            <a href="room.php?edit=<?php echo htmlspecialchars($item['id']); ?>" class="btn btn-success btn-sm me-1">Edit</a>
+                            <form method="POST" onsubmit="return confirm('Are you sure you want to delete this customer?');" style="display:inline;">
                               <input type="hidden" name="submit_delete" value="1">
                               <input type="hidden" name="id" value="<?php echo htmlspecialchars($item['id']); ?>">
                               <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                             </form>
                           </td>
                       </tr>
-                  <?php endforeach; ?>
+                  <?php endif; ?>
+                <?php endforeach; ?>
               <?php else: ?>
                 <tr>
                     <td colspan="6" class="text-center">No data available</td>

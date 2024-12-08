@@ -11,6 +11,9 @@
   // Clear notifications after displaying
   unset($_SESSION['error'], $_SESSION['success']);
 
+     // Variabel untuk edit mode
+     $edit_id = isset($_GET['edit']) ? htmlspecialchars($_GET['edit']) : null;
+
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['submit_add'])) {
       try {
@@ -79,6 +82,30 @@
       header("Location: " . $_SERVER['PHP_SELF']);
       exit();
     } 
+
+    // Proses update data
+    if (isset($_POST['submit_edit'])) {
+      try {
+        $id = htmlspecialchars($_POST['id']);
+        $nama_staf = htmlspecialchars($_POST['nama_staf']);
+        $gaji = htmlspecialchars($_POST['gaji']);
+        $status_gaji = htmlspecialchars($_POST['status_gaji']);
+        
+        $stmt = $pdo->prepare("UPDATE salary SET nama_staf = :nama_staf, gaji = :gaji, status_gaji = :status_gaji WHERE id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':nama_staf', $nama_staf);
+        $stmt->bindParam(':gaji', $gaji);
+        $stmt->bindParam(':status_gaji', $status_gaji);
+      
+        $stmt->execute();
+
+        $_SESSION['success'] = "Data updated successfully!";
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit(); 
+      }catch (PDOException $e) {
+        $_SESSION['error'] = "Error updating data: " . $e->getMessage();
+      }
+    }
   }
 ?>
 
@@ -166,11 +193,11 @@
           <!-- Check-In -->
           <div class="d-flex align-items-center mb-3">
             <label for="checkIncheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Salary Amount</label>
-            <input name="gaji" type="check_out" id="check_out" class="form-control flex-grow-1">
+            <input name="gaji" type="status_gaji" id="status_gaji" class="form-control flex-grow-1">
           </div>
           <div class="d-flex align-items-center mb-3">
             <label for="checkOutcheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Status</label>
-            <input name="status" type="telepon" id="check_out" class="form-control flex-grow-1">
+            <input name="status" type="telepon" id="status_gaji" class="form-control flex-grow-1">
           </div>
 
           
@@ -207,6 +234,24 @@
             ?>
             <?php if(!empty($data)) : ?>
               <?php foreach($data as $item): ?>
+                <?php if($edit_id == $item['id']): ?>
+                    <!-- Edit Row -->
+                    <tr class="edit-row">
+                      <form action="" method="POST">
+                        <input type="hidden" name="submit_edit" value="1">
+                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($item['id']); ?>">
+                        <td><?php echo htmlspecialchars($item['id']); ?></td>
+                        <td><input name="nama_staf" type="text" value="<?php echo htmlspecialchars($item['nama_staf']); ?>" required></td>
+                        <td><input name="gaji" type="text" value="<?php echo htmlspecialchars($item['gaji']); ?>" required></td>
+                        <td><input name="gaji" type="text" value="<?php echo htmlspecialchars($item['no_milli']); ?>" readonly></td>
+                        <td><input name="status_gaji" type="text" value="<?php echo htmlspecialchars($item['status_gaji']); ?>" required></td>
+                        <td>
+                          <button type="submit" class="btn btn-success btn-sm me-1">Save</button>
+                          <a href="staffsalary.php" class="btn btn-secondary btn-sm">Cancel</a>
+                        </td>
+                      </form>
+                    </tr>
+                  <?php else: ?>
                 <tr>
                   <td><?php echo htmlspecialchars($item['id']); ?></td>
                   <td><?php echo htmlspecialchars($item['nama_staf']); ?></td>
@@ -214,13 +259,15 @@
                   <td><?php echo htmlspecialchars($item['no_milli']); ?></td>
                   <td><?php echo htmlspecialchars($item['status_gaji']); ?></td>
                   <td>
-                    <form method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline;">
+                    <a href="staffsalary.php?edit=<?php echo htmlspecialchars($item['id']); ?>" class="btn btn-success btn-sm me-1">Edit</a>
+                    <form method="POST" onsubmit="return confirm('Are you sure you want to delete this customer?');" style="display:inline;">
                       <input type="hidden" name="submit_delete" value="1">
                       <input type="hidden" name="id" value="<?php echo htmlspecialchars($item['id']); ?>">
                       <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                     </form>
                   </td>
                 </tr>
+                <?php endif; ?>
               <?php endforeach; ?>
             <?php else: ?>
               <tr>
