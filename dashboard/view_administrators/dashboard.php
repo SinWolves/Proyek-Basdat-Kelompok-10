@@ -9,6 +9,28 @@
   $result = $stmt->fetch(PDO::FETCH_ASSOC);
   $customer = $result['jmlh_customer'];
 
+  // Menghapus data berdasarkan ID
+  if (isset($_POST['submit_delete'])) {
+    $id = htmlspecialchars($_POST['id']);
+
+    try {
+        // Prepare statement untuk menghapus data
+        $stmt = $pdo->prepare("DELETE FROM review WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+        // Eksekusi query
+        $stmt->execute();
+
+           // Pesan sukses
+           $_SESSION['success'] = "data deleted successfully!";
+          } catch (PDOException $e) {
+              $_SESSION['error'] = "Error deleting data: " . $e->getMessage();
+          }
+
+    // Redirect untuk mencegah form resubmission
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+  }
 ?>
 
 <!DOCTYPE html>
@@ -132,15 +154,38 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>JohnDoe</td>
-                <td>Excellent service!</td>
-                <td>17/11/2024</td>
-                <td><button class="btn btn-danger btn-sm">Delete</button></td>
-              </tr>
-              <tr>
-                <td colspan="4" class="text-center">No more reviews</td>
-              </tr>
+              <?php 
+                $data = [];
+                try {
+                    $stmt = $pdo->query("SELECT review.*, akun.id AS akun_id, akun.username AS username, date_trunc('second', created_at) AS no_milli FROM review
+                                          JOIN akun
+                                          ON review.id_akun = akun.id
+                                         ORDER BY id");
+                    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                } catch (Exception $e) {
+                    $message = "Error fetching data: " . $e->getMessage();
+                }
+              ?>
+              <?php if(!empty($data)) : ?>
+                <?php foreach($data as $item): ?>
+                  <tr>
+                      <td><?php echo htmlspecialchars($item['username']); ?></td>
+                      <td><?php echo htmlspecialchars($item['review']); ?></td>
+                      <td><?php echo htmlspecialchars($item['no_milli']); ?></td>
+                      <td>
+                        <form action="" method="POST" onsubmit="return confirm('Are you sure you want to delete this customer?');" style="display:inline;">
+                          <input type="hidden" name="submit_delete" value="1">
+                          <input type="hidden" name="id" value="<?php echo htmlspecialchars($item['id']); ?>">
+                          <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                      </td>
+                  </tr>
+                <?php endforeach; ?>
+              <?php else: ?>
+                  <tr>
+                      <td colspan="7" class="text-center">No data available</td>
+                  </tr>
+                <?php endif; ?>
             </tbody>
           </table>
         </div>
