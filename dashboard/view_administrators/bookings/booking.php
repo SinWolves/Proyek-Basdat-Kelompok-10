@@ -163,15 +163,20 @@
 </head>
 <body>
      <!-- Navbar -->
-   <nav class="navbar d-flex justify-content-between">
-    <button id="menu-toggle" class="menu-toggle">
-      <i class="fas fa-bars"></i> 
-    </button>
-    <div class="logout-container">
-    <a href="../../view_customers/login.php" class="logout">Logout</a>
-    </div>
-  </nav>
-
+     <nav class="navbar d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+            <button id="menu-toggle" class="menu-toggle me-3">
+                <i class="fas fa-bars"></i> 
+            </button>
+        </div>
+        <div class="d-flex align-items-center">
+            <!-- Search Bar -->
+            <input type="text" id="search-table" class="form-control me-3" onkeyup="searchTable('table')" 
+                placeholder="Search..." style="max-width: 300px;">
+            <!-- Logout -->
+            <a href="../../view_customers/login.php" class="logout">Logout</a>
+        </div>
+    </nav>
   <!-- Overlay and Sidebar -->
   <div class="overlay"></div>
   <div class="sidebar">
@@ -281,7 +286,7 @@
                             <td><?php echo htmlspecialchars($item['price']); ?></td>
                             <td><?php echo htmlspecialchars($item['status_pemesanan']); ?></td>
                             <td>
-                              <a href="booking.php?edit=<?php echo htmlspecialchars($item['id']); ?>" class="btn btn-primary btn-sm me-1">Edit</a>
+                              <a href="booking.php?edit=<?php echo htmlspecialchars($item['id']); ?>" class="btn btn-success btn-sm me-1">Edit</a>
                               <form method="POST" onsubmit="return confirm('Are you sure you want to delete this customer?');" style="display:inline;">
                                 <input type="hidden" name="submit_delete" value="1">
                                 <input type="hidden" name="id" value="<?php echo htmlspecialchars($item['id']); ?>">
@@ -353,12 +358,6 @@
           </div>
         </div>
         </form>
-        <div class="container border border-black row" id="staffForm">
-          <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Cari Staff</header> 
-          <div class="col-md-6 d-flex align-items-center">
-              <input type="text" id="search-table" class="search" onkeyup="searchTable('table')" placeholder="Search Books">
-          </div>
-        </div>
       </div>
     </div>
   </div>

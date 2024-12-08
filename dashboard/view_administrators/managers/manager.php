@@ -79,15 +79,20 @@
 </head>
 <body>
      <!-- Navbar -->
-   <nav class="navbar d-flex justify-content-between">
-    <button id="menu-toggle" class="menu-toggle">
-      <i class="fas fa-bars"></i> 
-    </button>
-    <div class="logout-container">
-    <a href="../../view_customers/login.php" class="logout">Logout</a>
-    </div>
-  </nav>
-
+     <nav class="navbar d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+            <button id="menu-toggle" class="menu-toggle me-3">
+                <i class="fas fa-bars"></i> 
+            </button>
+        </div>
+        <div class="d-flex align-items-center">
+            <!-- Search Bar -->
+            <input type="text" id="search-table" class="form-control me-3" onkeyup="searchTable('table')" 
+                placeholder="Search..." style="max-width: 300px;">
+            <!-- Logout -->
+            <a href="../../view_customers/login.php" class="logout">Logout</a>
+        </div>
+    </nav>
   <!-- Overlay and Sidebar -->
   <div class="overlay"></div>
   <div class="sidebar">
@@ -129,14 +134,6 @@
     <?php endif; ?>
   </div>
 
-  <div class="input-group" style="max-width: 400px; width: 100%; justify-content: flex-end; margin-left: auto; margin-left: 7.5%;">
-  <div class="form-outline flex-grow-1" data-mdb-input-init>
-    <input type="text" id="search-table" class="form-control" onkeyup="searchTable('table')" placeholder="Search in here" style="border-radius: 0.375rem 0 0 0.375rem;">
-  </div>
-  <button type="button" class="btn btn-primary" data-mdb-ripple-init style="border-radius: 0 0.375rem 0.375rem 0;">
-    <i class="fas fa-search"></i>
-  </button>
-</div>
 
 <form action="" method="POST">
     <input type="hidden" name="submit_add" value="1">
@@ -216,7 +213,6 @@
       </div>
     </div>
   </div>  
-
 
 
     <script src="../../sidebar.js"></script>

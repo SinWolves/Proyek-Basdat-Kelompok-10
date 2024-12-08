@@ -101,15 +101,20 @@ try {
 </head>
 
      <!-- Navbar -->
-   <nav class="navbar d-flex justify-content-between">
-    <button id="menu-toggle" class="menu-toggle">
-      <i class="fas fa-bars"></i> 
-    </button>
-    <div class="logout-container">
-    <a href="../../view_customers/login.php" class="logout">Logout</a>
-    </div>
-  </nav>
-
+     <nav class="navbar d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+            <button id="menu-toggle" class="menu-toggle me-3">
+                <i class="fas fa-bars"></i> 
+            </button>
+        </div>
+        <div class="d-flex align-items-center">
+            <!-- Search Bar -->
+            <input type="text" id="search-table" class="form-control me-3" onkeyup="searchTable('table')" 
+                placeholder="Search..." style="max-width: 300px;">
+            <!-- Logout -->
+            <a href="../../view_customers/login.php" class="logout">Logout</a>
+        </div>
+    </nav>
   <!-- Overlay and Sidebar -->
   <div class="overlay"></div>
   <div class="sidebar">
@@ -151,19 +156,6 @@ try {
         </div>
     <?php endif; ?>
 
-    <div class="input-group" style="max-width: 400px; width: 100%; margin-top: 30px;">
-  <div class="form-outline flex-grow-1" data-mdb-input-init>
-    <input type="text" id="search-table" class="form-control" 
-           onkeyup="searchTable('table')" placeholder="Search in here" 
-           style="border-radius: 0.375rem 0 0 0.375rem; height: 91%; box-sizing: border-box;">
-  </div>
-  <button type="button" class="btn btn-primary" data-mdb-ripple-init 
-          style="border-radius: 0 0.375rem 0.375rem 0; height: 100%; box-sizing: border-box;">
-    <i class="fas fa-search"></i>
-  </button>
-</div>
-
-
 
     <!-- Form Tambah Data -->
     <div class="container border border-black row" id="additForm">
@@ -187,8 +179,10 @@ try {
                 <button type="submit" class="btn btn-primary" id="addingService">Submit</button>
                 
             </form>
-            
+
+        
             </div>
+
         </div>
     </div>
 
@@ -236,25 +230,25 @@ try {
 <script src="../../sidebar.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    function searchTable(tableId) {
-            const input = document.getElementById(`search-${tableId}`).value.toLowerCase();
-            const rows = document.getElementById(tableId).querySelector('tbody').getElementsByTagName('tr');
+        function searchTable(tableId) {
+                const input = document.getElementById(`search-${tableId}`).value.toLowerCase();
+                const rows = document.getElementById(tableId).querySelector('tbody').getElementsByTagName('tr');
 
-            for (let i = 0; i < rows.length; i++) {
-                const cells = rows[i].getElementsByTagName('td');
-                let found = false;
+                for (let i = 0; i < rows.length; i++) {
+                    const cells = rows[i].getElementsByTagName('td');
+                    let found = false;
 
-                for (let j = 0; j < cells.length; j++) { // Include all columns in the search
-                    if (cells[j].textContent.toLowerCase().includes(input)) {
-                        found = true;
-                        break;
+                    for (let j = 0; j < cells.length; j++) { // Include all columns in the search
+                        if (cells[j].textContent.toLowerCase().includes(input)) {
+                            found = true;
+                            break;
+                        }
                     }
-                }
 
-                rows[i].style.display = found ? '' : 'none';
+                    rows[i].style.display = found ? '' : 'none';
+                }
             }
-        }
-</script>
+    </script>
 
 </body>
 </html>

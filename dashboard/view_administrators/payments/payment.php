@@ -77,14 +77,20 @@
 </head>
 <body>
      <!-- Navbar -->
-   <nav class="navbar d-flex justify-content-between">
-    <button id="menu-toggle" class="menu-toggle">
-      <i class="fas fa-bars"></i> 
-    </button>
-    <div class="logout-container">
-    <a href="../../view_customers/login.php" class="logout">Logout</a>
-    </div>
-  </nav>
+     <nav class="navbar d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+            <button id="menu-toggle" class="menu-toggle me-3">
+                <i class="fas fa-bars"></i> 
+            </button>
+        </div>
+        <div class="d-flex align-items-center">
+            <!-- Search Bar -->
+            <input type="text" id="search-table" class="form-control me-3" onkeyup="searchTable('table')" 
+                placeholder="Search..." style="max-width: 300px;">
+            <!-- Logout -->
+            <a href="../../view_customers/login.php" class="logout">Logout</a>
+        </div>
+    </nav>
 
   <!-- Overlay and Sidebar -->
   <div class="overlay"></div>
@@ -125,15 +131,6 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif; ?>
-
-    <div class="input-group" style="max-width: 400px; width: 100%;">
-  <div class="form-outline flex-grow-1" data-mdb-input-init>
-    <input type="text" id="search-table" class="form-control" onkeyup="searchTable('table')" placeholder="Search in here" style="border-radius: 0.375rem 0 0 0.375rem;">
-  </div>
-  <button type="button" class="btn btn-primary" data-mdb-ripple-init style="border-radius: 0 0.375rem 0.375rem 0;">
-    <i class="fas fa-search"></i>
-  </button>
-</div>
 
 
     <form action="" method="POST">
@@ -223,10 +220,14 @@
         </table>
       </div>
     </div>
+
   </div> 
    
   
 </div>
+  </div>  
+  
+
 
     <script src="../../sidebar.js"></script>
     <script>
@@ -254,5 +255,25 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script>
+        function searchTable(tableId) {
+                const input = document.getElementById(`search-${tableId}`).value.toLowerCase();
+                const rows = document.getElementById(tableId).querySelector('tbody').getElementsByTagName('tr');
+
+                for (let i = 0; i < rows.length; i++) {
+                    const cells = rows[i].getElementsByTagName('td');
+                    let found = false;
+
+                    for (let j = 0; j < cells.length; j++) { // Include all columns in the search
+                        if (cells[j].textContent.toLowerCase().includes(input)) {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    rows[i].style.display = found ? '' : 'none';
+                }
+            }
+    </script>
   </body>
 </html>
