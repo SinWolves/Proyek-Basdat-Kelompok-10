@@ -111,8 +111,9 @@
 
   <div class="container">
     <h1 class="mb-4">Payment Management</h1>
-    <!-- Notifikasi -->
-    <?php if (!empty($error)): ?>
+
+        <!-- Notifikasi -->
+        <?php if (!empty($error)): ?>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <?php echo htmlspecialchars($error); ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -124,7 +125,53 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif; ?>
+
+    <div class="input-group" style="max-width: 400px; width: 100%;">
+  <div class="form-outline flex-grow-1" data-mdb-input-init>
+    <input type="text" id="search-table" class="form-control" onkeyup="searchTable('table')" placeholder="Search in here" style="border-radius: 0.375rem 0 0 0.375rem;">
   </div>
+  <button type="button" class="btn btn-primary" data-mdb-ripple-init style="border-radius: 0 0.375rem 0.375rem 0;">
+    <i class="fas fa-search"></i>
+  </button>
+</div>
+
+
+    <form action="" method="POST">
+  <input type="hidden" name="submit_add" value="1">
+  <div class="container border border-black row" id="paymentForm">
+    <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add Payment Method</header>
+    
+    <!-- Dropdown untuk Metode Pembayaran -->
+    <div class="col-md-6 d-flex align-items-center mb-3">
+      <label for="paymentMethod" class="me-2 flex-shrink-0" style="min-width: 130px;">Payment Method</label>
+      <select name="name" id="paymentMethod" class="form-control flex-grow-1">
+        <option value="" selected disabled hidden>Select Payment Options </option>
+        <option value="tunai">Cash</option>
+        <option value="Credit Card">Credit Card</option>
+        <option value="transfer">Bank Transfer</option>
+      </select>
+    </div>
+
+    <!-- Dropdown untuk Status -->
+    <div class="col-md-6 d-flex align-items-center mb-3">
+      <label for="paymentStatus" class="me-2 flex-shrink-0" style="min-width: 130px;">Status</label>
+      <select name="status" id="paymentStatus" class="form-control flex-grow-1">
+        <option value="" selected disabled hidden>Select Status Options</option>
+        <option value="Paid">Paid</option>
+        <option value="Not yet paid">Not yet paid off</option>
+      </select>
+    </div>
+
+    <div class="col-md-6 d-flex align-items-center">
+      <label for="paymentDate" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Total</label>
+      <input name="total" type="text" id="paymentDate" class="form-control flex-grow-1"><br>
+    </div>
+    <div class="col-12 d-flex justify-content-end">
+    <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingPayment">Save</button>
+    </div>
+  </div>
+</form>
+
 
   <div class="container">
     <div class="row">
@@ -176,47 +223,9 @@
         </table>
       </div>
     </div>
-  </div>  
-  <form action="" method="POST">
-  <input type="hidden" name="submit_add" value="1">
-  <div class="container border border-black row" id="paymentForm">
-    <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add Payment Method</header>
-    
-    <!-- Dropdown untuk Metode Pembayaran -->
-    <div class="col-md-6 d-flex align-items-center mb-3">
-      <label for="paymentMethod" class="me-2 flex-shrink-0" style="min-width: 130px;">Metode Pembayaran</label>
-      <select name="name" id="paymentMethod" class="form-control flex-grow-1">
-        <option value="" selected disabled hidden>Pilih Opsi Bayar </option>
-        <option value="tunai">Tunai</option>
-        <option value="transfer">Transfer Bank</option>
-      </select>
-    </div>
-
-    <!-- Dropdown untuk Status -->
-    <div class="col-md-6 d-flex align-items-center mb-3">
-      <label for="paymentStatus" class="me-2 flex-shrink-0" style="min-width: 130px;">Status</label>
-      <select name="status" id="paymentStatus" class="form-control flex-grow-1">
-        <option value="" selected disabled hidden>Pilih Opsi Status</option>
-        <option value="sudah_lunas">Sudah Lunas</option>
-        <option value="belum_lunas">Belum Lunas</option>
-      </select>
-    </div>
-
-    <div class="col-md-6 d-flex align-items-center">
-      <label for="paymentDate" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Total</label>
-      <input name="total" type="text" id="paymentDate" class="form-control flex-grow-1"><br>
-    </div>
-    <div class="col-12 d-flex justify-content-end">
-    <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingPayment">Save</button>
-    </div>
-  </div>
-</form>
-
-<div class="container border border-black row" id="staffForm">
-    <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Cari Staff</header> 
-    <div class="col-md-6 d-flex align-items-center">
-        <input type="text" id="search-table" class="search" onkeyup="searchTable('table')" placeholder="Search Books">
-    </div>
+  </div> 
+   
+  
 </div>
 
     <script src="../../sidebar.js"></script>

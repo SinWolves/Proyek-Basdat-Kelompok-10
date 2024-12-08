@@ -151,9 +151,23 @@ try {
         </div>
     <?php endif; ?>
 
+    <div class="input-group" style="max-width: 400px; width: 100%; margin-top: 30px;">
+  <div class="form-outline flex-grow-1" data-mdb-input-init>
+    <input type="text" id="search-table" class="form-control" 
+           onkeyup="searchTable('table')" placeholder="Search in here" 
+           style="border-radius: 0.375rem 0 0 0.375rem; height: 91%; box-sizing: border-box;">
+  </div>
+  <button type="button" class="btn btn-primary" data-mdb-ripple-init 
+          style="border-radius: 0 0.375rem 0.375rem 0; height: 100%; box-sizing: border-box;">
+    <i class="fas fa-search"></i>
+  </button>
+</div>
+
+
+
     <!-- Form Tambah Data -->
-    <div class="card mb-4">
-        <div class="card-header">Add New Service</div>
+    <div class="container border border-black row" id="additForm">
+    <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add Additional Service</header>
         <div class="card-body">
             <form method="POST">
                 <input type="hidden" name="submit_add" value="1">
@@ -169,25 +183,22 @@ try {
                     <label for="price" class="form-label">Price</label>
                     <input type="number" class="form-control" id="price" name="price" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Add Service</button>
+                <div class="text-end">
+                <button type="submit" class="btn btn-primary" id="addingService">Submit</button>
+                
             </form>
-            <div class="container border border-black row" id="staffForm">
-                <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Cari Staff</header> 
-                <div class="col-md-6 d-flex align-items-center">
-                    <input type="text" id="search-table" class="search" onkeyup="searchTable('table')" placeholder="Search Books">
-                </div>
+            
             </div>
         </div>
     </div>
 
     <!-- Tabel Data -->
-    <div class="card">
-        <div class="card-header">List of Services</div>
-        <div class="card-body">
-            <table id="table" class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
+    <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <table id="table" class="table table-bordered">
+          <thead class="table-primary">
+                        <th>Service ID</th>
                         <th>Name</th>
                         <th>Description</th>
                         <th>Price</th>

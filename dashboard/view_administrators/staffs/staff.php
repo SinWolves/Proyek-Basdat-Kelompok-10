@@ -140,6 +140,53 @@
 
     </div>
 
+    <div id="staffForm" style="max-width: 400px; width: 100%; justify-content: flex-end; margin-left: 7.5%; margin-top: 20px;">
+    <div class="input-group">
+        <div class="form-outline flex-grow-1" data-mdb-input-init>
+            <input 
+                type="text" 
+                id="search-staff_table" 
+                class="form-control" 
+                onkeyup="searchTable('staff_table')" 
+                placeholder="Search in here" 
+                style="border-radius: 0.375rem 0 0 0.375rem;">
+        </div>
+        <button 
+            type="button" 
+            class="btn btn-primary" 
+            data-mdb-ripple-init 
+            style="border-radius: 0 0.375rem 0.375rem 0;">
+            <i class="fas fa-search"></i>
+        </button>
+    </div>
+</div>
+
+<form action="" method="POST">
+        <input type="hidden" name="submit_add" value="1">
+        <div class="container border border-black row" id="staffForm">
+            <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Tambah Staff</header> 
+            <div class="col-md-6 d-flex align-items-center">
+                <label for="staffName" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Nama</label>
+                <input name="nama" type="text" id="staffName" class="form-control flex-grow-1" value="" required><br>
+            </div>
+            <div class="col-md-6 d-flex align-items-center">
+                <label for="departmentName" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Departemen</label>
+                <input name="departemen" type="text" id="departmentName" class="form-control flex-grow-1" value="" required><br>
+            </div>
+            <div class="col-md-6 d-flex align-items-center">
+                <label for="staffNumber" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Nomor Telepon</label>
+                <input name="telepon" type="text" id="staffNumber" class="form-control flex-grow-1" value="" required><br>
+            </div>
+            <div class="col-md-6 d-flex align-items-center">
+                <label for="staffAddress" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Alamat</label>
+                <input name="alamat" type="text" id="staffAddress" class="form-control flex-grow-1" value="" required><br>
+            </div>
+            <div class="text-end">
+            <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingStaff">Save</button>
+            </div>
+        </div>
+    </form>
+
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -183,35 +230,6 @@
         </div>
     </div>  
 
-    <form action="" method="POST">
-        <input type="hidden" name="submit_add" value="1">
-        <div class="container border border-black row" id="staffForm">
-            <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Tambah Staff</header> 
-            <div class="col-md-6 d-flex align-items-center">
-                <label for="staffName" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Nama</label>
-                <input name="nama" type="text" id="staffName" class="form-control flex-grow-1" value="" required><br>
-            </div>
-            <div class="col-md-6 d-flex align-items-center">
-                <label for="departmentName" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Departemen</label>
-                <input name="departemen" type="text" id="departmentName" class="form-control flex-grow-1" value="" required><br>
-            </div>
-            <div class="col-md-6 d-flex align-items-center">
-                <label for="staffNumber" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Nomor Telepon</label>
-                <input name="telepon" type="text" id="staffNumber" class="form-control flex-grow-1" value="" required><br>
-            </div>
-            <div class="col-md-6 d-flex align-items-center">
-                <label for="staffAddress" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Alamat</label>
-                <input name="alamat" type="text" id="staffAddress" class="form-control flex-grow-1" value="" required><br>
-            </div>
-            <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingStaff">Simpan</button>
-        </div>
-    </form>
-    <div class="container border border-black row" id="staffForm">
-        <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Cari Staff</header> 
-        <div class="col-md-6 d-flex align-items-center">
-            <input type="text" id="search-staff_table" class="search" onkeyup="searchTable('staff_table')" placeholder="Search Books">
-        </div>
-    </div>
 
     <script src="../../sidebar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

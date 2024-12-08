@@ -147,6 +147,43 @@
     <?php endif; ?>
   </div>
 
+  <div class="input-group" style="max-width: 400px; width: 100%; justify-content: flex-end; margin-left: auto; margin-left: 7.5%;">
+  <div class="form-outline flex-grow-1" data-mdb-input-init>
+    <input type="text" id="search-table" class="form-control" onkeyup="searchTable('table')" placeholder="Search in here" style="border-radius: 0.375rem 0 0 0.375rem;">
+  </div>
+  <button type="button" class="btn btn-primary" data-mdb-ripple-init style="border-radius: 0 0.375rem 0.375rem 0;">
+    <i class="fas fa-search"></i>
+  </button>
+</div>
+
+<div class="col-md-6">
+        <form action="" method="POST">
+        <input type="hidden" name="submit_add" value="1">
+        <div class="border border-black p-3" id="serviceForm">
+          <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add New Salary</header>
+          <!-- ID Customer -->
+          <div class="d-flex align-items-center mb-3">
+            <label for="idcustomer" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Staff ID</label>
+            <input name="idStaff" type="number" id="idcustomer" class="form-control flex-grow-1" value="">
+          </div>
+          <!-- Check-In -->
+          <div class="d-flex align-items-center mb-3">
+            <label for="checkIncheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Salary Amount</label>
+            <input name="gaji" type="check_out" id="check_out" class="form-control flex-grow-1">
+          </div>
+          <div class="d-flex align-items-center mb-3">
+            <label for="checkOutcheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Status</label>
+            <input name="status" type="telepon" id="check_out" class="form-control flex-grow-1">
+          </div>
+
+          
+          <!-- Submit Button -->
+          <div class="text-end">
+            <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingService">Save</button>
+          </div>
+        </div>
+        </form>
+        
   <div class="container">
     <div class="row">
       <div class="col-md-6">
@@ -197,39 +234,8 @@
         </table>
       </div>
 
-      <div class="col-md-6">
-        <form action="" method="POST">
-        <input type="hidden" name="submit_add" value="1">
-        <div class="border border-black p-3" id="serviceForm">
-          <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add New Salary</header>
-          <!-- ID Customer -->
-          <div class="d-flex align-items-center mb-3">
-            <label for="idcustomer" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Staff ID</label>
-            <input name="idStaff" type="number" id="idcustomer" class="form-control flex-grow-1" value="">
-          </div>
-          <!-- Check-In -->
-          <div class="d-flex align-items-center mb-3">
-            <label for="checkIncheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Salary Amount</label>
-            <input name="gaji" type="check_out" id="check_out" class="form-control flex-grow-1">
-          </div>
-          <div class="d-flex align-items-center mb-3">
-            <label for="checkOutcheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Status</label>
-            <input name="status" type="telepon" id="check_out" class="form-control flex-grow-1">
-          </div>
+  
 
-          
-          <!-- Submit Button -->
-          <div class="text-end">
-            <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingService">Save</button>
-          </div>
-        </div>
-        </form>
-        <div class="container border border-black row" id="staffForm">
-          <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Cari Staff</header> 
-          <div class="col-md-6 d-flex align-items-center">
-              <input type="text" id="search-table" class="search" onkeyup="searchTable('table')" placeholder="Search Books">
-          </div>
-      </div>
       </div>
     </div>
   </div> 

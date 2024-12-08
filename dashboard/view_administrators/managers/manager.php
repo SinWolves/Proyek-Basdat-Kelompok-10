@@ -129,6 +129,42 @@
     <?php endif; ?>
   </div>
 
+  <div class="input-group" style="max-width: 400px; width: 100%; justify-content: flex-end; margin-left: auto; margin-left: 7.5%;">
+  <div class="form-outline flex-grow-1" data-mdb-input-init>
+    <input type="text" id="search-table" class="form-control" onkeyup="searchTable('table')" placeholder="Search in here" style="border-radius: 0.375rem 0 0 0.375rem;">
+  </div>
+  <button type="button" class="btn btn-primary" data-mdb-ripple-init style="border-radius: 0 0.375rem 0.375rem 0;">
+    <i class="fas fa-search"></i>
+  </button>
+</div>
+
+<form action="" method="POST">
+    <input type="hidden" name="submit_add" value="1">
+    <div class="container border border-black row" id="managerForm">
+      <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add Manager</header>
+      <div class="col-md-6 d-flex align-items-center">
+        <label for="managerName" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Name</label>
+        <input name="nama" type="text" id="managerName" class="form-control flex-grow-1"><br>
+      </div>
+      <div class="col-md-6 d-flex align-items-center">
+        <label for="departmentName" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Department</label>
+        <input name="departemen" type="text" id="departmentName" class="form-control flex-grow-1"><br>
+      </div>
+      <div class="col-md-6 d-flex align-items-center">
+        <label for="managerNumber" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Phone Number</label>
+        <input name="telepon" type="text" id="managerNumber" class="form-control flex-grow-1"><br>
+      </div>
+      <div class="col-md-6 d-flex align-items-center">
+        <label for="managerAddress" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Address</label>
+        <input name="alamat" type="text" id="managerAddress" class="form-control flex-grow-1"><br>
+      </div>
+      <div class="text-end">
+      <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingManager">Save</button>
+      </div>
+    </div>
+  </form>
+
+
   <div class="container">
     <div class="row">
       <div class="col-md-6">
@@ -181,35 +217,7 @@
     </div>
   </div>  
 
-  <form action="" method="POST">
-    <input type="hidden" name="submit_add" value="1">
-    <div class="container border border-black row" id="managerForm">
-      <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add Manager</header>
-      <div class="col-md-6 d-flex align-items-center">
-        <label for="managerName" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Name</label>
-        <input name="nama" type="text" id="managerName" class="form-control flex-grow-1"><br>
-      </div>
-      <div class="col-md-6 d-flex align-items-center">
-        <label for="departmentName" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Department</label>
-        <input name="departemen" type="text" id="departmentName" class="form-control flex-grow-1"><br>
-      </div>
-      <div class="col-md-6 d-flex align-items-center">
-        <label for="managerNumber" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Phone Number</label>
-        <input name="telepon" type="text" id="managerNumber" class="form-control flex-grow-1"><br>
-      </div>
-      <div class="col-md-6 d-flex align-items-center">
-        <label for="managerAddress" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Address</label>
-        <input name="alamat" type="text" id="managerAddress" class="form-control flex-grow-1"><br>
-      </div>
-      <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingManager">Save</button>
-    </div>
-  </form>
-  <div class="container border border-black row" id="staffForm">
-      <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Cari Staff</header> 
-      <div class="col-md-6 d-flex align-items-center">
-          <input type="text" id="search-table" class="search" onkeyup="searchTable('table')" placeholder="Search Books">
-      </div>
-  </div>
+
 
     <script src="../../sidebar.js"></script>
     <script>
