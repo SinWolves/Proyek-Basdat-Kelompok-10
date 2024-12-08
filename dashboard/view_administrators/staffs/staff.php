@@ -89,14 +89,20 @@
 <body>
 
      <!-- Navbar -->
-   <nav class="navbar d-flex justify-content-between">
-    <button id="menu-toggle" class="menu-toggle">
-      <i class="fas fa-bars"></i> 
-    </button>
-    <div class="logout-container">
-      <a href="../../view_customers/login.php" class="logout">Logout</a>
-    </div>
-  </nav>
+     <nav class="navbar d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+            <button id="menu-toggle" class="menu-toggle me-3">
+                <i class="fas fa-bars"></i> 
+            </button>
+        </div>
+        <div class="d-flex align-items-center">
+            <!-- Search Bar -->
+            <input type="text" id="search-staff_table" class="form-control me-3" onkeyup="searchTable('staff_table')" 
+            placeholder="Search..." style="max-width: 300px;">
+            <!-- Logout -->
+            <a href="../../view_customers/login.php" class="logout">Logout</a>
+        </div>
+    </nav>
 
 
     <!-- Sidebar -->
@@ -206,12 +212,6 @@
             <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingStaff">Simpan</button>
         </div>
     </form>
-    <div class="container border border-black row" id="staffForm">
-        <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Cari Staff</header> 
-        <div class="col-md-6 d-flex align-items-center">
-            <input type="text" id="search-staff_table" class="search" onkeyup="searchTable('staff_table')" placeholder="Search Books">
-        </div>
-    </div>
 
     <script src="../../sidebar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
