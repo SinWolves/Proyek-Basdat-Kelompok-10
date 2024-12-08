@@ -172,7 +172,7 @@
         <div class="d-flex align-items-center">
             <!-- Search Bar -->
             <input type="text" id="search-table" class="form-control me-3" onkeyup="searchTable('table')" 
-                placeholder="Search..." style="max-width: 300px;">
+            placeholder="Search..." style="max-width: 300px;">
             <!-- Logout -->
             <a href="../../view_customers/login.php" class="logout">Logout</a>
         </div>
