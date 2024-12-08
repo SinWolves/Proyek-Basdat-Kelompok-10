@@ -120,6 +120,7 @@
     // Proses update data
     if (isset($_POST['submit_edit'])) {
       try {
+        $id = htmlspecialchars($_POST['id']);
         $id_customer = htmlspecialchars($_POST['id_customer']);
         $check_in = htmlspecialchars($_POST['check_in']);
         $check_out = htmlspecialchars($_POST['check_out']);
@@ -128,6 +129,7 @@
         $status = htmlspecialchars($_POST['status_pemesanan']);
         
         $stmt = $pdo->prepare("UPDATE booking SET id_customer = :id_customer, check_in = :check_in, check_out = :check_out, room = :room, price = :price, status_pemesanan = :statuss WHERE id = :id");
+        $stmt->bindParam(':id', $id);
         $stmt->bindParam(':id_customer', $id_customer);
         $stmt->bindParam(':check_in', $check_in);
         $stmt->bindParam(':check_out', $check_out);
@@ -272,7 +274,7 @@
                         <td><input name="status_pemesanan" type="text" value="<?php echo htmlspecialchars($item['status_pemesanan']); ?>" required></td>
                         <td>
                           <button type="submit" class="btn btn-success btn-sm me-1">Save</button>
-                          <a href="customer.php" class="btn btn-secondary btn-sm">Cancel</a>
+                          <a href="booking.php" class="btn btn-secondary btn-sm">Cancel</a>
                         </td>
                       </form>
                     </tr>

@@ -11,6 +11,9 @@
   // Hapus notifikasi setelah ditampilkan
   unset($_SESSION['error'], $_SESSION['success']);
 
+     // Variabel untuk edit mode
+     $edit_id = isset($_GET['edit']) ? htmlspecialchars($_GET['edit']) : null;
+
   if($_SERVER['REQUEST_METHOD']==='POST'){
     if (isset($_POST['submit_add'])) {
     //htmlspecialchars memastikan data yang di input tidak berupa kode sql injection
@@ -62,6 +65,32 @@
       header("Location: " . $_SERVER['PHP_SELF']);
       exit();
     } 
+
+    // Proses update data
+    if (isset($_POST['submit_edit'])) {
+      try {
+        $id = htmlspecialchars($_POST['id']);
+        $nama = htmlspecialchars($_POST['nama']);
+        $departemen = htmlspecialchars($_POST['departemen']);
+        $telepon = htmlspecialchars($_POST['telepon']);
+        $alamat = htmlspecialchars($_POST['alamat']);
+        
+        $stmt = $pdo->prepare("UPDATE manajer SET nama = :nama, departemen = :departemen, telepon = :telepon, alamat = :alamat WHERE id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':nama', $nama);
+        $stmt->bindParam(':departemen', $departemen);
+        $stmt->bindParam(':telepon', $telepon);
+        $stmt->bindParam(':alamat', $alamat);
+      
+        $stmt->execute();
+
+        $_SESSION['success'] = "Data updated successfully!";
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit(); 
+      }catch (PDOException $e) {
+        $_SESSION['error'] = "Error updating data: " . $e->getMessage();
+      }
+    }
   }
 ?>
 
@@ -105,7 +134,7 @@
     </div>
     <ul class="nav-links">
       <li><a href="../dashboard.php">Dashboard</a></li>
-      <li><a href="../rooms/room.php">Room Management</a></li>
+      <li><a href="../rooms/alamat.php">alamat Management</a></li>
       <li><a href="../customers/customer.php">Customer Management</a></li>
       <li><a href="../bookings/booking.php">Booking Management</a></li>
       <li><a href="../payments/payment.php">Payment Management</a></li>
@@ -188,6 +217,24 @@
           ?>
             <?php if(!empty($managers)) : ?>
               <?php foreach($managers as $manager): ?>
+                <?php if($edit_id == $manager['id']): ?>
+                    <!-- Edit Row -->
+                    <tr class="edit-row">
+                      <form action="" method="POST">
+                        <input type="hidden" name="submit_edit" value="1">
+                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($manager['id']); ?>">
+                        <td><?php echo htmlspecialchars($manager['id']); ?></td>
+                        <td><input name="nama" type="text" value="<?php echo htmlspecialchars($manager['nama']); ?>" required></td>
+                        <td><input name="departemen" type="text" value="<?php echo htmlspecialchars($manager['departemen']); ?>" required></td>
+                        <td><input name="telepon" type="text" value="<?php echo htmlspecialchars($manager['telepon']); ?>" required></td>
+                        <td><input name="alamat" type="text" value="<?php echo htmlspecialchars($manager['alamat']); ?>" required></td>
+                        <td>
+                          <button type="submit" class="btn btn-success btn-sm me-1">Save</button>
+                          <a href="manager.php" class="btn btn-secondary btn-sm">Cancel</a>
+                        </td>
+                      </form>
+                    </tr>
+                  <?php else: ?>
                       <tr>
                           <td><?php echo htmlspecialchars($manager['id']); ?></td>
                           <td><?php echo htmlspecialchars($manager['nama']); ?></td>
@@ -195,13 +242,15 @@
                           <td><?php echo htmlspecialchars($manager['telepon']); ?></td>
                           <td><?php echo htmlspecialchars($manager['alamat']); ?></td>
                           <td>
-                            <form method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline;">
-                              <input type="hidden" name="submit_delete" value="1">
-                              <input type="hidden" name="id" value="<?php echo htmlspecialchars($manager['id']); ?>">
-                              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                            </form>
+                            <a href="manager.php?edit=<?php echo htmlspecialchars($manager['id']); ?>" class="btn btn-success btn-sm me-1">Edit</a>
+                              <form method="POST" onsubmit="return confirm('Are you sure you want to delete this customer?');" style="display:inline;">
+                                <input type="hidden" name="submit_delete" value="1">
+                                <input type="hidden" name="id" value="<?php echo htmlspecialchars($manager['id']); ?>">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                              </form>
                           </td>
-                      </tr>
+                        </tr>
+                    <?php endif; ?>
                   <?php endforeach; ?>
               <?php else: ?>
                 <tr>

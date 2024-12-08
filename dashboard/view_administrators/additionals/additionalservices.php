@@ -12,6 +12,8 @@ $success = $_SESSION['success'] ?? '';
 // Hapus notifikasi setelah ditampilkan
 unset($_SESSION['error'], $_SESSION['success']);
 
+$edit_id = isset($_GET['edit']) ? htmlspecialchars($_GET['edit']) : null;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Menambahkan data baru
     if (isset($_POST['submit_add'])) {
@@ -64,6 +66,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: " . $_SERVER['PHP_SELF']);
         exit();
     }
+
+    // Proses update data
+    if (isset($_POST['submit_edit'])) {
+        try {
+          $id = htmlspecialchars($_POST['id']);
+          $name = htmlspecialchars($_POST['name']);
+          $description = htmlspecialchars($_POST['description']);
+          $price = htmlspecialchars($_POST['price']);
+          
+          $stmt = $pdo->prepare("UPDATE additional_service SET name = :name, description = :description, price = :price WHERE id = :id");
+          $stmt->bindParam(':id', $id);
+          $stmt->bindParam(':name', $name);
+          $stmt->bindParam(':description', $description);
+          $stmt->bindParam(':price', $price);
+        
+          $stmt->execute();
+  
+          $_SESSION['success'] = "Data updated successfully!";
+          header("Location: " . $_SERVER['PHP_SELF']);
+          exit(); 
+        }catch (PDOException $e) {
+          $_SESSION['error'] = "Error updating data: " . $e->getMessage();
+        }
+      }
 }
 
 // Mengambil semua data dari tabel additional_service
@@ -206,6 +232,23 @@ try {
                         </tr>
                     <?php else: ?>
                         <?php foreach ($services as $service): ?>
+                            <?php if($edit_id == $service['id']): ?>
+                                <!-- Edit Row -->
+                                <tr class="edit-row">
+                                <form action="" method="POST">
+                                    <input type="hidden" name="submit_edit" value="1">
+                                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($service['id']); ?>">
+                                    <td><?php echo htmlspecialchars($service['id']); ?></td>
+                                    <td><input name="name" type="text" value="<?php echo htmlspecialchars($service['name']); ?>" required></td>
+                                    <td><input name="description" type="text" value="<?php echo htmlspecialchars($service['description']); ?>" required></td>
+                                    <td><input name="price" type="text" value="<?php echo htmlspecialchars($service['price']); ?>" required></td>
+                                    <td>
+                                    <button type="submit" class="btn btn-success btn-sm me-1">Save</button>
+                                    <a href="additionalservices.php" class="btn btn-secondary btn-sm">Cancel</a>
+                                    </td>
+                                </form>
+                                </tr>
+                            <?php else: ?>
                             <tr>
                                 <td><?php echo htmlspecialchars($service['id']); ?></td>
                                 <td><?php echo htmlspecialchars($service['name']); ?></td>
@@ -213,13 +256,15 @@ try {
                                 <td><?php echo htmlspecialchars($service['price']); ?></td>
                                 <td>
                                     <!-- Form Hapus Data -->
-                                    <form method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline;">
+                                    <a href="additionalservices.php?edit=<?php echo htmlspecialchars($service['id']); ?>" class="btn btn-success btn-sm me-1">Edit</a>
+                                    <form method="POST" onsubmit="return confirm('Are you sure you want to delete this customer?');" style="display:inline;">
                                         <input type="hidden" name="submit_delete" value="1">
                                         <input type="hidden" name="id" value="<?php echo htmlspecialchars($service['id']); ?>">
                                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                     </form>
                                 </td>
                             </tr>
+                            <?php endif; ?>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </tbody>
