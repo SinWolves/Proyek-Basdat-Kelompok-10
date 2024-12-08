@@ -90,7 +90,7 @@
                 // Room: Executive Suite
                 if ($_POST['executive-quantity'] > 0) { 
                     for ($i = 0; $i < $_POST['executive-quantity']; $i++) {
-                        $stmt = $pdo->prepare("INSERT INTO room(room_type, price) VALUES ('Executive', :price)");
+                        $stmt = $pdo->prepare("INSERT INTO room(room_type, price) VALUES ('Executive Suite', :price)");
                         $stmt->bindValue(':price', 3500000.00);
                         $stmt->execute();
                     }
@@ -108,7 +108,7 @@
                         exit(); 
                     }
             
-                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price, status) VALUES (:id_customer, :check_in, :check_out, 'Executive', :total_price, 'Dipesan')");
+                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price) VALUES (:id_customer, :check_in, :check_out, 'Executive Suite', :total_price)");
                     $stmt->bindParam(':id_customer', $id_customer);
                     $stmt->bindParam(':check_in', $check_in);
                     $stmt->bindParam(':check_out', $check_out);
@@ -119,7 +119,7 @@
                 // Room: Luxury Suite
                 if ($_POST['luxury-quantity'] > 0) {
                     for ($i = 0; $i < $_POST['luxury-quantity']; $i++) {
-                        $stmt = $pdo->prepare("INSERT INTO room(room_type, price) VALUES ('Luxury', :price)");
+                        $stmt = $pdo->prepare("INSERT INTO room(room_type, price) VALUES ('Luxury Suite', :price)");
                         $stmt->bindValue(':price', 7500000.00);
                         $stmt->execute();
                     }
@@ -137,7 +137,7 @@
                         exit(); 
                     }
             
-                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price) VALUES (:id_customer, :check_in, :check_out, 'Luxury', :total_price)");
+                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price) VALUES (:id_customer, :check_in, :check_out, 'Luxury Suite', :total_price)");
                     $stmt->bindParam(':id_customer', $id_customer);
                     $stmt->bindParam(':check_in', $check_in);
                     $stmt->bindParam(':check_out', $check_out);
@@ -148,7 +148,7 @@
                 // Room: Presidential Suite
                 if ($_POST['presidential-quantity'] > 0) {
                     for ($i = 0; $i < $_POST['presidential-quantity']; $i++) {
-                        $stmt = $pdo->prepare("INSERT INTO room(room_type, price) VALUES ('Presidential', :price)");
+                        $stmt = $pdo->prepare("INSERT INTO room(room_type, price) VALUES ('Presidential Suite', :price)");
                         $stmt->bindValue(':price', 15000000.00);
                         $stmt->execute();
                     }
@@ -167,7 +167,7 @@
                         exit(); 
                     }
             
-                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price) VALUES (:id_customer, :check_in, :check_out, 'Presidential', :total_price)");
+                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price) VALUES (:id_customer, :check_in, :check_out, 'Presidential Suite', :total_price)");
                     $stmt->bindParam(':id_customer', $id_customer);
                     $stmt->bindParam(':check_in', $check_in);
                     $stmt->bindParam(':check_out', $check_out);
@@ -425,15 +425,15 @@
                     <div class="card-header" style="background-color: #001f54;">Payment Method</div>
                     <div class="card-body" style="background-color: #001f54;">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="paymentMethod" id="cash" value="cash">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="cash" value="Cash">
                             <label class="form-check-label" style="font-family: 'Luxurious Roman';" for="cash">Cash Payment</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard" value="creditCard">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard" value="Credit card">
                             <label class="form-check-label" style="font-family: 'Luxurious Roman';" for="creditCard">Credit Card</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer" value="bankTransfer">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer" value="Bank transfer">
                             <label class="form-check-label" style="font-family: 'Luxurious Roman';" for="bankTransfer">Bank Transfer</label>
                         </div>
                         <button type="submit" class="btn btn-book-now">Book Now</button>

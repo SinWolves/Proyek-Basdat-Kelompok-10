@@ -230,6 +230,61 @@
 <?php endif; ?>
 
     
+      <!-- Form Add New Booking -->
+      <div id="serviceFormContainer">
+        <form action="" method="POST">
+        <input type="hidden" name="submit_add" value="1">
+        <div class="border border-black p-3" id="serviceForm">
+          <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add New Booking</header>
+          <!-- ID Customer -->
+          <div class="d-flex align-items-center mb-3">
+            <label for="idcustomer" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">ID Customer</label>
+            <input name="id_customer" type="text" id="idcustomer" class="form-control flex-grow-1" value="">
+          </div>
+          <!-- Check-In -->
+          <div class="d-flex align-items-center mb-3">
+            <label for="checkIncheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Check-In</label>
+            <input name="check_in" type="date" id="check_out" class="form-control flex-grow-1">
+          </div>
+          <!-- Check-Out -->
+          <div class="d-flex align-items-center mb-3">
+            <label for="checkOutcheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Check-Out</label>
+            <input name="check_out" type="date" id="check_out" class="form-control flex-grow-1">
+          </div>
+
+          <!-- Rooms -->
+          <div class="d-flex flex-column mb-3" id="roomsContainer">
+            <label class="section-title mb-2" style="font-size: 18px;">Rooms</label>
+
+            <!-- Template untuk memilih tipe kamar dan jumlah kamar -->
+            <div class="d-flex align-items-center mb-2 room-entry">
+              <!-- Pemilihan Tipe Kamar -->
+              <div class="d-flex flex-column flex-grow-1 me-2">
+                <label class="section-title" for="roomType">Room Type</label>
+                <select class="form-select" id="roomType" name="room">
+                  <option value="" disabled selected>Select Room Type</option>
+                  <option value="executive">Executive Suite</option>
+                  <option value="luxury">Luxury Suite</option>
+                  <option value="presidential">Presidential Suite</option>
+                </select>
+              </div>
+
+              <!-- Input Jumlah Kamar -->
+              <div class="d-flex flex-column flex-grow-1">
+                <label class="section-title" for="roomQuantity">Quantity</label>
+                <input name="quantity" type="number" id="roomQuantity" class="form-control" name="roomQuantity" placeholder="Enter Quantity" min="1">
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="text-end">
+            <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingService">Save</button>
+          </div>
+        </div>
+        </form>
+      </div>
+
     <div class="row">
       <!-- Tabel -->
       <div class="col-md-12">
@@ -307,64 +362,8 @@
           </table>
         </div>
 
-      <!-- Form Add New Booking -->
-      <div id="serviceFormContainer">
-        <form action="" method="POST">
-        <input type="hidden" name="submit_add" value="1">
-        <div class="border border-black p-3" id="serviceForm">
-          <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add New Booking</header>
-          <!-- ID Customer -->
-          <div class="d-flex align-items-center mb-3">
-            <label for="idcustomer" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">ID Customer</label>
-            <input name="id_customer" type="text" id="idcustomer" class="form-control flex-grow-1" value="">
-          </div>
-          <!-- Check-In -->
-          <div class="d-flex align-items-center mb-3">
-            <label for="checkIncheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Check-In</label>
-            <input name="check_in" type="date" id="check_out" class="form-control flex-grow-1">
-          </div>
-          <!-- Check-Out -->
-          <div class="d-flex align-items-center mb-3">
-            <label for="checkOutcheck_out" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Check-Out</label>
-            <input name="check_out" type="date" id="check_out" class="form-control flex-grow-1">
-          </div>
-
-          <!-- Rooms -->
-          <div class="d-flex flex-column mb-3" id="roomsContainer">
-            <label class="section-title mb-2" style="font-size: 18px;">Rooms</label>
-
-            <!-- Template untuk memilih tipe kamar dan jumlah kamar -->
-            <div class="d-flex align-items-center mb-2 room-entry">
-              <!-- Pemilihan Tipe Kamar -->
-              <div class="d-flex flex-column flex-grow-1 me-2">
-                <label class="section-title" for="roomType">Room Type</label>
-                <select class="form-select" id="roomType" name="room">
-                  <option value="" disabled selected>Select Room Type</option>
-                  <option value="executive">Executive Suite</option>
-                  <option value="luxury">Luxury Suite</option>
-                  <option value="presidential">Presidential Suite</option>
-                </select>
-              </div>
-
-              <!-- Input Jumlah Kamar -->
-              <div class="d-flex flex-column flex-grow-1">
-                <label class="section-title" for="roomQuantity">Quantity</label>
-                <input name="quantity" type="number" id="roomQuantity" class="form-control" name="roomQuantity" placeholder="Enter Quantity" min="1">
-              </div>
-            </div>
-          </div>
-
-          <!-- Submit Button -->
-          <div class="text-end">
-            <button type="submit" class="btn btn-primary rounded-3 fw-bold" id="addingService">Save</button>
-          </div>
-        </div>
-        </form>
-      </div>
     </div>
   </div>
-
-
 
     <script src="../../sidebar.js"></script>
     <script>

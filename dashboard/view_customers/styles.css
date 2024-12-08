@@ -1,10 +1,10 @@
-@font-face {
-    font-family: 'Luxurious Roman';
-    src: url('login_signin/view_customers/font/LuxuriousRoman-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
   
 .hero img {
     width: 100%;
@@ -15,12 +15,12 @@
 
 body {
     background-color: #f8f9fa;
-    font-family:'Luxurious Roman', cursive;
+    font-family:'Poppins', cursive;
 }
 
 .navbar {
     background-color: #15274b;
-    font-family: 'Luxurious Roman';
+    font-family: 'Poppins';
     position: sticky;
     top: 0;
     z-index: 3;
@@ -28,13 +28,13 @@ body {
 }
 
 .navbar-brand {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 
 .navbar .btn {
-    font-family: 'Luxurious Roman', cursive;
-    font-size: 16px;
+    font-family: 'Poppins', cursive;
+    font-size: 15px;
     margin: 0 10px;
 }
 
@@ -91,7 +91,7 @@ body {
 }
 
 .explain p {
-    font-size: 30px;
+    font-size: 20px;
     text-align: justify;
     text-justify: inter-word;
 }

@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 body{
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Poppins', sans-serif;
     background-color: #15274b;
     display: flex;
     justify-content: center;
@@ -7,7 +9,7 @@ body{
 }
 
 .signup-box{
-    margin-top: 15%;
+    margin-top: 2%;
     text-align: center;
     background-color: #f5f0dd;
     width: 450px;
@@ -42,41 +44,41 @@ input {
     left: 100%; /* Place the icon at the middle of the input */
     top: 55%; /* Vertically center it */
     transform: translate(-50%, -50%); /* Fine-tune vertical centering */
-    font-size: 25px; /* Icon size */
+    font-size: 20px; /* Icon size */
     color: #888; /* Icon color */
 }
 
 /* Styling for the username container */
 .name {
     padding-left: 50px;
-    padding-bottom: 30px;
+    padding-bottom: 20px;
     text-align: left;
 }
 
 .name label {
-    font-size: larger;
+    font-size: medium;
     font-weight: 600;
 }
 
 .e-mail {
     padding-left: 50px;
-    padding-bottom: 30px;
+    padding-bottom: 20px;
     text-align: left;
 }
 
 .e-mail label {
-    font-size: larger;
+    font-size: medium;
     font-weight: 600;
 }
 
 .username {
     padding-left: 50px;
-    padding-bottom: 30px;
+    padding-bottom: 20px;
     text-align: left;
 }
 
 .username label {
-    font-size: larger;
+    font-size: medium;
     font-weight: 600;
 }
 
@@ -84,23 +86,23 @@ input {
 .secret {
     padding-left: 50px;
     padding-top: 10px;
-    padding-bottom: 30px;
+    padding-bottom: 20px;
     text-align: left;
 }
 
 .secret label {
-    font-size: larger;
+    font-size: medium;
     font-weight: 600;
 }
 
 .confirm {
     padding-top: 10px;
-    padding-bottom: 30px;
+    padding-bottom: 20px;
     text-align: left;
 }
 
 .confirm label {
-    font-size: larger;
+    font-size: medium;
     font-weight: 600;
 }
 
@@ -135,5 +137,5 @@ button:hover{
 
 .sign-up a:hover{
     transform: scale(1.1);
-    color: #a5dd74;
+    color: #ffa60e;
 }
