@@ -15,6 +15,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     if ($result) {
         if (password_verify($password, $result['password'])) {
             $_SESSION['akun'] = $result['username'];
+            $_SESSION['id_akun'] = $result['id'];
 
             header("Location: index.php");
             exit();

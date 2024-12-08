@@ -1,4 +1,6 @@
-
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -362,9 +364,12 @@
                  <a href=""><i class="fab fa-facebook" style="font-size: 24px; color: #007bff; margin-right: 10px;"></i></a>
                 </div>
                 <div class="col-md-6 review" style="margin-top: 20px;">
+                <form action="review.php" method="POST">
                  <p style="font-family: 'Orelega One', cursive; color: #2C5099; letter-spacing: 2px;"><strong>Review</strong></p>
-                 <textarea placeholder="Share your experience" style="width: 100%; height: 100px; margin-bottom: 10px;"></textarea>
-                 <button class="btn" style="float: right; width: 100px; height: 40px; border-radius: 0; font-family: 'Plus Jakarta Sans', sans-serif; background-color: #15274B; color: white;">Send</button>
+                 <input type="hidden" name="id_akun" value="<?php echo $_SESSION['id_akun'] ?>">
+                 <textarea name="review" placeholder="Share your experience" style="width: 100%; height: 100px; margin-bottom: 10px;"></textarea>
+                 <button type="submit" class="btn" style="float: right; width: 100px; height: 40px; border-radius: 0; font-family: 'Plus Jakarta Sans', sans-serif; background-color: #15274B; color: white;">Send</button>
+                </form>
                 </div>
                 
                </div>
