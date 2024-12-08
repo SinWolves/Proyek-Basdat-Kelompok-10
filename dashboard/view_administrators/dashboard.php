@@ -78,16 +78,18 @@
       </div>
       
       <div class="row mb-4">
-        <!-- Total Bookings and Total Customers Section -->
+        <!-- Total Bookings -->
         <div class="col-md-6 d-flex align-items-center">
           <label for="totalBookings" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Total Bookings</label>
-          <input type="text" id="totalBookings" class="form-control flex-grow-1" value="<?php echo $booking ?>">
+          <p id="totalBookings" class="form-control flex-grow-1 " style="border: 1px solid  #0d335d;; padding: 10px;"><?php echo $booking; ?></p>
         </div>
+
+        <!-- Total Customers -->
         <div class="col-md-6 d-flex align-items-center">
           <label for="totalCustomers" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Total Customers</label>
-          <input type="text" id="totalCustomers" class="form-control flex-grow-1" value="<?php echo $customer?>">
+          <p id="totalCustomers" class="form-control flex-grow-1 " style="border: 1px solid  #0d335d;; padding: 10px;"><?php echo $customer; ?></p>
         </div>
-      </div>
+      </div>S
       
       <h3>Overview</h3>
       <!-- Monthly Revenue and Review Section -->
