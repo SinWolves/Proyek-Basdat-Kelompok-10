@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
             // Masukkan data ke tabel akun
-            $insert = $pdo->prepare("INSERT INTO akun (name, email, username, password) VALUES (:name, :email, :username, :hashed_password)");
+            $insert = $pdo->prepare("INSERT INTO akun (name, email, username, password, role) VALUES (:name, :email, :username, :hashed_password, 'user')");
             try {
                 $insert->execute([
                     ":name" => $name,
