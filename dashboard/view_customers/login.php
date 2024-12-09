@@ -1,10 +1,10 @@
-<?php
-session_start(); 
+<? php 
+session_start();
 include '../conn.php';
 
 if (isset($_POST['username']) && isset($_POST['password'])) {
     $username = htmlspecialchars($_POST['username']);
-    $password = htmlspecialchars($_POST['password']); // Menggunakan MD5 untuk hashing (sebaiknya gunakan bcrypt pada sistem nyata)
+    $password = htmlspecialchars($_POST['password']);
 
     // Query untuk mengecek username dan password
     $query = "SELECT * FROM akun WHERE username = :username";
@@ -13,20 +13,31 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($result) {
+        // Verifikasi password
         if (password_verify($password, $result['password'])) {
             $_SESSION['akun'] = $result['username'];
             $_SESSION['id_akun'] = $result['id'];
+            $_SESSION['role'] = $result['role'];
 
-            header("Location: index.php");
-            exit();
+            if ($result['role'] == 'admin') {
+                // Admin berhasil login
+                header("Location: ../view_administrators/dashboard.php");
+                exit();
+            } else {
+                // Bukan admin, tampilkan pesan error
+                echo "<script>alert('Hanya admin yang dapat mengakses halaman ini!');</script>";
+                header("Location: index.php");
+                exit();
+            }
         } else {
-            echo "<script>alert('Username atau password salah!');</script>";
+            echo "<script>alert('Password salah!');</script>";
         }
     } else {
-        echo "<script>alert('Username atau password salah!');</script>";
+        echo "<script>alert('Username tidak ditemukan!');</script>";
     }
 }
 ?>
+
 
 <!--untuk kerangka html -->
 <!DOCTYPE html>
