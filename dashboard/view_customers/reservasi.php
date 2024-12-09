@@ -108,7 +108,7 @@
                         exit(); 
                     }
             
-                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price) VALUES (:id_customer, :check_in, :check_out, 'Executive Suite', :total_price)");
+                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price, status_pemesanan) VALUES (:id_customer, :check_in, :check_out, 'Executive', :total_price, 'Dipesan')");
                     $stmt->bindParam(':id_customer', $id_customer);
                     $stmt->bindParam(':check_in', $check_in);
                     $stmt->bindParam(':check_out', $check_out);
@@ -137,7 +137,7 @@
                         exit(); 
                     }
             
-                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price) VALUES (:id_customer, :check_in, :check_out, 'Luxury Suite', :total_price)");
+                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price) VALUES (:id_customer, :check_in, :check_out, 'Luxury', :total_price)");
                     $stmt->bindParam(':id_customer', $id_customer);
                     $stmt->bindParam(':check_in', $check_in);
                     $stmt->bindParam(':check_out', $check_out);
@@ -167,7 +167,7 @@
                         exit(); 
                     }
             
-                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price) VALUES (:id_customer, :check_in, :check_out, 'Presidential Suite', :total_price)");
+                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price) VALUES (:id_customer, :check_in, :check_out, 'Presidential', :total_price)");
                     $stmt->bindParam(':id_customer', $id_customer);
                     $stmt->bindParam(':check_in', $check_in);
                     $stmt->bindParam(':check_out', $check_out);

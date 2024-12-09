@@ -74,6 +74,7 @@
         }
 
         // Booking hanya satu kali
+        for ($i = 0; $i < $quantity; $i++){
         $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price, status_pemesanan) VALUES (:id_customer, :check_in, :check_out, :room, :price, 'Dipesan')");
         $stmt->bindParam(':id_customer', $id_customer);
         $stmt->bindParam(':check_in', $check_in);
@@ -84,6 +85,7 @@
 
         // Jalankan kode
         $stmt->execute();
+        }
 
            // Pesan sukses
            $_SESSION['success'] = "New data added successfully!";
