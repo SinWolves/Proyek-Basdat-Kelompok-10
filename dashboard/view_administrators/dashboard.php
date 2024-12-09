@@ -83,23 +83,17 @@
     <!-- Dashboard Container -->
     <div class="container">
       <h1 class="mb-4">Dashboard</h1>
-      <h3>Hotel</h3>
-      <div class="row mb-4">
-        <!-- Hotel and Address Section -->
-        <div class="col-md-6 d-flex align-items-center">
-          <label for="hotelName" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Hotel</label>
-          <input type="text" id="hotelName" class="form-control flex-grow-1" value="Moonlit Hotel" readonly>
-          <button class="btn btn-outline-primary ms-1 mb-2" id="editHotelBtn">Edit</button>
-        </div>
+  
 
-        <div class="col-md-6 d-flex align-items-center">
-          <label for="hotelAddress" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Address</label>
-          <input type="text" id="hotelAddress" class="form-control flex-grow-1" value="Jakarta" readonly>
-          <button class="btn btn-outline-primary ms-1 mb-2" id="editAddressBtn">Edit</button>
-        </div>
+      <div class="row mb-4 text-center">
+        <!-- Hotel and Address Section -->
+        <h3>Hotel MoonLit </h3>
+        <h6> Sunrise Street 14, Tulung Agung
+Kediri, West Java
+12291</h6>
       </div>
       
-      <div class="row mb-4">
+      <div class="row mb-5">
         <!-- Total Bookings -->
         <div class="col-md-6 d-flex align-items-center">
           <label for="totalBookings" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Total Bookings</label>
@@ -107,41 +101,14 @@
         </div>
 
         <!-- Total Customers -->
-        <div class="col-md-6 d-flex align-items-center">
+        <div class="col-md-6  d-flex align-items-center">
           <label for="totalCustomers" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Total Customers</label>
           <p id="totalCustomers" class="form-control flex-grow-1 " style="border: 1px solid  #0d335d;; padding: 10px;"><?php echo $customer; ?></p>
         </div>
-      </div>S
+      </div>
       
       <h3>Overview</h3>
       <!-- Monthly Revenue and Review Section -->
-      <div class="row">
-        <!-- Monthly Revenue -->
-        <div class="col-md-6">
-            <h3 style="text-align: center; font-size:20px ; color:#000000">Monthly Revenue</h3>
-              <table class="table table-bordered">
-                <thead class="table-primary">
-                  <tr>
-                    <th>Month</th>
-                    <th>Year</th>
-                    <th>Total Revenue (IDR)</th>
-                    <th>Transactions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>January</td>
-                    <td>2024</td>
-                    <td>10,000,000</td>
-                    <td>15</td>
-                  </tr>
-                  <tr>
-                    <td colspan="4" class="text-center">No more data available</td>
-                  </tr>
-                </tbody>
-              </table>
-        </div>
-
         <div class="col-md-6">
           <h3 style="text-align: center; font-size:20px; color:#000000;">Review</h3>
           <table class="table table-bordered">
