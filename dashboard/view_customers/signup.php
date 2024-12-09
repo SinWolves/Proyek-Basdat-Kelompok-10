@@ -8,48 +8,72 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     $password = trim($_POST['password']);
     $password2 = trim($_POST['password2']);
 
+    // Validasi input
+    $errors = [];
+    
+    if (empty($name)) $errors[] = "Nama tidak boleh kosong";
+    if (empty($email)) $errors[] = "Email tidak boleh kosong";
+    if (empty($username)) $errors[] = "Username tidak boleh kosong";
+    if (empty($password)) $errors[] = "Password tidak boleh kosong";
+    if ($password !== $password2) $errors[] = "Password tidak sesuai";
+
     // Cek apakah username sudah terdaftar
-    $stmt = $pdo->query("SELECT * FROM akun WHERE username = '$username'");
+    $stmt = $pdo->prepare("SELECT * FROM akun WHERE username = :username");
+    $stmt->execute([':username' => $username]);
     $cek_user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
     if ($cek_user) {
+        $errors[] = "Username telah terdaftar";
+    }
+
+    // Cek apakah email sudah terdaftar
+    $stmt = $pdo->prepare("SELECT * FROM akun WHERE email = :email");
+    $stmt->execute([':email' => $email]);
+    $cek_email = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($cek_email) {
+        $errors[] = "Email telah terdaftar";
+    }
+
+    // Jika ada error, tampilkan pesan
+    if (!empty($errors)) {
+        $error_message = implode("\\n", $errors);
         echo "<script>
-            alert('Username telah terdaftar');
+            alert('$error_message');
             window.location = 'signup.php';
         </script>";
-    } else {    
-        if ($password !== $password2) {
-            echo "<script>
-                alert('Password tidak sesuai');
-                window.location = 'signup.php';
-            </script>";
-        } else {
-            // Hash password untuk keamanan
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        exit();
+    }
 
-            // Masukkan data ke tabel akun
-            $insert = $pdo->prepare("INSERT INTO akun (name, email, username, password, role) VALUES (:name, :email, :username, :hashed_password, 'user')");
-            try {
-                $insert->execute([
-                    ":name" => $name,
-                    ":email" => $email,
-                    ":username" => $username,
-                    ":hashed_password" => $hashed_password,
-                ]);
-                echo "<script>
-                    alert('Data berhasil ditambahkan');
-                    window.location = 'index.php';
-                </script>";
-                header("Location: login.php");
-                exit();
-            } catch (PDOException $e) {
-                // Handle any errors that occur during the insert process
-                echo "Error: " . $e->getMessage();
-            }
-        }
+    // Hash password untuk keamanan
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    // Masukkan data ke tabel akun dengan role default 'user'
+    $insert = $pdo->prepare("INSERT INTO akun (name, email, username, password, role) VALUES (:name, :email, :username, :hashed_password, :role)");
+    try {
+        $insert->execute([
+            ":name" => $name,
+            ":email" => $email,
+            ":username" => $username,
+            ":hashed_password" => $hashed_password,
+            ":role" => 'user' // Tambahkan role default
+        ]);
+
+        echo "<script>
+            alert('Registrasi berhasil');
+            window.location = 'login.php';
+        </script>";
+        exit();
+    } catch (PDOException $e) {
+        // Handle any errors that occur during the insert process
+        echo "<script>
+            alert('Terjadi kesalahan: " . addslashes($e->getMessage()) . "');
+            window.location = 'signup.php';
+        </script>";
+        exit();
     }
 }
 ?>
-
 
 <!--ini adalah kerangka dari html--> 
 <!DOCTYPE html>
