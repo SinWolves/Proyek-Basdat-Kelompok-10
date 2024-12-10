@@ -1,10 +1,10 @@
-<? php 
-session_start();
+<?php
+session_start(); 
 include '../conn.php';
 
 if (isset($_POST['username']) && isset($_POST['password'])) {
     $username = htmlspecialchars($_POST['username']);
-    $password = htmlspecialchars($_POST['password']);
+    $password = htmlspecialchars($_POST['password']); // Menggunakan MD5 untuk hashing (sebaiknya gunakan bcrypt pada sistem nyata)
 
     // Query untuk mengecek username dan password
     $query = "SELECT * FROM akun WHERE username = :username";
@@ -13,31 +13,33 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($result) {
-        // Verifikasi password
         if (password_verify($password, $result['password'])) {
-            $_SESSION['akun'] = $result['username'];
+            $_SESSION['nama'] = $result['name'];
+            $_SESSION['email'] = $result['email'];
+            $_SESSION['phone'] = "-";
+            $_SESSION['username'] = $result['username'];
+            $_SESSION['birth'] = "-";
             $_SESSION['id_akun'] = $result['id'];
-            $_SESSION['role'] = $result['role'];
 
-            if ($result['role'] == 'admin') {
-                // Admin berhasil login
+            if($result['role'] == 'admin') {
                 header("Location: ../view_administrators/dashboard.php");
                 exit();
-            } else {
-                // Bukan admin, tampilkan pesan error
-                echo "<script>alert('Hanya admin yang dapat mengakses halaman ini!');</script>";
+            }else{
                 header("Location: index.php");
+
                 exit();
             }
+
+           // header("Location: index.php");
+            //exit();
         } else {
-            echo "<script>alert('Password salah!');</script>";
+            echo "<script>alert('Username atau password salah!');</script>";
         }
     } else {
-        echo "<script>alert('Username tidak ditemukan!');</script>";
+        echo "<script>alert('Username atau password salah!');</script>";
     }
 }
 ?>
-
 
 <!--untuk kerangka html -->
 <!DOCTYPE html>
@@ -68,7 +70,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                         <i class="fas fa-lock"></i> <!-- Lock icon -->
                     </div>
                 </div>
-                <button type="submit">Login</button>
+                <button type="submit" name="login">Login</button>
             </form>
         </div>
         <div class="sign-up">
