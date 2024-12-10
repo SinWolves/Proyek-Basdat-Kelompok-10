@@ -8,8 +8,23 @@
   $error = $_SESSION['error'] ?? '';
   $success = $_SESSION['success'] ?? '';
 
-  // Hapus notifikasi setelah ditampilkan
+  // Untuk ke constomer
   unset($_SESSION['error'], $_SESSION['success']);
+  
+  if($_SERVER['REQUEST_METHOD']==='POST'){
+    $nama = $_SESSION['nama'];
+    $email = $_SESSION['email'];
+    $username = $_SESSION['username'];
+    $telepon = $_SESSION['phone'];
+    $tanggal_lahir = null;
+    $stmt = $pdo->prepare("INSERT INTO customer (nama, email, username, telepon, tanggal_lahir ) VALUES (:name, :email, :username, :telepon, :tanggal_lahir )");
+    $stmt->bindParam(':name', $nama);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':telepon', $telepon);
+    $stmt->bindParam(':tanggal_lahir', $tanggal_lahir);
+    $stmt->execute();
+}
 
     if($_SERVER['REQUEST_METHOD']==='POST'){
         if (isset($_POST['submit_add'])) {
@@ -108,7 +123,7 @@
                         exit(); 
                     }
             
-                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price) VALUES (:id_customer, :check_in, :check_out, 'Executive Suite', :total_price)");
+                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price, status_pemesanan) VALUES (:id_customer, :check_in, :check_out, 'Executive', :total_price, 'Dipesan')");
                     $stmt->bindParam(':id_customer', $id_customer);
                     $stmt->bindParam(':check_in', $check_in);
                     $stmt->bindParam(':check_out', $check_out);
@@ -137,7 +152,7 @@
                         exit(); 
                     }
             
-                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price) VALUES (:id_customer, :check_in, :check_out, 'Luxury Suite', :total_price)");
+                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price) VALUES (:id_customer, :check_in, :check_out, 'Luxury', :total_price)");
                     $stmt->bindParam(':id_customer', $id_customer);
                     $stmt->bindParam(':check_in', $check_in);
                     $stmt->bindParam(':check_out', $check_out);
@@ -167,7 +182,7 @@
                         exit(); 
                     }
             
-                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price) VALUES (:id_customer, :check_in, :check_out, 'Presidential Suite', :total_price)");
+                    $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price) VALUES (:id_customer, :check_in, :check_out, 'Presidential', :total_price)");
                     $stmt->bindParam(':id_customer', $id_customer);
                     $stmt->bindParam(':check_in', $check_in);
                     $stmt->bindParam(':check_out', $check_out);
@@ -210,6 +225,8 @@
             }
         }
     }
+
+    
 ?>
 
 <!DOCTYPE html>
@@ -360,12 +377,13 @@
             <li class="nav-item"><a class="nav-link" href="index.php">Contact Us</a></li>
             </ul>
             <div class="d-flex ms-3">
-            <button class="btn btn-outline-light me-2"  onclick="window.location.href='login.html';">Login</button>
+            <button class="btn btn-outline-light me-2"  onclick="window.location.href='login.php';">Login</button>
             <button class="btn btn-primary" style="background-color: black; color: white;" onclick="window.location.href='signup.html';">Sign up</button>
             </div>
             <div class="ms-auto d-flex align-items-center">
                 <img id="profile-account" alt="pp user" class="rounded-circle" height="30" src="img/f10ff70a7155e5ab666bcdd1b45b726d.jpg" width="30"/>
                 </div>
+                <span style="color: white;" class="ms-3"><?= $_SESSION['nama']; ?></span>
         </div>
         </div>
     </nav>
@@ -436,7 +454,7 @@
                             <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer" value="Bank transfer">
                             <label class="form-check-label" style="font-family: 'Luxurious Roman';" for="bankTransfer">Bank Transfer</label>
                         </div>
-                        <button type="submit" class="btn btn-book-now">Book Now</button>
+                        <button name="book_now" type="submit" class="btn btn-book-now">Book Now</button>
                     </div>
                 </div>
             </div>

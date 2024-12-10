@@ -74,7 +74,8 @@
         }
 
         // Booking hanya satu kali
-        $stmt = $pdo->prepare("INSERT INTO booking(id_customer, check_in, check_out, room, price, status_pemesanan) VALUES (:id_customer, :check_in, :check_out, :room, :price, 'Dipesan')");
+        for ($i = 0; $i < $quantity; $i++){
+        $stmt = $pdo->prepare("INSERT INTO booking(nama_customer, check_in, check_out, room, price, status_pemesanan) VALUES (:id_customer, :check_in, :check_out, :room, :price, 'Dipesan')");
         $stmt->bindParam(':id_customer', $id_customer);
         $stmt->bindParam(':check_in', $check_in);
         $stmt->bindParam(':check_out', $check_out);
@@ -84,6 +85,7 @@
 
         // Jalankan kode
         $stmt->execute();
+        }
 
            // Pesan sukses
            $_SESSION['success'] = "New data added successfully!";
@@ -238,7 +240,7 @@
           <header class="mb-4 text-start fw-bold fs-5 pt-3" style="color: #2c5099;">Add New Booking</header>
           <!-- ID Customer -->
           <div class="d-flex align-items-center mb-3">
-            <label for="idcustomer" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">ID Customer</label>
+            <label for="idcustomer" class="section-title me-2 flex-shrink-0" style="min-width: 130px;">Customer Name</label>
             <input name="id_customer" type="text" id="idcustomer" class="form-control flex-grow-1" value="">
           </div>
           <!-- Check-In -->
@@ -293,7 +295,7 @@
             <thead class="table-primary">
               <tr>
                 <th>ID Booking</th>
-                <th>ID Customer</th>
+                <th>Customer Name</th>
                 <th>Check-In</th>
                 <th>Check-out</th>
                 <th>Rooms</th>
@@ -336,7 +338,7 @@
                   <?php else: ?>
                         <tr>
                             <td><?php echo htmlspecialchars($item['id']); ?></td>
-                            <td><?php echo htmlspecialchars($item['id_customer']); ?></td>
+                            <td><?php echo htmlspecialchars($item['nama_customer']); ?></td>
                             <td><?php echo htmlspecialchars($item['check_in']); ?></td>
                             <td><?php echo htmlspecialchars($item['check_out']); ?></td>
                             <td><?php echo htmlspecialchars($item['room']); ?></td>

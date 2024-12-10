@@ -14,11 +14,24 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
     if ($result) {
         if (password_verify($password, $result['password'])) {
-            $_SESSION['akun'] = $result['username'];
+            $_SESSION['nama'] = $result['name'];
+            $_SESSION['email'] = $result['email'];
+            $_SESSION['phone'] = "-";
+            $_SESSION['username'] = $result['username'];
+            $_SESSION['birth'] = "-";
             $_SESSION['id_akun'] = $result['id'];
 
-            header("Location: index.php");
-            exit();
+            if($result['role'] == 'admin') {
+                header("Location: ../view_administrators/dashboard.php");
+                exit();
+            }else{
+                header("Location: index.php");
+
+                exit();
+            }
+
+           // header("Location: index.php");
+            //exit();
         } else {
             echo "<script>alert('Username atau password salah!');</script>";
         }
@@ -57,7 +70,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                         <i class="fas fa-lock"></i> <!-- Lock icon -->
                     </div>
                 </div>
-                <button type="submit">Login</button>
+                <button type="submit" name="login">Login</button>
             </form>
         </div>
         <div class="sign-up">
